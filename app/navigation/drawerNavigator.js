@@ -1,14 +1,12 @@
 import React, { PureComponent, Component } from 'react';
-import
-{
+import {
     View,
     Image,
     Text,
     TouchableOpacity,
     SafeAreaView
 } from 'react-native';
-import
-{
+import {
     createDrawerNavigator,
     DrawerContentScrollView,
     DrawerItemList,
@@ -24,10 +22,8 @@ import BottomTabNavigator from './bottomTabNavigator';
 import { getSize, Colors } from '../common';
 import { MultiSliders } from '../components';
 
-class MyDrawer extends Component
-{
-    constructor(props)
-    {
+class MyDrawer extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             isEfficiency: false,
@@ -37,8 +33,7 @@ class MyDrawer extends Component
         };
     }
 
-    render()
-    {
+    render() {
         const image =
             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRogMFHOw0CKtwUvuJmhgcSi18GmfqlCxUI6g&usqp=CAU';
 
@@ -362,16 +357,13 @@ class MyDrawer extends Component
 
 const Drawer = createDrawerNavigator();
 
-class DrawerNavigator extends PureComponent
-{
-    constructor(props)
-    {
+class DrawerNavigator extends PureComponent {
+    constructor(props) {
         super(props);
         this.state = {};
     }
 
-    render()
-    {
+    render() {
         const { action, screenState } = this.props;
         return (
             <Drawer.Navigator
@@ -390,7 +382,6 @@ class DrawerNavigator extends PureComponent
                 <Drawer.Screen
                     name={stackNavigator.BOTTOM_TAB}
                     component={BottomTabNavigator}
-                // options={{ headerShown: false }}
                 />
             </Drawer.Navigator>
         );

@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import
-{
-    View,
-    Text,
-    StyleSheet,
-    TextInput,
-    Image,
-    SafeAreaView,
-    TouchableOpacity,
-    Keyboard,
-    KeyboardAvoidingView,
-    ImageBackground,
-    TouchableWithoutFeedback,
-    ActivityIndicator
+import {
+View,
+Text,
+StyleSheet,
+TextInput,
+Image,
+SafeAreaView,
+TouchableOpacity,
+Keyboard,
+KeyboardAvoidingView,
+ImageBackground,
+TouchableWithoutFeedback,
+ActivityIndicator
 } from 'react-native';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { bindActionCreators } from 'redux';
@@ -24,10 +23,8 @@ import Activication from './activication';
 import * as ApiServices from "./../../service/index";
 import { CONST_STORAGE, storage } from '../../common';
 const Stack = createNativeStackNavigator();
-class Login extends Component
-{
-    constructor(props)
-    {
+class Login extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             email: 'dat19952010@gmail.com',
@@ -39,27 +36,21 @@ class Login extends Component
             count: 56
         };
     }
-    onChangeText = (name, itemValue) =>
-    {
-        this.setState(state =>
-        {
+    onChangeText = (name, itemValue) => {
+        this.setState(state => {
             return {
                 [name]: itemValue
             }
         })
     }
 
-    componentDidMount()
-    {
+    componentDidMount() {
 
     }
-    SetIsHiddenBottom = (type) =>
-    {
+    SetIsHiddenBottom = (type) => {
         if (!type) {
-            setTimeout(() =>
-            {
-                this.setState(state =>
-                {
+            setTimeout(() => {
+                this.setState(state => {
                     return {
                         isHiddenBottom: type
                     }
@@ -67,8 +58,7 @@ class Login extends Component
             }, 50);
         }
         else {
-            this.setState(state =>
-            {
+            this.setState(state => {
                 return {
                     isHiddenBottom: type
                 }
@@ -77,37 +67,31 @@ class Login extends Component
 
     }
 
-    Login = () =>
-    {
+    Login = () => {
 
         const { password, email } = this.state;
         const { action, navigation } = this.props;
         if (email && password) {
-            this.setState(state =>
-            {
+            this.setState(state => {
                 return {
                     isLogin: true
                 }
-            }, () =>
-            {
+            }, () => {
                 console.log("ok");
                 ApiServices.postLogin({
                     email: email,
                     password: password,
 
-                }).then(res =>
-                {
+                }).then(res => {
                     if (res.code === 200) {
 
                         const { token } = res.data;
                         storage.setItem(CONST_STORAGE.TOKEN_ACCESS, token);
-                        this.setState(state =>
-                        {
+                        this.setState(state => {
                             return {
                                 isLogin: false
                             }
-                        }, () =>
-                        {
+                        }, () => {
                             action.postLogin(res.data)
                             action.login(true);
 
@@ -117,24 +101,20 @@ class Login extends Component
                     if (res.code === 400) {
 
 
-                        this.setState(state =>
-                        {
+                        this.setState(state => {
                             return {
                                 isLogin: false
                             }
-                        }, () =>
-                        {
+                        }, () => {
                             alert(res.message);
                         })
 
                     }
 
 
-                }).catch(err =>
-                {
+                }).catch(err => {
 
-                    this.setState(state =>
-                    {
+                    this.setState(state => {
                         return {
                             isLogin: false
                         }
@@ -147,8 +127,7 @@ class Login extends Component
     }
 
 
-    render()
-    {
+    render() {
         const { isHiddenBottom, password, email, isLogin } = this.state
         const { action } = this.props;
 
@@ -179,8 +158,7 @@ class Login extends Component
                 </View>}
                 <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
                     <TouchableWithoutFeedback
-                        onPress={() =>
-                        {
+                        onPress={() => {
                             Keyboard.dismiss();
                             this.SetIsHiddenBottom(false);
                         }}
@@ -193,13 +171,13 @@ class Login extends Component
                                     alignItems: 'center',
                                     height: getSize.scale(200)
                                 }}>
-                                <Image
+                                {/* <Image
                                     source={{ uri: 'ic_loation_blue' }}
                                     style={{
                                         width: getSize.scale(132),
                                         height: getSize.scale(147)
                                     }}
-                                />
+                                /> */}
                             </View>
                             <View
                                 style={{
