@@ -420,12 +420,6 @@ class TabBar extends Component
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     activeOpacity={1}
-                                    // onPress={() =>
-                                    //     this.setState({
-                                    //         isGalleryMini: false,
-                                    //         isUpgradeMini: true
-                                    //     })
-                                    // }
                                     onPress={() => this._handleTabbarMini('isUpgradeMini')}
                                     style={{
                                         flex: 1,

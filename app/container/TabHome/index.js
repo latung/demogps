@@ -45,6 +45,12 @@ class TabHome extends Component {
         };
     }
 
+    componentDidUpdate(preProp) {
+        if (preProp?.shoesIdWear !== this.props.shoesIdWear) {
+            this.LoadData()
+        }
+    }
+
     shoesIdWear = (id) => {
 
 
@@ -56,7 +62,6 @@ class TabHome extends Component {
         }, () => {
             ApiServices.shoesIdWear({ _id: id }).then(res => {
                 if (res.code === 200) {
-                    alert("Successfully!");
                     action.shoesIdWear(res.data);
                     this.LoadData();
                     this.setState(state => {
@@ -96,7 +101,6 @@ class TabHome extends Component {
             ApiServices.putShoesId({ price: pr, isSelling: isSelling, _id: id }).then(res => {
                 console.log(res);
                 if (res.code === 200) {
-                    alert("Successfully!");
                     action.putShoesId(res.data);
                     this.LoadData();
                     this.setState(state => {
@@ -181,7 +185,6 @@ class TabHome extends Component {
     LoadData = () => {
         const { action } = this.props;
         ApiServices.getConstShoe().then(res => {
-            // console.log(res);
             if (res.code === 200) {
                 action.getConstShoe(res.data);
             }
@@ -270,7 +273,6 @@ class TabHome extends Component {
     render() {
         const { navigation, screenState, getConstShoe, action, getShoesId, userId, shoeCurrentWear, shoes } = this.props;
         const { modalVisible, modalTransfer, modalBuy, price, isPutShoe, isshoesIdWear, isShowModalInstruction } = this.state;
-        // const ShoeWeared = getShoesId.data;
         const balanceUserId = userId.data ? userId.data : { mer: 0, usdt: 0 };
         let dataS = shoes.data ? shoes.data.filter((item, index) => {
             return !item.isWearing;
@@ -283,7 +285,6 @@ class TabHome extends Component {
 
         let isWearr = shoeCurrentWear._id ? true : false;
         const ShoeWeared = isWearr ? shoeCurrentWear : getShoesId.data;
-        console.log('toolTipStart', this.state.toolTipStart)
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <ImageBackground

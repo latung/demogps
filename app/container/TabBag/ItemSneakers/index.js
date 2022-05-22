@@ -17,7 +17,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { stackNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
-import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 export default forwardRef(function ItemSneakers({ item,
     index,

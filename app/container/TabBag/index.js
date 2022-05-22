@@ -267,7 +267,6 @@ class TabBag extends Component {
             ApiServices.putShoesId({ price: pr, isSelling: isSelling, _id: id }).then(res => {
                 console.log(res);
                 if (res.code === 200) {
-                    alert("Successfully!");
                     action.putShoesId(res.data);
                     this.LoadData();
                     this.setState(state => {
