@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import
-{
+import {
     View,
     Text,
     Platform,
@@ -9,7 +8,6 @@ import
     ImageBackground,
     Image,
     TextInput,
-    StatusBar,
     Modal,
     ScrollView,
     RefreshControl,
@@ -21,16 +19,15 @@ import Tooltip from 'react-native-walkthrough-tooltip';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as _action from '../../redux/action/ActionHandle';
-import { Popup, Header } from '../../components';
 
 import Head from "./../../components/head/index";
 import { location, getSize, Colors } from '../../common/';
 
 import * as ApiServices from "./../../service/index";
-class TabHome extends Component
-{
-    constructor(props)
-    {
+import AsyncStorage from '@react-native-community/async-storage';
+
+class TabHome extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             modalVisibles: true, // true,
@@ -44,34 +41,34 @@ class TabHome extends Component
             price: "0",
             isPutShoe: false,
             isshoesIdWear: false,
+            isShowModalInstruction: true,
         };
     }
 
-    shoesIdWear = (id) =>
-    {
+    componentDidUpdate(preProp) {
+        if (preProp?.shoesIdWear !== this.props.shoesIdWear) {
+            this.LoadData()
+        }
+    }
+
+    shoesIdWear = (id) => {
 
 
         const { action } = this.props;
-        this.setState(state =>
-        {
+        this.setState(state => {
             return {
                 isshoesIdWear: true,
             }
-        }, () =>
-        {
-            ApiServices.shoesIdWear({ _id: id }).then(res =>
-            {
+        }, () => {
+            ApiServices.shoesIdWear({ _id: id }).then(res => {
                 if (res.code === 200) {
-                    alert("Successfully!");
                     action.shoesIdWear(res.data);
                     this.LoadData();
-                    this.setState(state =>
-                    {
+                    this.setState(state => {
                         return {
                             isshoesIdWear: false
                         }
-                    }, () =>
-                    {
+                    }, () => {
                         this.setmodalBuy(false);
                         this.setmodalTransfer(false);
                     });
@@ -79,11 +76,9 @@ class TabHome extends Component
                 if (res.code === 404) {
                     alert(res.message)
                 }
-            }).catch(err =>
-            {
+            }).catch(err => {
                 alert("Fail!");
-                this.setState(state =>
-                {
+                this.setState(state => {
                     return {
                         isshoesIdWear: false
                     }
@@ -92,34 +87,27 @@ class TabHome extends Component
 
         })
     }
-    putShoe = (isSelling, id) =>
-    {
+    putShoe = (isSelling, id) => {
 
 
         const { action } = this.props;
         const { price } = this.state;
         let pr = isSelling ? price : 0;
-        this.setState(state =>
-        {
+        this.setState(state => {
             return {
                 isPutShoe: true,
             }
-        }, () =>
-        {
-            ApiServices.putShoesId({ price: pr, isSelling: isSelling, _id: id }).then(res =>
-            {
-                console.log(res);
+        }, () => {
+            ApiServices.putShoesId({ price: pr, isSelling: isSelling, _id: id }).then(res => {
+                console.log('putShoe', res);
                 if (res.code === 200) {
-                    alert("Successfully!");
                     action.putShoesId(res.data);
                     this.LoadData();
-                    this.setState(state =>
-                    {
+                    this.setState(state => {
                         return {
                             isPutShoe: false
                         }
-                    }, () =>
-                    {
+                    }, () => {
                         this.setmodalBuy(false);
                         this.setmodalTransfer(false);
                     });
@@ -127,11 +115,9 @@ class TabHome extends Component
                 if (res.code === 404) {
                     alert(res.message)
                 }
-            }).catch(err =>
-            {
+            }).catch(err => {
                 alert("Fail!");
-                this.setState(state =>
-                {
+                this.setState(state => {
                     return {
                         isPutShoe: false
                     }
@@ -142,105 +128,90 @@ class TabHome extends Component
         })
 
     }
-    setmodalBuy = (type) =>
-    {
-        this.setState(state =>
-        {
+    setmodalBuy = (type) => {
+        this.setState(state => {
             return {
                 modalBuy: type
             }
         })
     }
-    setmodalTransfer = (type) =>
-    {
-        this.setState(state =>
-        {
+    setmodalTransfer = (type) => {
+        this.setState(state => {
             return {
                 modalTransfer: type
             }
         })
     }
-    componentDidMount = () =>
-    {
+
+    getIsShowModalInstruction = async () => {
+        const isShow = await AsyncStorage.getItem('NOT_SHOW_INSTRUCTION')
+        this.setState({ isShowModalInstruction: isShow === 'having' ? false : true })
+    }
+
+    componentDidMount = () => {
 
         // Permissions location
         location.requestPermissions();
         this._getCurrentLocation();
-
+        this.getIsShowModalInstruction()
         this.LoadData();
 
 
 
 
     };
-    _onRefresh = () =>
-    {
+    _onRefresh = () => {
         const { action } = this.props;
-        this.setState(state =>
-        {
+        this.setState(state => {
             return { refreshing: true }
-        }, () =>
-        {
-            ApiServices.shoes().then(res =>
-            {
+        }, () => {
+            ApiServices.shoes().then(res => {
                 console.log(res);
                 if (res.code === 200) {
-                    this.setState(state =>
-                    {
+                    this.setState(state => {
                         return { refreshing: false }
-                    }, () =>
-                    {
+                    }, () => {
                         action.shoes(res.data);
                         this.setShoeCurrentWear(res.data, action)
                     });
 
                 }
-            }).catch(err =>
-            {
+            }).catch(err => {
 
             })
 
         });
     }
-    LoadData = () =>
-    {
+    LoadData = () => {
         const { action } = this.props;
-        ApiServices.getConstShoe().then(res =>
-        {
-            // console.log(res);
+        ApiServices.getConstShoe().then(res => {
             if (res.code === 200) {
                 action.getConstShoe(res.data);
             }
-        }).catch(err =>
-        {
+        }).catch(err => {
 
         })
-        ApiServices.shoes().then(res =>
-        {
+        ApiServices.shoes().then(res => {
 
             if (res.code === 200) {
                 action.shoes(res.data);
                 this.setShoeCurrentWear(res.data, action)
             }
-        }).catch(err =>
-        {
+        }).catch(err => {
 
         })
-        ApiServices.market({ pageSize: 20, page: 1 }).then(res =>
-        {
+        ApiServices.market({ pageSize: 20, page: 1 }).then(res => {
             if (res.code === 200) {
                 action.market(res.data.shoes);
             }
-        }).catch(err =>
-        {
+        }).catch(err => {
 
         })
 
     }
 
 
-    setShoeCurrentWear = (shoes, action) =>
-    {
+    setShoeCurrentWear = (shoes, action) => {
 
         for (let i = 0; i < shoes.length; i++) {
             const element = shoes[i];
@@ -257,23 +228,23 @@ class TabHome extends Component
         }
     }
 
+    setKeyIsShowModalInstruction = async () => {
+        await AsyncStorage.setItem('NOT_SHOW_INSTRUCTION', 'having')
+    }
 
-    onChangeText = (name, itemValue) =>
-    {
-        this.setState(state =>
-        {
+
+    onChangeText = (name, itemValue) => {
+        this.setState(state => {
             return {
                 [name]: itemValue
             }
         })
     }
-    _getCurrentLocation = async () =>
-    {
+    _getCurrentLocation = async () => {
         const { action, screenState } = this.props;
         return location
             .getCurrentLocation()
-            .then((currentLocation) =>
-            {
+            .then((currentLocation) => {
                 if (currentLocation) {
                     const { longitude, latitude } = currentLocation;
                     action.changeScreenState({
@@ -285,8 +256,7 @@ class TabHome extends Component
                     });
                 }
             })
-            .catch((err) =>
-            {
+            .catch((err) => {
                 if (err === 1) {
                     return Toast.show('Chưa cấp quyền định vị');
                 }
@@ -299,14 +269,12 @@ class TabHome extends Component
             });
     };
 
-    render()
-    {
+
+    render() {
         const { navigation, screenState, getConstShoe, action, getShoesId, userId, shoeCurrentWear, shoes } = this.props;
-        const { modalVisible, modalTransfer, modalBuy, price, isPutShoe, isshoesIdWear } = this.state;
-        // const ShoeWeared = getShoesId.data;
+        const { modalVisible, modalTransfer, modalBuy, price, isPutShoe, isshoesIdWear, isShowModalInstruction } = this.state;
         const balanceUserId = userId.data ? userId.data : { mer: 0, usdt: 0 };
-        let dataS = shoes.data ? shoes.data.filter((item, index) =>
-        {
+        let dataS = shoes.data ? shoes.data.filter((item, index) => {
             return !item.isWearing;
         }).slice(-4) : [];
         if (dataS.length < 4) {
@@ -388,8 +356,10 @@ class TabHome extends Component
                                                     paddingBottom: getSize.scale(16)
                                                 }}>
                                                 <TouchableOpacity
-                                                    onPress={() =>
+                                                    onPress={() => {
                                                         this.setState({ toolTipSneaker: false })
+                                                        this.setKeyIsShowModalInstruction()
+                                                    }
                                                     }
                                                     style={{
                                                         justifyContent: 'center',
@@ -428,11 +398,13 @@ class TabHome extends Component
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity
-                                                    onPress={() =>
+                                                    onPress={() => {
                                                         this.setState({
                                                             toolTipSneaker: false,
                                                             toolTipSol: true
                                                         })
+                                                        this.setKeyIsShowModalInstruction()
+                                                    }
                                                     }
                                                     style={{
                                                         justifyContent: 'center',
@@ -610,7 +582,7 @@ class TabHome extends Component
                                                     fontSize: getSize.scale(14),
                                                     fontWeight: 'bold'
                                                 }}>
-                                                # {ShoeWeared.readableId}
+                                                # {ShoeWeared.name}
                                             </Text>
                                             <Image
                                                 style={{ width: 16, height: 16, resizeMode: 'contain' }}
@@ -638,8 +610,7 @@ class TabHome extends Component
                                 justifyContent: 'space-between',
                                 alignItems: 'flex-start'
                             }}>
-                            {datashoes && datashoes.map((item, index) =>
-                            {
+                            {datashoes && datashoes.map((item, index) => {
                                 if (item.readableId || item.readableId == 0) {
                                     return <View style={{ flex: 1, alignItems: 'center' }}>
                                         <ImageBackground
@@ -802,8 +773,7 @@ class TabHome extends Component
                                                                 alignItems: 'flex-end'
                                                             }}>
                                                                 <TouchableOpacity
-                                                                    onPress={() =>
-                                                                    {
+                                                                    onPress={() => {
                                                                         this.putShoe(!item.isSelling, item._id)
                                                                     }}
                                                                     style={{
@@ -848,8 +818,7 @@ class TabHome extends Component
                                                                     // flex: 1
                                                                 }}>
                                                                     <TouchableOpacity
-                                                                        onPress={() =>
-                                                                        {
+                                                                        onPress={() => {
                                                                             // setmodalTransfer(!modalTransfer);
                                                                             return this.setmodalBuy(item.readableId);
                                                                         }}
@@ -1059,9 +1028,9 @@ class TabHome extends Component
                                                                         style={{
                                                                             color: '#000',
                                                                             fontWeight: 'bold',
-                                                                            fontSize: getSize.scale(14)
+                                                                            fontSize: getSize.scale(13)
                                                                         }}>
-                                                                        {constShoe.SPEED_RANGE && `${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`}
+                                                                        {constShoe.SPEED_RANGE && `${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h`}
                                                                     </Text>
                                                                 </View>
                                                             </View>
@@ -1310,7 +1279,7 @@ class TabHome extends Component
                                                                                 fontWeight: 'bold',
                                                                                 color: 'rgba(44, 44, 44, 1)'
                                                                             }}>
-                                                                            {constShoe.SPEED_RANGE && `${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`}
+                                                                            {constShoe.SPEED_RANGE && `${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h`}
 
                                                                         </Text>
                                                                     </View>
@@ -1452,8 +1421,7 @@ class TabHome extends Component
                                                         }}>
                                                             <TouchableOpacity
                                                                 disabled={item.isSelling ? true : false}
-                                                                onPress={() =>
-                                                                {
+                                                                onPress={() => {
                                                                     this.setmodalBuy(item.readableId)
                                                                 }}
                                                                 style={{
@@ -1491,8 +1459,7 @@ class TabHome extends Component
                                                             </TouchableOpacity>
                                                             <TouchableOpacity
                                                                 disabled={item.isSelling ? false : true}
-                                                                onPress={() =>
-                                                                {
+                                                                onPress={() => {
                                                                     this.putShoe(!item.isSelling, item._id)
 
                                                                 }}
@@ -1633,8 +1600,10 @@ class TabHome extends Component
                                                     paddingBottom: getSize.scale(16)
                                                 }}>
                                                 <TouchableOpacity
-                                                    onPress={() =>
+                                                    onPress={() => {
                                                         this.setState({ toolTipStart: false })
+                                                        this.setKeyIsShowModalInstruction()
+                                                    }
                                                     }
                                                     style={{
                                                         justifyContent: 'center',
@@ -1673,11 +1642,13 @@ class TabHome extends Component
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity
-                                                    onPress={() =>
+                                                    onPress={() => {
                                                         this.setState({
                                                             toolTipStart: false,
                                                             toolTipSneaker: true
                                                         })
+                                                        this.setKeyIsShowModalInstruction()
+                                                    }
                                                     }
                                                     style={{
                                                         justifyContent: 'center',
@@ -1722,8 +1693,7 @@ class TabHome extends Component
                                     <TouchableOpacity
                                         style={{ alignItems: 'center' }}
                                         disabled={this.state.toolTipStart}
-                                        onPress={() =>
-                                        {
+                                        onPress={() => {
                                             // Start
                                             // action.changeScreenState({
                                             //     ...screenState,
@@ -1895,7 +1865,7 @@ class TabHome extends Component
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
-                    <Modal
+                    {isShowModalInstruction && <Modal
                         animationType="none"
                         transparent={true}
                         visible={modalVisible}
@@ -1966,11 +1936,13 @@ class TabHome extends Component
                                             flexDirection: 'row'
                                         }}>
                                         <TouchableOpacity
-                                            onPress={() =>
+                                            onPress={() => {
                                                 this.setState({
                                                     modalVisible: false,
                                                     toolTipStart: false
                                                 })
+                                                this.setKeyIsShowModalInstruction()
+                                            }
                                             }
                                             style={{
                                                 justifyContent: 'center',
@@ -2009,11 +1981,13 @@ class TabHome extends Component
                                             </View>
                                         </TouchableOpacity>
                                         <TouchableOpacity
-                                            onPress={() =>
+                                            onPress={() => {
                                                 this.setState({
                                                     modalVisible: false,
                                                     toolTipStart: true
                                                 })
+                                                this.setKeyIsShowModalInstruction()
+                                            }
                                             }
                                             style={{
                                                 justifyContent: 'center',
@@ -2055,7 +2029,7 @@ class TabHome extends Component
                                 </View>
                             </View>
                         </View>
-                    </Modal>
+                    </Modal>}
                 </View>
             </SafeAreaView>
         );

@@ -512,7 +512,7 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                                                     marginHorizontal:
                                                                         getSize.scale(8)
                                                                 }}>
-                                                                {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`}
+                                                                {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h`}
                                                             </Text>
                                                         </View>
                                                         <Text
@@ -619,7 +619,7 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                                                         fontWeight: '600',
                                                                         fontStyle: 'italic'
                                                                     }}>
-                                                                    {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`}
+                                                                    {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h`}
                                                                 </Text>
                                                             </View>
                                                         </View>
@@ -1034,9 +1034,9 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                             style={{
                                                 color: '#000',
                                                 fontWeight: 'bold',
-                                                fontSize: getSize.scale(14)
+                                                fontSize: getSize.scale(13)
                                             }}>
-                                            {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`}
+                                            {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h`}
                                         </Text>
                                     </View>
                                 </View>
@@ -1172,7 +1172,7 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                                     fontWeight: 'bold',
                                                     color: 'rgba(44, 44, 44, 1)'
                                                 }}>
-                                                {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`}
+                                                {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h`}
                                             </Text>
                                         </View>
                                     </View>

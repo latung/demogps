@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import
-{
+import {
     View,
     Text,
     StyleSheet,
@@ -15,16 +14,14 @@ import { tabNavigator, stackNavigator } from '../../navigation/nameNavigator';
 import * as _action from '../../redux/action/ActionHandle';
 import { location, getSize, Colors } from '../../common/';
 
-class Activicaction extends Component
-{
-    constructor(props)
-    {
+class Activicaction extends Component {
+    constructor(props) {
         super(props);
         this.state = {};
     }
 
-    render()
-    {
+
+    render() {
         const {
             isAccount,
             isCountDown,
@@ -33,7 +30,8 @@ class Activicaction extends Component
             verificationcode,
             password,
             action,
-            resendRegisterCode
+            resendRegisterCode,
+            goBacKFunc,
         } = this.props;
 
 
@@ -131,15 +129,16 @@ class Activicaction extends Component
                                     </Text>
                                 )}
                                 {isCountDown && (
-                                    // <Text
-                                    //     style={{
-                                    //         fontSize: getSize.scale(15),
-                                    //         fontWeight: 'bold',
-                                    //         color: '#F44369'
-                                    //     }}>
-                                    //     {count}s
-                                    // </Text>
-                                    <ActivityIndicator size="small" color="#F44369" />
+                                    <>
+                                        <Text
+                                            style={{
+                                                fontSize: getSize.scale(15),
+                                                fontWeight: 'bold',
+                                                color: '#F44369'
+                                            }}>
+                                            {count}s
+                                        </Text>
+                                    </>
                                 )}
                             </TouchableOpacity>
                         </View>
@@ -149,7 +148,7 @@ class Activicaction extends Component
                                 width: '100%',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                marginVertical: getSize.scale(20)
+                                marginTop: getSize.scale(20)
                             }}>
                             <TouchableOpacity
                                 style={{
@@ -168,9 +167,13 @@ class Activicaction extends Component
                                 />
                             </TouchableOpacity>
                         </View>
+
+                        <TouchableOpacity style={styles.containerBtnBack} onPress={goBacKFunc}>
+                            <Text style={styles.txtBack}>Go back</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
-            </View>
+            </View >
         );
     }
 }
@@ -263,6 +266,14 @@ const styles = StyleSheet.create({
         alignContent: 'center',
 
         borderRadius: 5
+    },
+    containerBtnBack: {
+        marginVertical: getSize.scale(10)
+    },
+    txtBack: {
+        fontSize: getSize.scale(20),
+        fontWeight: 'bold',
+        color: '#767676'
     }
 });
 export default Activicaction;

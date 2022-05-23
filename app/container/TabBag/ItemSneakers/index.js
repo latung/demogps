@@ -17,7 +17,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { stackNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
-import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 export default forwardRef(function ItemSneakers({ item,
     index,
@@ -215,7 +214,7 @@ export default forwardRef(function ItemSneakers({ item,
                                 {[
 
                                     { title: 'Energy', value: item.energy && item.energy },
-                                    { title: 'Speed', value: `${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}` },
+                                    { title: 'Speed', value: `${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h` },
                                     { title: 'Lucky', value: `${constShoe.LUCK[item.quality]}` },
                                     { title: 'Durability', value: 40 }
                                 ].map((i, index) => (
@@ -669,9 +668,9 @@ export default forwardRef(function ItemSneakers({ item,
                                             style={{
                                                 color: '#000',
                                                 fontWeight: 'bold',
-                                                fontSize: getSize.scale(14)
+                                                fontSize: getSize.scale(13)
                                             }}>
-                                            {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`}
+                                            {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`} km/h
                                         </Text>
                                     </View>
                                 </View>
@@ -920,7 +919,7 @@ export default forwardRef(function ItemSneakers({ item,
                                                     fontWeight: 'bold',
                                                     color: 'rgba(44, 44, 44, 1)'
                                                 }}>
-                                                {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`}
+                                                {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`} km/h
 
                                             </Text>
                                         </View>

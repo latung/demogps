@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import
-{
+import {
     View,
     Text,
     StyleSheet,
@@ -13,7 +12,8 @@ import
     ImageBackground,
     TouchableWithoutFeedback,
     BackHandler,
-    ActivityIndicator
+    ActivityIndicator,
+    Alert
 } from 'react-native';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { bindActionCreators } from 'redux';
@@ -26,10 +26,8 @@ import Activication from './activication';
 import { CONST_STORAGE, storage } from '../../common';
 import * as ApiServices from "./../../service/index";
 const Stack = createNativeStackNavigator();
-class LoginSignup extends Component
-{
-    constructor(props)
-    {
+class LoginSignup extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             email: '',
@@ -38,57 +36,34 @@ class LoginSignup extends Component
             isHiddenBottom: false,
             isAccount: false,
             isCountDown: false,
-            count: 3
+            count: 60
         };
     }
-    onChangeText = (name, itemValue) =>
-    {
-        this.setState(state =>
-        {
+    onChangeText = (name, itemValue) => {
+        this.setState(state => {
             return {
                 [name]: itemValue
             }
         })
     }
-    RegisterCode = () =>
-    {
-
+    RegisterCode = () => {
         const { action } = this.props;
         const { email } = this.state;
-
-        if (email) {
-            this.setState(state =>
-            {
+        if (email?.trim()) {
+            this.countDown()
+            this.setState(state => {
                 return {
                     isCountDown: true
                 }
-            }, () =>
-            {
-                ApiServices.resendRegisterCode({ email: email }).then(res =>
-                {
-                    console.log("res sssssssssssssssss", res);
+            }, () => {
+                ApiServices.resendRegisterCode({ email: email?.trim()?.toLocaleLowerCase() }).then(res => {
                     if (res.code === 200) {
-                        this.setState(state =>
-                        {
-                            return {
-                                isCountDown: false
-                            }
-                        })
                         action.resendRegisterCode(res);
                     }
                     if (res.code === 400) {
-                        this.setState(state =>
-                        {
-                            return {
-                                isCountDown: false
-                            }
-                        }, () =>
-                        {
-                            alert(res.message)
-                        })
+                        alert(res.message)
                     }
-                }).catch(err =>
-                {
+                }).catch(err => {
                     console.log(err)
                 })
                 // action.resendRegisterCode({ email: email });
@@ -112,38 +87,34 @@ class LoginSignup extends Component
                 //     }
                 // }, 200);
             })
+        } else {
+            Alert.alert('Email not is empty')
         }
     }
 
-    SubmitCode = () =>
-    {
+    SubmitCode = () => {
         const { action } = this.props;
         const { email, verificationcode } = this.state;
 
 
-        this.setState(state =>
-        {
+        this.setState(state => {
             return {
                 isSummitCode: true,
             }
-        }, () =>
-        {
+        }, () => {
             action.setUser({
-                email: email
+                email: email?.trim()?.toLocaleLowerCase()
             });
             ApiServices.submitCode({
                 verificationCode: verificationcode,
-                email: email
-            }).then(res =>
-            {
+                email: email?.trim()?.toLocaleLowerCase()
+            }).then(res => {
                 if (res.code === 200) {
-                    this.setState(state =>
-                    {
+                    this.setState(state => {
                         return {
                             isSummitCode: false
                         }
-                    }, () =>
-                    {
+                    }, () => {
                         const { token } = res.data;
                         storage.setItem(CONST_STORAGE.TOKEN_SET_PASSWORD, token);
                         action.submitCode(res.data)
@@ -151,20 +122,17 @@ class LoginSignup extends Component
                     })
                 }
                 if (res.code === 400) {
-                    this.setState(state =>
-                    {
+                    this.setState(state => {
                         return {
                             isSummitCode: false
                         }
-                    }, () =>
-                    {
+                    }, () => {
                         alert(res.message)
                     })
                 }
                 console.log(res);
 
-            }).catch(err =>
-            {
+            }).catch(err => {
                 console.log(err)
             })
             // action.submitCode({
@@ -203,39 +171,27 @@ class LoginSignup extends Component
         })
     }
 
-    countDown = () =>
-    {
+    countDown = () => {
         let { count } = this.state;
-        // console.log(count)
-        setInterval(() =>
-        {
+        let interval = setInterval(() => {
             if (count == 0) {
-                clearInterval();
-                this.setState(state =>
-                {
-                    return {
-                        isCountDown: false,
-                        count: 3
-                    }
+                clearInterval(interval);
+                this.setState({
+                    isCountDown: false,
+                    count: 60
                 })
                 return;
             }
             count--;
-            this.setState(state =>
-            {
-                return {
-                    count: count
-                }
-            })
+            this.setState({ count })
         }, 1000);
     }
-    backAction = () =>
-    {
+
+    backAction = () => {
 
         this.props.navigation.goBack()
     };
-    componentDidMount()
-    {
+    componentDidMount() {
         // const { submitCode, action } = this.props;
 
         BackHandler.addEventListener(
@@ -244,20 +200,16 @@ class LoginSignup extends Component
         );
     }
 
-    componentWillUnmount()
-    {
+    componentWillUnmount() {
         BackHandler.removeEventListener(
             "hardwareBackPress",
             this.backAction
         );
     }
-    SetIsHiddenBottom = (type) =>
-    {
+    SetIsHiddenBottom = (type) => {
         if (!type) {
-            setTimeout(() =>
-            {
-                this.setState(state =>
-                {
+            setTimeout(() => {
+                this.setState(state => {
                     return {
                         isHiddenBottom: type
                     }
@@ -265,8 +217,7 @@ class LoginSignup extends Component
             }, 50);
         }
         else {
-            this.setState(state =>
-            {
+            this.setState(state => {
                 return {
                     isHiddenBottom: type
                 }
@@ -275,11 +226,9 @@ class LoginSignup extends Component
 
     }
 
-    SetIsAccount = () =>
-    {
+    SetIsAccount = () => {
 
-        this.setState(state =>
-        {
+        this.setState(state => {
             return {
                 isAccount: !state.isAccount
             }
@@ -289,8 +238,7 @@ class LoginSignup extends Component
     }
 
 
-    render()
-    {
+    render() {
         const {
             User,
             isHiddenBottom,
@@ -335,8 +283,7 @@ class LoginSignup extends Component
                 </View>}
                 <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
                     <TouchableWithoutFeedback
-                        onPress={() =>
-                        {
+                        onPress={() => {
                             Keyboard.dismiss();
                             this.SetIsHiddenBottom(false);
                         }}
@@ -393,6 +340,7 @@ class LoginSignup extends Component
                                 SubmitCode={this.SubmitCode}
                                 resendRegisterCode={resendRegisterCode}
                                 RegisterCode={this.RegisterCode}
+                                goBacKFunc={this.backAction}
                             />
 
                             {!isHiddenBottom && (
