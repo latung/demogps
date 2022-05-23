@@ -326,7 +326,7 @@ class TabStore extends Component
                         }
                     })
                 }
-                if (res.code === 404) {
+                if (res.code !== 200) {
                     this.setState(state =>
                     {
                         return {

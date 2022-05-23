@@ -582,7 +582,7 @@ class TabHome extends Component {
                                                     fontSize: getSize.scale(14),
                                                     fontWeight: 'bold'
                                                 }}>
-                                                # {ShoeWeared.readableId}
+                                                # {ShoeWeared.name}
                                             </Text>
                                             <Image
                                                 style={{ width: 16, height: 16, resizeMode: 'contain' }}
@@ -1028,9 +1028,9 @@ class TabHome extends Component {
                                                                         style={{
                                                                             color: '#000',
                                                                             fontWeight: 'bold',
-                                                                            fontSize: getSize.scale(14)
+                                                                            fontSize: getSize.scale(13)
                                                                         }}>
-                                                                        {constShoe.SPEED_RANGE && `${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`}
+                                                                        {constShoe.SPEED_RANGE && `${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h`}
                                                                     </Text>
                                                                 </View>
                                                             </View>
@@ -1279,7 +1279,7 @@ class TabHome extends Component {
                                                                                 fontWeight: 'bold',
                                                                                 color: 'rgba(44, 44, 44, 1)'
                                                                             }}>
-                                                                            {constShoe.SPEED_RANGE && `${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`}
+                                                                            {constShoe.SPEED_RANGE && `${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h`}
 
                                                                         </Text>
                                                                     </View>
