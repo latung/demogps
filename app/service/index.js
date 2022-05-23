@@ -364,12 +364,15 @@ const putShoesId = async (Body) =>
         isSelling: Body.isSelling,
         price: Body.price
     };
+    console.log(body, Body._id);
+    // return
     const rawResponse = await fetch(`${API_CONST.API_PUT_SHOES_ID}/${Body._id}`, {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json',
             'Authorization': `Bearer ${token_access}`
-        }
+        },
+        body: JSON.stringify(body)
     });
     const content = await rawResponse.json();
     console.log("content putShoesId", content);
