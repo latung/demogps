@@ -1,3 +1,4 @@
 export const LOGIN_USERNAME = 'LOGIN_USERNAME';
 export const TOKEN_ACCESS = 'TOKEN_ACCESS';
 export const TOKEN_SET_PASSWORD = 'TOKEN_SET_PASSWORD';
+export const EMAIL_LOGIN = 'EMAIL_LOGIN'

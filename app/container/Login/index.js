@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import {
-View,
-Text,
-StyleSheet,
-TextInput,
-Image,
-SafeAreaView,
-TouchableOpacity,
-Keyboard,
-KeyboardAvoidingView,
-ImageBackground,
-TouchableWithoutFeedback,
-ActivityIndicator
+    View,
+    Text,
+    StyleSheet,
+    TextInput,
+    Image,
+    SafeAreaView,
+    TouchableOpacity,
+    Keyboard,
+    KeyboardAvoidingView,
+    ImageBackground,
+    TouchableWithoutFeedback,
+    ActivityIndicator
 } from 'react-native';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { bindActionCreators } from 'redux';
@@ -27,9 +27,9 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: 'dat19952010@gmail.com',
+            email: '',
             verificationcode: '',
-            password: '123456789',
+            password: '',
             isHiddenBottom: false,
             isAccount: false,
             isCountDown: false,
@@ -44,8 +44,13 @@ class Login extends Component {
         })
     }
 
-    componentDidMount() {
+    setEmailLogin = async () => {
+        const emailStore = await storage.getItem(CONST_STORAGE.EMAIL_LOGIN)
+        this.setState({ email: emailStore })
+    }
 
+    componentDidMount() {
+        this.setEmailLogin()
     }
     SetIsHiddenBottom = (type) => {
         if (!type) {
@@ -71,22 +76,22 @@ class Login extends Component {
 
         const { password, email } = this.state;
         const { action, navigation } = this.props;
-        if (email && password) {
+        if (email?.trim() && password) {
             this.setState(state => {
                 return {
                     isLogin: true
                 }
             }, () => {
-                console.log("ok");
                 ApiServices.postLogin({
-                    email: email,
+                    email: email?.trim()?.toLocaleLowerCase(),
                     password: password,
 
-                }).then(res => {
+                }).then(async (res) => {
                     if (res.code === 200) {
 
                         const { token } = res.data;
-                        storage.setItem(CONST_STORAGE.TOKEN_ACCESS, token);
+                        await storage.setItem(CONST_STORAGE.TOKEN_ACCESS, token);
+                        await storage.setItem(CONST_STORAGE.EMAIL_LOGIN, email)
                         this.setState(state => {
                             return {
                                 isLogin: false
@@ -171,13 +176,13 @@ class Login extends Component {
                                     alignItems: 'center',
                                     height: getSize.scale(200)
                                 }}>
-                                {/* <Image
+                                <Image
                                     source={{ uri: 'ic_loation_blue' }}
                                     style={{
                                         width: getSize.scale(132),
                                         height: getSize.scale(147)
                                     }}
-                                /> */}
+                                />
                             </View>
                             <View
                                 style={{

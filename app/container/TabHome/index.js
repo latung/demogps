@@ -99,7 +99,7 @@ class TabHome extends Component {
             }
         }, () => {
             ApiServices.putShoesId({ price: pr, isSelling: isSelling, _id: id }).then(res => {
-                console.log(res);
+                console.log('putShoe', res);
                 if (res.code === 200) {
                     action.putShoesId(res.data);
                     this.LoadData();
