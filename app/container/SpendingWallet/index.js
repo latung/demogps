@@ -9,10 +9,8 @@ import Poup from "./modal";
 
 
 import * as ApiServices from "./../../service/index";
-class Wallet extends Component
-{
-    constructor(props)
-    {
+class Wallet extends Component {
+    constructor(props) {
         super(props);
         this.popupBotomRef = new createRef();
         this.popupRef = new createRef();
@@ -28,55 +26,54 @@ class Wallet extends Component
 
         };
     }
-    _onRefresh = () =>
-    {
-        this.setState(state =>
-        {
+    _onRefresh = () => {
+        this.setState(state => {
             return { refreshing: true }
-        }, () =>
-        {
+        }, () => {
             this.BalanceUserIdBnb();
             this.BalanceUserId();
-            this.setState(state =>
-            {
+            this.setState(state => {
                 return { refreshing: false }
             })
 
         });
 
     }
-    GetRate = () =>
-    {
+    GetRate = () => {
         const { action } = this.props;
-        ApiServices.getRate().then(res =>
-        {
+        ApiServices.getRate().then(res => {
 
             if (res.price) {
                 action.getRate(res)
             }
 
-        }).catch(err =>
-        {
+        }).catch(err => {
 
         })
 
     }
 
-    componentDidMount()
-    {
+    componentDidMount() {
 
 
         this.BalanceUserIdBnb();
 
         this.GetRate();
 
+        this.props.navigation?.addListener('focus', () => {
+            this.setState({
+                isSpending: true,
+                isWallet: false
+            })
+        })
+
+
+
         // this.onShowPoup()
     }
 
-    componentWillUnmount()
-    {
-        this.setState(state =>
-        {
+    componentWillUnmount() {
+        this.setState(state => {
             return {
                 isSpending: true,
                 isWallet: false
@@ -84,8 +81,7 @@ class Wallet extends Component
         })
 
     }
-    onShowPoupBottom = () =>
-    {
+    onShowPoupBottom = () => {
         this.popupBotomRef.Show();
         // setTimeout(() =>
         // {
@@ -93,57 +89,47 @@ class Wallet extends Component
         // }, 300);
 
     }
-    onColsePopupBottom = () =>
-    {
+    onColsePopupBottom = () => {
         this.popupBotomRef.Close();
 
     }
-    onShowPoup = () =>
-    {
+    onShowPoup = () => {
         this.popupRef.Show();
 
     }
-    onColsePopup = () =>
-    {
+    onColsePopup = () => {
         this.popupRef.Close();
 
     }
-    BalanceUserIdBnb = () =>
-    {
+    BalanceUserIdBnb = () => {
 
         const { action, user } = this.props;
-        ApiServices.userIdBnb({ _id: user._id }).then(res =>
-        {   //
+        ApiServices.userIdBnb({ _id: user._id }).then(res => {   //
             console.log("res", res);
             if (res.code === 200) {
                 action.userIdBnb(res.data)
             }
 
-        }).catch(err =>
-        {
+        }).catch(err => {
 
         })
 
 
     }
 
-    BalanceUserId = () =>
-    {
+    BalanceUserId = () => {
         const { action, user } = this.props;
-        ApiServices.userId({ _id: user._id }).then(res =>
-        {
+        ApiServices.userId({ _id: user._id }).then(res => {
             if (res.code === 200) {
                 action.userId(res.data)
             }
 
-        }).catch(err =>
-        {
+        }).catch(err => {
 
         })
     }
 
-    checkIsPass = () =>
-    {
+    checkIsPass = () => {
         const { userIdBnb, navigation } = this.props;
         // if (!userIdBnb.data.isPass) {
         //     navigation.navigate(stackNavigator.WALLET_PASSCODE)
@@ -157,8 +143,7 @@ class Wallet extends Component
 
     }
 
-    renderItem = ({ item, index }) =>
-    {
+    renderItem = ({ item, index }) => {
         const { userId } = this.props;
 
         const balanceUserid = userId.data;
@@ -231,13 +216,13 @@ class Wallet extends Component
             </TouchableOpacity>
         </View>
     }
-    render()
-    {
+    render() {
         const { navigation, userId, user, getRate } = this.props;
         const { isSpending, isWallet, data } = this.state;
         const balanceUserid = userId.data;
         const totalBalanceUsd = (balanceUserid.mer * rate) + balanceUserid.usdt;
         const totalBalancemer = totalBalanceUsd / rate;
+        console.log('isSending', isSpending, isWallet)
         const dataBalance = [
             {
                 name: "MOV", amount: balanceUserid.mer ? (balanceUserid.mer).toLocaleString('en-US', {
@@ -335,8 +320,7 @@ class Wallet extends Component
                                             isSpending: true,
                                             isWallet: false,
                                             isBadges: false
-                                        }, () =>
-                                        {
+                                        }, () => {
 
                                             this.props.navigation.navigate(
                                                 stackNavigator.SPENDING_WALLET
@@ -383,8 +367,7 @@ class Wallet extends Component
                                             isSpending: false,
                                             isWallet: true,
                                             isBadges: false
-                                        }, () =>
-                                        {
+                                        }, () => {
                                             this.checkIsPass()
                                             // this.onShowPoupBottom()
                                             // this.props.navigation.navigate(
@@ -426,8 +409,7 @@ class Wallet extends Component
                             // backgroundColor: "#000000",
 
                         }}
-                            onPress={() =>
-                            {
+                            onPress={() => {
                                 this.props.navigation.navigate(
                                     stackNavigator.WALLET_SETTINGS
                                 )

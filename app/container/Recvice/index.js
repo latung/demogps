@@ -1,6 +1,5 @@
 import React, { Component, createRef } from 'react';
-import
-{
+import {
     View,
     Text,
     TextInput,
@@ -19,28 +18,26 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as _action from '../../redux/action/ActionHandle';
+import { LoadingIndicator } from '../../components'
 
-class Recvice extends Component
-{
-    constructor(props)
-    {
+class Recvice extends Component {
+    constructor(props) {
         super(props);
 
         this.state = {
-            Address: 'adwijdaodadkwadkwijad454dwad84'
+            Address: 'adwijdaodadkwadkwijad454dwad84',
+            loadingQR: true,
         };
     }
-    CopyPrivateKey = async () =>
-    {
+    CopyPrivateKey = async () => {
         const { userIdBnb } = this.props;
         const address = userIdBnb.data.address ? userIdBnb.data.address : "";
         const content = await Clipboard.setString(address);
         alert("Copy Success!")
     }
-    render()
-    {
+    render() {
         const { navigation, userIdBnb } = this.props;
-        const { isSpending, isWallet, data, data1, isHiddenBottom, istop, modalVisible } =
+        const { loadingQR } =
             this.state;
         const address = userIdBnb.data.address ? userIdBnb.data.address : "";
         return (
@@ -110,6 +107,7 @@ class Recvice extends Component
                 </View>
 
                 <View style={{ flex: 9 }}>
+                    {loadingQR && <LoadingIndicator />}
                     <View
                         style={{
                             justifyContent: 'center',
@@ -122,6 +120,7 @@ class Recvice extends Component
                                 height: getSize.scale(200),
                                 resizeMode: 'contain'
                             }}
+                            onLoadEnd={() => this.setState({ loadingQR: false })}
                             source={{ uri: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${address}` }}
                         />
                         {/* <Text

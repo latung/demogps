@@ -1,6 +1,5 @@
 import React, { Component, createRef } from 'react';
-import
-{
+import {
     View,
     Text,
     SafeAreaView,
@@ -30,16 +29,18 @@ import { connect } from 'react-redux';
 import * as _action from '../../redux/action/ActionHandle';
 
 import * as ApiServices from "./../../service/index";
-class WalletHome extends Component
-{
-    constructor(props)
-    {
+
+const TIME_REFRESH_WALLET = 3;
+
+class WalletHome extends Component {
+    constructor(props) {
         super(props);
         this.popupBotomRef = new createRef();
         this.popupRef = new createRef();
         this.popupDetailRef = new createRef();
         this.popupBotomRRef = new createRef();
         this.popupExternalRef = new createRef();
+        this.timeIntervalRef = new createRef();
         this.state = {
             isSpending: false,
             isWallet: true,
@@ -108,25 +109,20 @@ class WalletHome extends Component
         };
     }
 
-    onShowPoup = () =>
-    {
+    onShowPoup = () => {
         this.popupRef.Show();
     };
 
-    onColsePopup = () =>
-    {
+    onColsePopup = () => {
         this.popupRef.Close();
     };
-    toggleAnimation = (type) =>
-    {
+    toggleAnimation = (type) => {
         if (type) {
-            this.setState(state =>
-            {
+            this.setState(state => {
                 return {
                     viewState: false
                 }
-            }, () =>
-            {
+            }, () => {
                 Animated.timing(this.state.animationValue, {
                     toValue: 150,
                     duration: 500,
@@ -153,15 +149,12 @@ class WalletHome extends Component
                 toValue: 0,
                 duration: 300,
                 useNativeDriver: false
-            }).start(() =>
-            {
-                this.setState(state =>
-                {
+            }).start(() => {
+                this.setState(state => {
                     return {
                         viewState: true
                     }
-                }, () =>
-                {
+                }, () => {
                     Animated.timing(this.state.animationOpacity1, {
                         toValue: 1,
                         duration: 300,
@@ -174,115 +167,98 @@ class WalletHome extends Component
 
 
     }
-    _onRefresh = () =>
-    {
-        this.setState(state =>
-        {
+    _onRefresh = () => {
+        this.setState(state => {
             return { refreshing: true }
-        }, () =>
-        {
+        }, () => {
             this.BalanceUserIdBnb();
             this.BalanceUserId();
-            this.setState(state =>
-            {
+            this.setState(state => {
                 return { refreshing: false }
             })
 
         });
 
     }
-    BalanceUserIdBnb = () =>
-    {
+    BalanceUserIdBnb = () => {
 
         const { action, user } = this.props;
-        ApiServices.userIdBnb({ _id: user._id }).then(res =>
-        {   //
+        ApiServices.userIdBnb({ _id: user._id }).then(res => {   //
             console.log("res", res);
             if (res.code === 200) {
                 action.userIdBnb(res.data)
             }
 
-        }).catch(err =>
-        {
+        }).catch(err => {
 
         })
 
 
     }
-    BalanceUserId = () =>
-    {
+    BalanceUserId = () => {
         const { action, user } = this.props;
-        ApiServices.userId({ _id: user._id }).then(res =>
-        {
+        ApiServices.userId({ _id: user._id }).then(res => {
             if (res.code === 200) {
                 action.userId(res.data)
             }
 
-        }).catch(err =>
-        {
+        }).catch(err => {
 
         })
     }
-    componentDidMount()
-    {
-
-
+    componentDidMount() {
+        this.timeIntervalRef = setInterval(() => {
+            this.BalanceUserIdBnb()
+            this.BalanceUserId()
+        }, TIME_REFRESH_WALLET * 1000);
+        this.props.navigation.addListener('blur', () => {
+            clearInterval(this.timeIntervalRef)
+        })
     }
 
-    onShowPoupBottomR = () =>
-    {
+    onShowPoupBottomR = () => {
         this.popupBotomRRef.Show();
 
     }
-    onColsePopupBottomR = () =>
-    {
+    onColsePopupBottomR = () => {
         this.popupBotomRRef.Close();
 
     }
-    onShowPoupBottom = () =>
-    {
+    onShowPoupBottom = () => {
         this.popupBotomRef.Show();
 
     }
-    onColsePopupBottom = () =>
-    {
+    onColsePopupBottom = () => {
         this.popupBotomRef.Close();
 
     }
-    onShowPoup = () =>
-    {
+    onShowPoup = () => {
         this.popupRef.Show();
 
     }
 
-    onColsePopup = () =>
-    {
+    onColsePopup = () => {
         this.popupRef.Close();
 
     }
-    onShowPoupDetail = () =>
-    {
+    onShowPoupDetail = () => {
         this.popupDetailRef.Show();
 
     }
 
-    onColsePopupDetail = () =>
-    {
+    onColsePopupDetail = () => {
         this.popupDetailRef.Close();
 
     }
-    onShowPoupExternal = () =>
-    {
+    onShowPoupExternal = () => {
         this.popupExternalRef.Show();
 
     }
-    onColsePopupExternal = () =>
-    {
+    onColsePopupExternal = () => {
         this.popupExternalRef.Close();
 
     }
-    render()
-    {
+    render() {
 
         const { navigation, userId, user, getRate, getRateBnb, userIdBnb } = this.props;
 
@@ -381,8 +357,7 @@ class WalletHome extends Component
                         </View>
                         <View style={{ flex: 2, justifyContent: 'center', alignItems: 'flex-end' }}>
                             <TouchableOpacity
-                                onPress={() =>
-                                {
+                                onPress={() => {
                                     this.props.navigation.navigate(stackNavigator.WALLET_SETTINGS);
                                 }}>
                                 <Image
@@ -586,8 +561,7 @@ class WalletHome extends Component
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                            {dataBalance && dataBalance.map((item, index) =>
-                            {
+                            {dataBalance && dataBalance.map((item, index) => {
                                 return <View
                                     style={{
                                         justifyContent: 'space-between',
@@ -1105,8 +1079,7 @@ class WalletHome extends Component
                 </Modal>
                 {/* Popup */}
                 <Poup
-                    ref={(target) =>
-                    {
+                    ref={(target) => {
                         this.popupRef = target;
                     }}
                     onTouchOutside={this.onColsePopup}
