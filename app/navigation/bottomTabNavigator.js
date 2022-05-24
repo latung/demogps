@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: getSize.scale(16),
         right: getSize.scale(16),
-        bottom: getSize.scale(16)
+        bottom: getSize.scale(0)
     }
 })
 export default BottomTabNavigator
