@@ -33,8 +33,6 @@ class Activicaction extends Component {
             resendRegisterCode,
             goBacKFunc,
         } = this.props;
-
-
         return (
             <View
                 style={{
@@ -173,7 +171,7 @@ class Activicaction extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View >
+            </View>
         );
     }
 }

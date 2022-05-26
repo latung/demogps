@@ -275,12 +275,12 @@ class WalletHome extends Component {
         const totalBalancemer = totalBalanceUsd / rate;
         const dataBalance = [
             {
-                name: "MOV", amount: balanceUseridBNB.mer ? Number(balanceUseridBNB.mer).toFixed(2) : "0", icon: "ic_location"
+                name: "MOVS", amount: balanceUseridBNB.mer ? Number(balanceUseridBNB.mer).toFixed(2) : "0", icon: "ic_location"
             },
-            {
-                name: "BNB", amount: balanceUseridBNB.bnb ? Number(balanceUseridBNB.bnb).toFixed(6) : "0", icon: "ic_coin_b"
-            }
-            ,
+            // {
+            //     name: "BNB", amount: balanceUseridBNB.bnb ? Number(balanceUseridBNB.bnb).toFixed(6) : "0", icon: "ic_coin_b"
+            // }
+            // ,
             {
                 name: "BUSD", amount: balanceUseridBNB.busd ? Number(balanceUseridBNB.busd).toFixed(2) : "0", icon: "ic_coin"
             }]

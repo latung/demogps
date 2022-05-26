@@ -582,7 +582,7 @@ class TabHome extends Component {
                                                     fontSize: getSize.scale(14),
                                                     fontWeight: 'bold'
                                                 }}>
-                                                # {ShoeWeared.name}
+                                                {ShoeWeared.name}
                                             </Text>
                                             <Image
                                                 style={{ width: 16, height: 16, resizeMode: 'contain' }}
@@ -849,7 +849,7 @@ class TabHome extends Component {
                                                     </View>
                                                 </View>
                                             </View>
-                                        </Modal >
+                                        </Modal>
                                         <Modal
                                             animationType="fade"
                                             transparent={true}
@@ -861,7 +861,7 @@ class TabHome extends Component {
                                                     width: '100%',
                                                     top: 0,
                                                     position: 'absolute',
-                                                    backgroundColor: '#0000007f'
+                                                    backgroundColor: '#000000bf'
                                                 }}></View>
                                             <TouchableOpacity
                                                 // onPress={() => setmodalTransfer(!modalTransfer)}
@@ -1011,7 +1011,7 @@ class TabHome extends Component {
                                                                         color: '#767676',
                                                                         fontStyle: 'italic'
                                                                     }}>
-                                                                    Speed
+                                                                    Rarity
                                                                 </Text>
                                                                 <View
                                                                     style={{
@@ -1030,7 +1030,7 @@ class TabHome extends Component {
                                                                             fontWeight: 'bold',
                                                                             fontSize: getSize.scale(13)
                                                                         }}>
-                                                                        {constShoe.SPEED_RANGE && `${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h`}
+                                                                        {item.quality}
                                                                     </Text>
                                                                 </View>
                                                             </View>
@@ -1305,7 +1305,7 @@ class TabHome extends Component {
                                                                                 fontStyle: 'italic',
                                                                                 color: 'rgba(44, 44, 44, 1)'
                                                                             }}>
-                                                                            Energy
+                                                                            Durability
                                                                         </Text>
                                                                     </View>
                                                                     <View
@@ -1345,7 +1345,7 @@ class TabHome extends Component {
                                                                                 fontStyle: 'italic',
                                                                                 color: 'rgba(44, 44, 44, 1)'
                                                                             }}>
-                                                                            Lucky
+                                                                            Luck
                                                                         </Text>
                                                                     </View>
                                                                     <View
@@ -1848,7 +1848,7 @@ class TabHome extends Component {
                                                     fontSize: getSize.scale(10),
                                                     padding: getSize.scale(4)
                                                 }}>
-                                                Support
+                                                About
                                             </Text>
                                         </View>
                                     </TouchableOpacity>

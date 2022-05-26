@@ -262,7 +262,7 @@ function ItemShare()
                                     fontStyle: 'italic',
                                     top: getSize.scale(-8)
                                 }}>
-                                {`MOVERN `}
+                                {`MOVEARN `}
                             </Text>
                             <Text
                                 style={{
@@ -270,7 +270,7 @@ function ItemShare()
                                     color: 'rgba(118, 118, 118, 1)',
                                     fontStyle: 'italic'
                                 }}>
-                                {`Make memories became treasury`}
+                                {`Make your moves to take your treasure`}
                             </Text>
                         </View>
                         <View

@@ -481,7 +481,7 @@ export default function ItemShoeBoxes({ item, index })
                                                                     fontWeight: '500',
                                                                     color: '#F44369'
                                                                 }}>
-                                                                New York - 50 km/h{' '}
+                                                                5 - 20 km/h{' '}
                                                             </Text>
                                                             to earn
                                                         </Text>
@@ -1268,7 +1268,7 @@ export default function ItemShoeBoxes({ item, index })
                                                     fontStyle: 'italic',
                                                     color: 'rgba(44, 44, 44, 1)'
                                                 }}>
-                                                Lucky
+                                                Luck
                                             </Text>
                                         </View>
                                         <View

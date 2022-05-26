@@ -4,10 +4,8 @@ import { Modal, Dimensions, Animated, TouchableNativeFeedback, TouchableOpacity,
 
 
 const deviceHeigth = Dimensions.get("window").height;
-class PoppupBottom extends Component
-{
-    constructor(props)
-    {
+class PoppupBottom extends Component {
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -16,20 +14,17 @@ class PoppupBottom extends Component
             viewState: true
         };
     }
-    componentDidMount()
-    {
+    componentDidMount() {
         this.Show();
     }
-    toggleAnimation = () =>
-    {
+    toggleAnimation = () => {
 
         if (this.state.viewState == true) {
             Animated.timing(this.state.animationValue, {
                 toValue: 300,
                 duration: 200,
                 useNativeDriver: false
-            }).start(() =>
-            {
+            }).start(() => {
                 this.setState({ viewState: false })
             });
         }
@@ -42,25 +37,20 @@ class PoppupBottom extends Component
             );
         }
     }
-    Show = () =>
-    {
-        this.setState(state => { return { show: true } }, () =>
-        {
+    Show = () => {
+        this.setState(state => { return { show: true } }, () => {
             this.toggleAnimation();
         })
 
     }
-    Close = () =>
-    {
+    Close = () => {
         this.toggleAnimation();
-        setTimeout(() =>
-        {
+        setTimeout(() => {
             this.setState(state => { return { show: false } })
         }, 300);
 
     }
-    renderOutsideTouchable = (onTouch) =>
-    {
+    renderOutsideTouchable = (onTouch) => {
         const view = <View style={{
 
             flex: 1, width: "100%"
@@ -73,8 +63,7 @@ class PoppupBottom extends Component
             {view}
         </TouchableNativeFeedback>
     }
-    renderTitle = () =>
-    {
+    renderTitle = () => {
         // const { title } = this.props;
         // return <View style={{
         //     alignItems: "center"
@@ -89,8 +78,7 @@ class PoppupBottom extends Component
         //     }}>{title}</Text>
         // </View>
     }
-    renderItem = ({ item }) =>
-    {
+    renderItem = ({ item }) => {
 
         // return <View style={{
         //     height: 70, flex: 1, alignItems: "center",
@@ -142,8 +130,7 @@ class PoppupBottom extends Component
         //     </TouchableOpacity>
         // </View>
     }
-    renderSeparator = () =>
-    {
+    renderSeparator = () => {
         return <View
             style={{
                 opacity: 0.1,
@@ -154,8 +141,7 @@ class PoppupBottom extends Component
 
         </View>
     }
-    renderContent = () =>
-    {
+    renderContent = () => {
         const { data } = this.props;
         return <View style={{
             padding: 20,
@@ -349,11 +335,10 @@ class PoppupBottom extends Component
                     }}>SHARE YOUR RUN</Text>
                 </TouchableOpacity>
             </View>
-        </View >
+        </View>
     }
 
-    render()
-    {
+    render() {
 
         const { show } = this.state;
         const { onTouchOutside, title } = this.props;

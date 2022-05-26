@@ -267,7 +267,7 @@ export default function ItemSneakers({ item, index })
                                         style={{
                                             color: '#000',
                                             fontSize: 11,
-                                        }}>Lucky:
+                                        }}>Luck:
                                     </Text>
                                     <Text
                                         style={{
@@ -1035,7 +1035,7 @@ export default function ItemSneakers({ item, index })
                                                     color: "#2C2C2C",
                                                     fontStyle: "italic"
                                                 }}>
-                                                    Lucky
+                                                    Luck
                                                 </Text>
                                                 <Text style={{
                                                     color: "#2C2C2C",

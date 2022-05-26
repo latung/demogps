@@ -256,6 +256,8 @@ class LoginSignup extends Component {
             submitCode,
             resendRegisterCode,
         } = this.props;
+        const getParams = this.props?.navigation?.getState()
+        const paramsCurrent = getParams?.routes[getParams?.routes?.length - 1]
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <ImageBackground
@@ -323,7 +325,7 @@ class LoginSignup extends Component {
                                         fontWeight: 'bold',
                                         fontSize: getSize.scale(30)
                                     }}>
-                                    SIGN UP
+                                    {paramsCurrent?.params?.isForgotPass ? 'FORGOT PASSWORD' : 'SIGN UP'}
                                 </Text>
                             </View>
 
@@ -357,7 +359,7 @@ class LoginSignup extends Component {
                                             width: '70%',
                                             textAlign: 'center'
                                         }}>
-                                        Registration means that you agree to MOVEARN
+                                        Make sure you agree to MOVEARN's
                                         <Text
                                             style={{
                                                 color: 'red'

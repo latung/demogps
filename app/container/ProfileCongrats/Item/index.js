@@ -236,7 +236,7 @@ function ItemCongrats()
                                     fontWeight: 'bold',
                                     fontStyle: 'italic'
                                 }}>
-                                {`MOV`}
+                                {`BUSD`}
                             </Text>
                         </View>
                     </View>

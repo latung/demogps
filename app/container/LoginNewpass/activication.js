@@ -73,7 +73,7 @@ class Activicaction extends Component
                                         color: '#767676'
                                     }}
                                     // onFocus={() => { this.props.SetIsHiddenBottom(true) }}
-                                    placeholder="Enter Activate Code"></TextInput>
+                                    placeholder="Enter password"></TextInput>
                             </ImageBackground>
                         </View>
 

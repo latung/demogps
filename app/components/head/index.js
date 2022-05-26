@@ -7,10 +7,8 @@ import { connect } from 'react-redux';
 import * as _action from '../../redux/action/ActionHandle';
 import { location, getSize, Colors } from '../../common/';
 import * as ApiServices from "./../../service/index";
-class index extends Component
-{
-    constructor(props)
-    {
+class index extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             modalVisibles: true, // true,
@@ -21,8 +19,7 @@ class index extends Component
             refreshing: false
         };
     }
-    componentDidMount = () =>
-    {
+    componentDidMount = () => {
         const { getUser, userId } = this.props
         if (userId) {
 
@@ -30,35 +27,27 @@ class index extends Component
         this.GetUser();
 
     };
-    GetUser = () =>
-    {
+    GetUser = () => {
         const { action } = this.props;
-        ApiServices.getUser().then(res =>
-        {
+        ApiServices.getUser().then(res => {
 
             if (res.code === 200) {
                 action.getUser(res.data);
                 action.setUser(res.data);
-                ApiServices.userId({ _id: res.data && res.data._id }).then(res =>
-                {
+                ApiServices.userId({ _id: res.data && res.data._id }).then(res => {
                     if (res.code === 200) {
                         action.userId(res.data)
                     }
 
-                }).catch(err =>
-                {
+                }).catch(err => {
 
                 })
             }
-        }).catch(err =>
-        {
+        }).catch(err => {
 
         })
     }
-
-
-    render()
-    {
+    render() {
         const { navigation, userId } = this.props;
         const balanceUserId = userId.data ? userId.data : { mer: 0, usdt: 0 };
         return (
@@ -162,7 +151,7 @@ class index extends Component
                                         height: getSize.scale(48),
                                         resizeMode: 'contain'
                                     }}
-                                    source={{ uri: 'ic_user' }}
+                                    source={{ uri: 'ic_congrats_avata' }}
                                 />
                                 <Text
                                     style={{

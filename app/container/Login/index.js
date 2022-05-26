@@ -103,7 +103,7 @@ class Login extends Component {
                         })
 
                     }
-                    if (res.code === 400) {
+                    if (res.code === 400 || res.code === 404) {
 
 
                         this.setState(state => {
@@ -111,7 +111,7 @@ class Login extends Component {
                                 isLogin: false
                             }
                         }, () => {
-                            alert(res.message);
+                            alert('Incorrect email adress/password');
                         })
 
                     }
@@ -224,7 +224,7 @@ class Login extends Component {
                                             width: '70%',
                                             textAlign: 'center'
                                         }}>
-                                        Registration means that you agree to Movearn
+                                        Make sure you agree to MOVEARN's
                                         <Text
                                             style={{
                                                 color: 'red'

@@ -212,7 +212,7 @@ export default function ItemSneakers({ item, index })
                                                 color: '#000',
                                                 fontSize: getSize.scale(10)
                                             }}>
-                                            Lucky:
+                                            Luck:
                                         </Text>
                                         <Text
                                             style={{
@@ -1188,7 +1188,7 @@ export default function ItemSneakers({ item, index })
                                                     fontStyle: 'italic',
                                                     color: 'rgba(44, 44, 44, 1)'
                                                 }}>
-                                                Lucky
+                                                Luck
                                             </Text>
                                         </View>
                                         <View

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import
-{
+import {
     View,
     Text,
     StyleSheet,
@@ -14,16 +13,13 @@ import { tabNavigator, stackNavigator } from '../../navigation/nameNavigator';
 import * as _action from '../../redux/action/ActionHandle';
 import { location, getSize, Colors } from '../../common/';
 
-class Activicaction extends Component
-{
-    constructor(props)
-    {
+class Activicaction extends Component {
+    constructor(props) {
         super(props);
         this.state = {};
     }
 
-    render()
-    {
+    render() {
         const { email, password } = this.props;
 
         return (
@@ -73,7 +69,7 @@ class Activicaction extends Component
                                         fontStyle: 'italic',
                                         color: '#767676'
                                     }}
-                                    placeholder="User name"></TextInput>
+                                    placeholder="Email address"></TextInput>
                             </ImageBackground>
                         </View>
                         <View
@@ -119,8 +115,7 @@ class Activicaction extends Component
                                     justifyContent: 'center',
                                     alignItems: 'center'
                                 }}
-                                onPress={() =>
-                                {
+                                onPress={() => {
                                     this.props.Login()
                                 }}>
                                 <Image
@@ -145,9 +140,10 @@ class Activicaction extends Component
                                         fontSize: getSize.scale(13),
                                         fontStyle: 'italic'
                                     }}
-                                    onPress={() =>
-                                    {
-
+                                    onPress={() => {
+                                        this.props.navigation.navigate(
+                                            stackNavigator.SIGNUP, {isForgotPass: true}
+                                        );
                                     }}>
                                     Forgot password?
                                 </Text>
@@ -158,8 +154,7 @@ class Activicaction extends Component
                                     justifyContent: 'center',
                                     alignItems: 'center'
                                 }}
-                                onPress={() =>
-                                {
+                                onPress={() => {
                                     return this.props.navigation.navigate(
                                         stackNavigator.SIGNUP
                                     );

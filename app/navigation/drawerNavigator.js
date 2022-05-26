@@ -192,7 +192,7 @@ class MyDrawer extends Component {
                                                 ? Colors.BLACK
                                                 : Colors.GREEN
                                         }}>
-                                        Lucky
+                                        Luck
                                     </Text>
                                 </TouchableOpacity>
                             </View>

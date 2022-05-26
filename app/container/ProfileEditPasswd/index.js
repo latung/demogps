@@ -385,7 +385,7 @@ class ProfileChangePass extends Component
                                                     this.setState({ ...this.state, inputEmail: text })
                                                 }
                                                 value={user.email}
-                                                placeholder={'Enter new email'}
+                                                placeholder={'Enter your email'}
                                             />
                                         </ImageBackground>
                                     </View>

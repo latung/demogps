@@ -294,7 +294,7 @@ export default function ItemFilter({ ...props })
                                         style={{
                                             marginBottom: 10
                                         }}>
-                                        Legendary
+                                        Grade
                                     </Text>
 
                                     <View

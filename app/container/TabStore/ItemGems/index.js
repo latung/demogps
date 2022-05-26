@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import
-{
-    View,
-    Image,
-    TouchableOpacity,
-    ImageBackground,
-    StyleSheet,
-    Text,
-    Modal,
-    Platform
+import {
+View,
+Image,
+TouchableOpacity,
+ImageBackground,
+StyleSheet,
+Text,
+Modal,
+Platform
 } from 'react-native';
 import { getSize, Colors } from '../../../common';
 import { useNavigation } from '@react-navigation/native';
@@ -17,8 +16,7 @@ import { stackNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
 import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
-export default function ItemGems({ item, index })
-{
+export default function ItemGems({ item, index }) {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const [modalBuy, setmodalBuy] = useState(false);
@@ -228,7 +226,7 @@ export default function ItemGems({ item, index })
                                                 color: '#000',
                                                 fontSize: getSize.scale(10)
                                             }}>
-                                            Lucky:
+                                            Luck:
                                         </Text>
                                         <Text
                                             style={{
@@ -546,7 +544,7 @@ export default function ItemGems({ item, index })
                                                                     fontWeight: '500',
                                                                     color: '#F44369'
                                                                 }}>
-                                                                New York - 50 km/h{' '}
+                                                                5 - 20 km/h{' '}
                                                             </Text>
                                                             to earn
                                                         </Text>
@@ -828,8 +826,7 @@ export default function ItemGems({ item, index })
                                                                 alignItems: 'flex-end'
                                                             }}>
                                                             <TouchableOpacity
-                                                                onPress={() =>
-                                                                {
+                                                                onPress={() => {
                                                                     setmodalTransfer(
                                                                         !modalTransfer
                                                                     );
@@ -1333,7 +1330,7 @@ export default function ItemGems({ item, index })
                                                     fontStyle: 'italic',
                                                     color: 'rgba(44, 44, 44, 1)'
                                                 }}>
-                                                Lucky
+                                                Luck
                                             </Text>
                                         </View>
                                         <View

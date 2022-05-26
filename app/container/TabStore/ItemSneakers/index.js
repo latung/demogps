@@ -237,7 +237,7 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                                 color: '#000',
                                                 fontSize: getSize.scale(10)
                                             }}>
-                                            Lucky:
+                                            Luck:
                                         </Text>
                                         <Text
                                             style={{
@@ -635,7 +635,7 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                                                     color: Colors.GREY_DARK,
                                                                     fontStyle: 'italic'
                                                                 }}>
-                                                                LUCKY
+                                                                Luck
                                                             </Text>
                                                             <View
                                                                 style={{
@@ -1047,7 +1047,7 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                             color: '#767676',
                                             fontStyle: 'italic'
                                         }}>
-                                        LUCKY
+                                        Luck
                                     </Text>
                                     <View
                                         style={{
@@ -1237,7 +1237,7 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                                     fontStyle: 'italic',
                                                     color: 'rgba(44, 44, 44, 1)'
                                                 }}>
-                                                Lucky
+                                                Luck
                                             </Text>
                                         </View>
                                         <View

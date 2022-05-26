@@ -286,7 +286,7 @@ class TabBar extends Component
                                 </View>
                             </TouchableOpacity>
 
-                            <TouchableOpacity
+                            {/* <TouchableOpacity
                                 activeOpacity={1}
                                 style={{
                                     flex: 0.9,
@@ -313,8 +313,8 @@ class TabBar extends Component
                                         Items
                                     </Text>
                                 </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
+                            </TouchableOpacity> */}
+                            {/* <TouchableOpacity
                                 activeOpacity={1}
                                 style={{
                                     flex: 0.9,
@@ -342,7 +342,7 @@ class TabBar extends Component
                                         Promo
                                     </Text>
                                 </View>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     </View>
                 </View>
@@ -418,7 +418,7 @@ class TabBar extends Component
                                         </Text>
                                     </View>
                                 </TouchableOpacity>
-                                <TouchableOpacity
+                                {/* <TouchableOpacity
                                     activeOpacity={1}
                                     onPress={() => this._handleTabbarMini('isUpgradeMini')}
                                     style={{
@@ -447,7 +447,7 @@ class TabBar extends Component
                                             Upgrade
                                         </Text>
                                     </View>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </View>
                         </View>
                     ) : null}

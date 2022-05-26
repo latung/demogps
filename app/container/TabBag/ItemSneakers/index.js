@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
-import
-{
-    View,
-    Image,
-    TouchableOpacity,
-    ImageBackground,
-    StyleSheet,
-    Text,
-    Modal,
-    Platform,
-    TextInput,
-    ActivityIndicator
+import {
+View,
+Image,
+TouchableOpacity,
+ImageBackground,
+StyleSheet,
+Text,
+Modal,
+Platform,
+TextInput,
+ActivityIndicator
 } from 'react-native';
 import { getSize, Colors } from '../../../common';
 import { useNavigation } from '@react-navigation/native';
@@ -28,8 +27,7 @@ export default forwardRef(function ItemSneakers({ item,
     isshoesIdWear,
     constShoe,
 
-}, ref)
-{
+}, ref) {
     const navigation = useNavigation();
     const selector = useSelector((state) => ({
 
@@ -46,18 +44,14 @@ export default forwardRef(function ItemSneakers({ item,
         ClosemodalTransfer: () => { ClosemodalTransfer() },
         ClosemodalmodalBuy: () => { ClosemodalmodalBuy() }
     }))
-    const ClosemodalmodalBuy = () =>
-    {
+    const ClosemodalmodalBuy = () => {
         setmodalBuy(false)
     }
-    const ClosemodalTransfer = () =>
-    {
+    const ClosemodalTransfer = () => {
         setmodalTransfer(false)
     }
-    useEffect(() =>
-    {
-        return () =>
-        {
+    useEffect(() => {
+        return () => {
             if (selector.shoes.isSuccess) {
                 setmodalTransfer(false);
                 setmodalBuy(false)
@@ -129,7 +123,7 @@ export default forwardRef(function ItemSneakers({ item,
                                             fontWeight: 'bold',
                                             color: '#2C2C2C'
                                         }}>
-                                        # {item.readableId && item.readableId}
+                                        {item.class ? item.class: 'none'}
                                     </Text>
                                     <View
                                         style={{
@@ -215,7 +209,7 @@ export default forwardRef(function ItemSneakers({ item,
 
                                     { title: 'Energy', value: item.energy && item.energy },
                                     { title: 'Speed', value: `${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h` },
-                                    { title: 'Lucky', value: `${constShoe.LUCK[item.quality]}` },
+                                    { title: 'Luck', value: `${constShoe.LUCK[item.quality]}` },
                                     { title: 'Durability', value: 40 }
                                 ].map((i, index) => (
                                     <View
@@ -411,8 +405,7 @@ export default forwardRef(function ItemSneakers({ item,
                                     alignItems: 'flex-end'
                                 }}>
                                     <TouchableOpacity
-                                        onPress={() =>
-                                        {
+                                        onPress={() => {
                                             item._id && putShoe(!item.isSelling, item._id)
                                         }}
                                         style={{
@@ -457,8 +450,7 @@ export default forwardRef(function ItemSneakers({ item,
                                         // flex: 1
                                     }}>
                                         <TouchableOpacity
-                                            onPress={() =>
-                                            {
+                                            onPress={() => {
                                                 // setmodalTransfer(!modalTransfer);
                                                 return setmodalBuy(!modalBuy);
                                             }}
@@ -489,7 +481,7 @@ export default forwardRef(function ItemSneakers({ item,
                         </View>
                     </View>
                 </View>
-            </Modal >
+            </Modal>
             <Modal
                 animationType="fade"
                 transparent={true}
@@ -501,7 +493,7 @@ export default forwardRef(function ItemSneakers({ item,
                         width: '100%',
                         top: 0,
                         position: 'absolute',
-                        backgroundColor: '#0000007f'
+                        backgroundColor: '#000000bf'
                     }}></View>
                 <TouchableOpacity
                     // onPress={() => setmodalTransfer(!modalTransfer)}
@@ -651,7 +643,7 @@ export default forwardRef(function ItemSneakers({ item,
                                             color: '#767676',
                                             fontStyle: 'italic'
                                         }}>
-                                        Speed
+                                        Rarity
                                     </Text>
                                     <View
                                         style={{
@@ -670,7 +662,7 @@ export default forwardRef(function ItemSneakers({ item,
                                                 fontWeight: 'bold',
                                                 fontSize: getSize.scale(13)
                                             }}>
-                                            {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`} km/h
+                                            {item.quality}
                                         </Text>
                                     </View>
                                 </View>
@@ -945,7 +937,7 @@ export default forwardRef(function ItemSneakers({ item,
                                                     fontStyle: 'italic',
                                                     color: 'rgba(44, 44, 44, 1)'
                                                 }}>
-                                                Energy
+                                                Durability
                                             </Text>
                                         </View>
                                         <View
@@ -985,7 +977,7 @@ export default forwardRef(function ItemSneakers({ item,
                                                     fontStyle: 'italic',
                                                     color: 'rgba(44, 44, 44, 1)'
                                                 }}>
-                                                Lucky
+                                                Luck
                                             </Text>
                                         </View>
                                         <View
@@ -1061,8 +1053,7 @@ export default forwardRef(function ItemSneakers({ item,
                             }}>
                                 <TouchableOpacity
                                     disabled={item.isSelling ? true : false}
-                                    onPress={() =>
-                                    {
+                                    onPress={() => {
                                         setmodalBuy(!modalBuy)
                                     }}
                                     style={{
@@ -1100,8 +1091,7 @@ export default forwardRef(function ItemSneakers({ item,
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     disabled={item.isSelling ? false : true}
-                                    onPress={() =>
-                                    {
+                                    onPress={() => {
                                         item._id && putShoe(!item.isSelling, item._id)
 
                                     }}
