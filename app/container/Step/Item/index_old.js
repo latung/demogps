@@ -1,23 +1,31 @@
-import React, { useState, useRef, useEffect, forwardRef } from 'react';
-import {
+import React, { useState, useCallback, useRef, useEffect, forwardRef } from 'react';
+import
+{
     View,
     Image,
     TouchableOpacity,
     Text,
     Platform,
+    ImageBackground,
     Modal
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPreciseDistance } from 'geolib';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import { getSize } from '../../../common';
+import { getSize, location } from '../../../common';
 import Geolocation from 'react-native-geolocation-service';
 import { stackNavigator, tabNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
-import { createSession, getSession, putSession } from '../../../service';
+import { createSession, getSession, putSession, testStop } from '../../../service';
+let idSs = "";
 let clearAS = '';
-function Item() {
+let ta = 0, tb = 0, tc = 0, td = 0;
+// console.log('====================================');
+// console.log('0000000000000000000000000000000000');
+// console.log('====================================');
+function Item()
+{
     const navigation = useNavigation();
     const selector = useSelector((state) => ({
         screenState: state.initReducer.screenState,
@@ -36,6 +44,7 @@ function Item() {
     const watchId = useRef(null);
     const countRef = useRef(selector.initReducer.isStepTimer);
     const [isPress, setisPress] = useState(false);
+    const [fill, setfill] = useState(false);
     const [stepss, setStepss] = useState(0);
     const [timeShow, setTimeShow] = useState(0);
     const [kmh, setKmh] = useState(0);
@@ -43,87 +52,113 @@ function Item() {
     const [reciveUsdt, setReciveUsdt] = useState(0);
     const [modalVisible, setmodalVisible] = useState(false);
     const [energy, setEnergy] = useState(selector.shoeCurrentWear.energy);
-    const [timeRun, setTimeRun] = useState(0)
-    const [kmhState, setKmhState] = useState(0)
-    const refIDss = useRef('')
-    const refLocations = useRef({ latitude: 0, longitude: 0, time: 0 })
+    // console.log('====================================');
+    // console.log(1111111111111111111111111111111111);
+    // console.log('====================================');
+    const [state, setstate] = useState({ latitude: 0, longitude: 0 });
+    const image =
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRogMFHOw0CKtwUvuJmhgcSi18GmfqlCxUI6g&usqp=CAU';
 
-    useEffect(() => {
-        // run();
-        const timerInterval = setInterval(() => {
-            setTimeRun((preSta) => preSta + 1)
-            handleLocationsFunc()
-        }, 1000);
-        const timerIntervalGetDataSession = setInterval(() => {
-            getDataSession()
-        })
-        return () => {
-            clearInterval(timerInterval)
-            clearInterval(timerIntervalGetDataSession)
-        }
+
+    // useEffect(() =>
+    // {
+    //     if (selector.initReducer.isStepTimer) {
+    //         return _getCurrentLocation();
+    //     }
+    //     return () =>
+    //     {
+    //         Geolocation.clearWatch(watchId.current);
+    //     };
+    // }, [selector.initReducer.isStepTimer]);
+
+    // Start Step Timer
+    useEffect(() =>
+    {
+        // if (selector.screenState.isStepStart) {
+        //     // setpause(false);
+        run();
+        //     // testStop('newDistance', 'selector.initReducer.isStepTimer', Date.now(), 'hi')
+        //     if (countRef.current) {
+        //         clearTimeout(countRef.current);
+        //         if (clearAS) {
+        //             console.log(`clearAS`, clearAS);
+        //             clearInterval(clearAS);
+        //         }
+        //     }
+        //     countRef.current = setInterval(() =>
+        //     {
+        //         // settime((timer) => timer + 1);
+        //         dispatch(_action.isStepTimer(++selector.initReducer.isStepTimer));
+        //     }, 1000);
+        //     return dispatch(
+        //         _action.changeScreenState({
+        //             ...selector.screenState,
+        //             // isStepStart: false,
+        //             isStepPause: false
+        //         })
+        //     );
+        // }
+        // return () => { };
     }, []);
 
-    const getDataSession = async () => {
-        let dataSession = await getSession(refIDss.current);
-        if (dataSession.data.status != "running") {
-            // run();
-        }
-    }
+    // ============================================
 
-    const handleLocationsFunc = () => {
-        Geolocation.getCurrentPosition(
-            (position) => {
-                let { longitude, latitude, speed } = position.coords;
-                const dateNow = Date.now()
-                if (!refLocations.current.time) {
-                    refLocations.current.time = dateNow;
-                    return
+    // =============================================
+    const run = async () =>
+    {
+
+        // console.log('dateCreate iss', selector.shoeCurrentWear._id);
+        // console.log("runnnnnnnnnnnnnnnnnnnnnnnnnn");
+        if (selector.shoeCurrentWear) {
+            if (selector.idSession == "" || selector.idSession == undefined || selector.idSession == null) {
+                // console.log('==================================== if 1');
+                let dataCreate = await createSession(selector.shoeCurrentWear._id);
+                // console.log('dataCreate iss code', dataCreate);
+                // console.log('dataCreate iss Number(dataCreate.code) == 200', Number(dataCreate.code) == 200);
+                if (Number(dataCreate.code) == 200) {
+                    // dispatch(_action.idSession(dataCreate.data._id));
+                    // console.log('====================================');
+                    // console.log('dataCreate.data._id ', dataCreate.data._id);
+                    // console.log('====================================');
+                    idSs = dataCreate.data._id
+                    // console.log(`idSs`, idSs);
                 }
-                const newDistance = getPreciseDistance(
-                    {
-                        latitude: Number(refLocations.current.latitude),
-                        longitude: Number(refLocations.current.longitude)
-                    },
-                    {
-                        latitude: Number(latitude),
-                        longitude: Number(longitude)
-                    }
-                );
-                const timeChangeHour = (dateNow - refLocations.current.time) / 3600000
-                const distanceKm = newDistance / 1000
-                const vtKmH = distanceKm / timeChangeHour
-                setKmhState(vtKmH)
-                if (speed > 0) {
-                    dispatch(
-                        _action.changeScreenState({
-                            ...selector.screenState,
-                            dataLocation: [
-                                ...selector.screenState.dataLocation,
-                                {
-                                    latitude: Number(latitude),
-                                    longitude: Number(longitude)
-                                }
-                            ]
-                        })
-                    );
-                } else if (selector.screenState.dataLocation.length == 0) {
-                    dispatch(
-                        _action.changeScreenState({
-                            ...selector.screenState,
-                            dataLocation: [
-                                ...selector.screenState.dataLocation,
-                                {
-                                    latitude: Number(latitude),
-                                    longitude: Number(longitude)
-                                }
-                            ]
-                        })
-                    );
+            } else {
+                // console.log('==================================== if else', selector.idSession);
+                idSs = selector.idSession;
+                // setIdSs(selector.idSession)
+            }
+
+            // console.log(`dataSession iss `, dataSession);
+
+            clearAS = setInterval(async () =>
+            {
+
+                let dataSession = await getSession(idSs);
+                // console.log('====================================');
+                // console.log('dataSession is ', dataSession);
+                // console.log('====================================');
+                if (dataSession.data.status != "running") {
+
+                    clearInterval(clearAS);
+                    run();
                 }
+                // console.log('======================00000====');
                 let EARN_PER_ENERGY_BY_WEEK = selector.getConstShoe.data.EARN_PER_ENERGY_BY_WEEK[selector.shoeCurrentWear.quality][Math.floor((new Date().getTime() - new Date().getTime(selector.shoeCurrentWear.activatedDate)) / (1000 * 60 * 60 * 24 * 7))];
 
                 let KM_PER_ENERGY = selector.getConstShoe.data.KM_PER_ENERGY[selector.shoeCurrentWear.class];
+                // console.log('======================1111====', );
+                // console.log(`selector.getConstShoe.data.SPEED_RANGE[selector.shoeCurrentWear.class].min`, selector.getConstShoe.data.SPEED_RANGE[selector.shoeCurrentWear.class].min);
                 let { min, max } = selector.getConstShoe.data.SPEED_RANGE[selector.shoeCurrentWear.quality];
+                // console.log(`min, max`, min, max);
+                // console.log("EARN_PER_ENERGY_BY_WEEK", EARN_PER_ENERGY_BY_WEEK);
+                // console.log("KM_PER_ENERGY", KM_PER_ENERGY);
+                // console.log("receivedUSDT", receivedUSDT);
+                // dispatch(_action.changeScreenState({ 16.1 -- 1.2
+                //     ...selector.screenState,
+                //     distance: Number(dataSession.data.currentDistance).toFixed(2),
+                //     receivedUSDT: receivedUSDT,
+                // }));
                 dispatch(
                     _action.getShoesId({ _id: selector.shoeCurrentWear._id })
                 );
@@ -131,87 +166,185 @@ function Item() {
                     _action.shoeCurrentWear(selector.getShoesId.data)
                 );
                 setEnergy(selector.shoeCurrentWear.energy)
+                // let time_ = setInterval(() =>
+                // {
 
-                let receivedUSDTt = EARN_PER_ENERGY_BY_WEEK / KM_PER_ENERGY;
-                if (receivedUSDTt > 0) {
-                    receivedUSDTt = receivedUSDTt
-                } else {
-                    receivedUSDTt = 0
-                }
-                // setStepss(a => a + Math.floor(speed / 0.5))
-                // setKmh((vtKmH * 3.6))
-                CheckSpeed(refIDss.current, vtKmH, receivedUSDTt, min, max, distanceKm);
-                // setTimeShow(a => a + 1)
-                refLocations.current.latitude = latitude
-                refLocations.current.longitude = longitude
-                refLocations.current.time = dateNow;
-            },
-            (error) => {
-                console.log(error.code, error.message);
-                setTimeShow(a => a + 1)
-            },
-            {
-                enableHighAccuracy: true,
-                timeout: 1000,
-                maximumAge: 1000
-            }
-        );
+                //     if (!selector.getShoesId.isFetching) {
+                //         clearInterval(time_)
+                //     }
+                //     if (selector.getShoesId.isSuccess) {
+                //         clearInterval(time_);
+                //         dispatch(
+                //             _action.shoeCurrentWear(selector.getShoesId.data)
+                //         );
+
+                //     }
+                // }, 300);
+
+                Geolocation.getCurrentPosition(
+                    (position) =>
+                    {
+                        // console.log(position);
+                        let { longitude, latitude, speed } = position.coords;
+                        if (speed > 0) {
+                            dispatch(
+                                _action.changeScreenState({
+                                    ...selector.screenState,
+                                    dataLocation: [
+                                        ...selector.screenState.dataLocation,
+                                        {
+                                            latitude: Number(latitude),
+                                            longitude: Number(longitude)
+                                        }
+                                    ]
+                                })
+                            );
+                        } else if (selector.screenState.dataLocation.length == 0) {
+                            dispatch(
+                                _action.changeScreenState({
+                                    ...selector.screenState,
+                                    dataLocation: [
+                                        ...selector.screenState.dataLocation,
+                                        {
+                                            latitude: Number(latitude),
+                                            longitude: Number(longitude)
+                                        }
+                                    ]
+                                })
+                            );
+                        }
+
+
+                        // testStop(longitude, latitude, speed, Date.now(), 'sdddsesss')
+                        // console.log('====================================');
+                        // console.log('chắc chắn đã run', speed);
+                        // console.log('====================================');
+                        // const newDistance = getPreciseDistance(
+                        //     {
+                        //         latitude: state.latitude,
+                        //         longitude: state.longitude
+                        //     },
+                        //     {
+                        //         latitude: Number(watchId.current.latitude),
+                        //         longitude: Number(watchId.current.longitude)
+                        //     }
+                        // );
+                        // ta += Math.floor(speed / 0.5);
+                        // tb += (speed / 1000);
+                        // tc = (speed * 3.6).toFixed(2);
+                        // td = speed;
+                        let receivedUSDTt = EARN_PER_ENERGY_BY_WEEK / KM_PER_ENERGY;
+                        if (receivedUSDTt > 0) {
+                            receivedUSDTt = receivedUSDTt
+                        } else {
+                            receivedUSDTt = 0
+                        }
+                        setStepss(a => a + Math.floor(speed / 0.5))
+                        setKmh((speed * 3.6))
+                        CheckSpeed(idSs, speed, receivedUSDTt, min, max);
+                        setTimeShow(a => a + 1)
+
+
+
+                        // dispatch(
+                        //     _action.changeScreenState({
+                        //         ...selector.screenState,
+                        //         dataLocation: [
+                        //             ...selector.screenState.dataLocation,
+                        //             {
+                        //                 latitude: Number(latitude),
+                        //                 longitude: Number(longitude)
+                        //             }
+                        //         ],
+                        //         steps: selector.screenState.steps + Math.floor(speed / 0.5),
+                        //         totalKm: selector.screenState.totalKm + (speed / 1000),
+                        //         distance: (speed * 3.6).toFixed(2),
+                        //         speed: speed ? speed : 0
+                        //     })
+                        // );
+                        // ta = longitude;
+                        // tb = latitude;
+
+                    },
+                    (error) =>
+                    {
+                        // See error code charts below.
+                        // testStop('longitude', 'latitude', 'speed', 'Date.now()', 'sdddsesss')
+                        console.log(error.code, error.message);
+                        setTimeShow(a => a + 1)
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 1000,
+                        maximumAge: 1000
+                    }
+                );
+                // tc += 1;
+            }, 1000);
+            // setInterval(() =>
+            // {
+            //     putSession(idSs, 0.1);
+            // }, 3000);
+            // let abcs = await _action.run({ shoesId: selector.shoeCurrentWear._id });
+            // console.log(`abcs is `, abcs);
+            // dispatch(
+            //     _action.run({ shoesId: selector.shoeCurrentWear._id }));
+        }
+
     }
 
-    // const run = async () => {
-    //     if (selector.shoeCurrentWear) {
-    //         if (selector.idSession == "" || selector.idSession == undefined || selector.idSession == null) {
-    //             let dataCreate = await createSession(selector.shoeCurrentWear._id);
-    //             if (Number(dataCreate.code) == 200) {
-    //                 refIDss.current = dataCreate.data._id
-    //             }
-    //         } else {
-    //             refIDss.current = selector.idSession;
-    //         }
 
-    //         clearAS = setInterval(async () => {
-    //             let dataSession = await getSession(refIDss.current);
-    //             if (dataSession.data.status != "running") {
-    //                 clearInterval(clearAS);
-    //                 run();
-    //             }
-    //             let EARN_PER_ENERGY_BY_WEEK = selector.getConstShoe.data.EARN_PER_ENERGY_BY_WEEK[selector.shoeCurrentWear.quality][Math.floor((new Date().getTime() - new Date().getTime(selector.shoeCurrentWear.activatedDate)) / (1000 * 60 * 60 * 24 * 7))];
+    const putRunningSessionId = (status) =>
+    {
+        console.log("run updateeeeeeeeeeeeeeeeeeeeeeeeee");
 
-    //             let KM_PER_ENERGY = selector.getConstShoe.data.KM_PER_ENERGY[selector.shoeCurrentWear.class];
-    //             let { min, max } = selector.getConstShoe.data.SPEED_RANGE[selector.shoeCurrentWear.quality];
-    //             dispatch(
-    //                 _action.getShoesId({ _id: selector.shoeCurrentWear._id })
-    //             );
-    //             dispatch(
-    //                 _action.shoeCurrentWear(selector.getShoesId.data)
-    //             );
-    //             setEnergy(selector.shoeCurrentWear.energy)
-    //         }, 1000);
-    //     }
-
-    // }
-
-
-    const putRunningSessionId = (status) => {
         if (selector.run) {
             dispatch(
                 _action.putRunningSessionId({ distance: selector.screenState.distance, status: status, _id: selector.run.data._id }));
         }
 
     }
-    const CheckSpeed = (idSs, speed, receivedUSDTt, min, max, distanceKm) => {
-        const CurrentSpeed = speed;//(speed * 3.6);
-        const kmms = distanceKm;
-
+    const CheckSpeed = (idSs, speed, receivedUSDTt, min, max) =>
+    {
+        const CurrentSpeed = (speed * 3.6);//selector.screenState.speed;
+        const kmms = speed / 1000;//selector.screenState.distance;
+        // const ConstSpeed = getSpeedRange();
+        // const min = ConstSpeed && ConstSpeed.min ? ConstSpeed.min : 0
+        // const max = ConstSpeed && ConstSpeed.max ? ConstSpeed.max : 0
+        console.log("run updateeeeeeeeeeeeeeeeeeeeeeeeee", min, max);
+        //
+        // console.log(`selector`, selector.getConstShoe.data.SPEED_RANGE[selector.shoeCurrentWear.quality]);
+        // let { min, max } = selector.getConstShoe.data.SPEED_RANGE[selector.shoeCurrentWear.quality]
         if (CurrentSpeed >= min && CurrentSpeed <= max) {
-            setTotalKm(a => a + distanceKm)
-            setReciveUsdt(a => a + (receivedUSDTt * distanceKm))
+            setTotalKm(a => a + (speed / 1000))
+            setReciveUsdt(a => a + (receivedUSDTt * (speed / 1000)))
             putSession(idSs, kmms);
+            // testStop(idSs, kmms, CurrentSpeed, Date.now(), `${min} -- ${max}`)
+            // totalKm = 0;
+            //2-7 km/h
+            // if (!PutOnlyone) {
+            // console.log("Run firsttttttttttttttttttttttttttttttttt")
+            // dispatch(
+            //     _action.getRunningSessionId({ _id: selector.run.data._id }));
+
+            // console.log("Run selector", selector.run)
+            // if (selector.run.data._id) {
+            //     dispatch(
+            //         _action.putRunningSessionId({ distance: 10, status: "running", _id: selector.run.data._id }));
+            //     setPutOnlyone(true)
+            // }
+
+            // }
+
+            console.log("min", min);
+            console.log("max", max);
+            console.log("CurrentSpeed", CurrentSpeed);
         }
 
     }
 
-    const getSpeedRange = () => {
+    const getSpeedRange = () =>
+    {
         let result = '';
         if (selector.getConstShoe) {
             const speedRange = selector.getConstShoe.data.SPEED_RANGE;
@@ -226,11 +359,13 @@ function Item() {
                     result = SpeedValue[i]
                 }
             }
+            // console.log(result)
         }
         return result;
     }
     // TIMER
-    const formatTime = (timer) => {
+    const formatTime = (timer) =>
+    {
         const getSeconds = `0${timer % 60}`.slice(-2);
         const minutes = `${Math.floor(timer / 60)}`;
         const getMinutes = `0${minutes % 60}`.slice(-2);
@@ -239,7 +374,8 @@ function Item() {
             ? `${getHours}:${getMinutes}:${getSeconds}`
             : `${getMinutes}:${getSeconds}`;
     };
-    const handlePause = () => {
+    const handlePause = () =>
+    {
 
         clearInterval(clearAS);
         clearInterval(countRef.current);
@@ -252,7 +388,8 @@ function Item() {
             })
         );
     };
-    const handleResume = () => {
+    const handleResume = () =>
+    {
         setisPress(false);
         dispatch(
             _action.changeScreenState({
@@ -264,14 +401,93 @@ function Item() {
         if (countRef.current) {
             clearTimeout(countRef.current);
         }
-        countRef.current = setInterval(() => {
+        countRef.current = setInterval(() =>
+        {
             dispatch(_action.isStepTimer(++selector.initReducer.isStepTimer));
         }, 1000);
     };
+    // ===========
+    // Geolocation
+    // const _getCurrentLocation = useCallback(async () =>
+    // {
+    //     // 3 số cuối 100 === 1 Meter : latitude: (0.00000001) longitude: (-0.0000001)
+    //     watchId.current = await location.getCurrentLocation();
+    //     // console.log('watchId.current', watchId.current);
 
-    const handleStepStop = () => {
+    //     if (watchId.current) {
+    //         setstate({
+    //             ...state,
+    //             latitude: Number(watchId.current.latitude),
+    //             longitude: Number(watchId.current.longitude) // + selector.initReducer.isStepTimer / 10000
+    //         });
+    //         if (Number(state.latitude) > 0) {
+    //             // Count distance
+    //             const newDistance = getPreciseDistance(
+    //                 {
+    //                     latitude: state.latitude,
+    //                     longitude: state.longitude
+    //                 },
+    //                 {
+    //                     latitude: Number(watchId.current.latitude),
+    //                     longitude: Number(watchId.current.longitude)
+    //                 }
+    //             );
+
+    //             // Geolocation.getCurrentPosition(
+    //             //     (position) =>
+    //             //     {
+    //             //         console.log('====================================');
+    //             //         console.log(position);
+    //             //         console.log('====================================');
+    //             //         let { longitude, latitude, speed } = position.coords;
+    //             //         // testStop(longitude, latitude, speed, Date.now(), 'hd')
+    //             //     },
+    //             //     (error) =>
+    //             //     {
+    //             //         // See error code charts below.
+    //             //         // testStop('longitude', 'latitude', 'speed', 'Date.now()', 'hp')
+    //             //         console.log(error.code, error.message);
+    //             //     },
+    //             //     { enableHighAccuracy: true, timeout: 1000, maximumAge: 50 }
+    //             // );
+
+    //             // if (speed > 0) {
+    //             //     // Count speed < 20km/h && distance > 10m
+    //             //     if (speed < 20 && newDistance > 10) {
+    //             //call ở đây---- a=newDistance; b=distance, c=speed; d= Date.now()
+
+
+    //             dispatch(
+    //                 _action.changeScreenState({
+    //                     ...selector.screenState,
+    //                     dataLocation: [
+    //                         ...selector.screenState.dataLocation,
+    //                         {
+    //                             latitude: Number(watchId.current.latitude),
+    //                             longitude: Number(watchId.current.longitude)
+    //                         }
+    //                     ],
+    //                     distance: (newDistance / 1000).toFixed(2),
+    //                     speed: newDistance
+    //                         ? (Number(newDistance) / selector.initReducer.isStepTimer).toFixed(2)
+    //                         : 0
+    //                 })
+    //             );
+    //             // }
+    //             // }
+    //         }
+    //     }
+    //     return watchId.current;
+    // });
+    // ===========
+
+    const handleStepStop = () =>
+    {
+
         clearInterval(clearAS);
+        // OnpressLonger out
         setmodalVisible(false);
+        setstate({ latitude: 0, longitude: 0 });
         if (countRef.current) {
             clearTimeout(countRef.current);
         }
@@ -309,7 +525,8 @@ function Item() {
                         marginHorizontal: getSize.scale(16)
                     }}>
                     <TouchableOpacity
-                        onPress={() => {
+                        onPress={() =>
+                        {
                             clearInterval(countRef.current);
                             setisPress(false);
                             dispatch(
@@ -407,7 +624,7 @@ function Item() {
                                 fontStyle: 'italic',
                                 marginTop: getSize.scale(11)
                             }}>
-                            {`${formatTime(timeRun)}`}
+                            {`${formatTime(timeShow)}`}
                         </Text>
                         <Text
                             style={{
@@ -443,7 +660,7 @@ function Item() {
                                 fontStyle: 'italic',
                                 marginTop: getSize.scale(11)
                             }}>
-                            {kmhState.toFixed(2) || '0.00'}
+                            {kmh.toFixed(2) || '0.00'}
                         </Text>
                         <Text
                             style={{
@@ -501,7 +718,7 @@ function Item() {
                     <AnimatedCircularProgress
                         size={getSize.scale(294)}
                         width={18}
-                        fill={(kmhState * 100) / 20} // {selector.screenState.speed} speedMin:8 - fillMin:0 : speedMax:20 - fillMax:100
+                        fill={(kmh * 100) / 20} // {selector.screenState.speed} speedMin:8 - fillMin:0 : speedMax:20 - fillMax:100
                         tintColor="rgba(244, 67, 105, 1)" // "#00e0ff"
                         arcSweepAngle={280}
                         rotation={220}
@@ -623,7 +840,8 @@ function Item() {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => {
+                        onPress={() =>
+                        {
                             handlePause();
                             return navigation.navigate(tabNavigator.TAB_BAG);
                         }}>
