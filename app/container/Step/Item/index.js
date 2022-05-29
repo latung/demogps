@@ -15,8 +15,42 @@ import { getSize } from '../../../common';
 import Geolocation from 'react-native-geolocation-service';
 import { stackNavigator, tabNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
-import { createSession, getSession, putSession } from '../../../service';
-let clearAS = '';
+import { putSession } from '../../../service';
+import { cloneDeep } from 'lodash'
+
+// const arrayLocationsTest = [
+//     {
+//         longitude: 106.67111208248981,
+//         latitude: 10.78628223866345,
+//     },
+//     {
+//         longitude: 106.67064671922563,
+//         latitude: 10.78661817800748,
+//     },
+//     {
+//         longitude: 106.67055753577593,
+//         latitude: 10.7869745367938,
+//     },
+//     {
+//         longitude: 106.67055875744377,
+//         latitude: 10.78726353057032,
+//     },
+//     {
+//         longitude: 106.67091284005585,
+//         latitude: 10.78755265017361,
+//     },
+//     {
+//         longitude: 106.6714049727849,
+//         latitude: 10.787404400872461,
+//     },
+//     {
+//         longitude: 106.67191481390583,
+//         latitude: 10.787222611825262,
+//     },
+// ]
+
+// let countTest = 0
+
 function Item() {
     const navigation = useNavigation();
     const selector = useSelector((state) => ({
@@ -36,9 +70,6 @@ function Item() {
     const watchId = useRef(null);
     const countRef = useRef(selector.initReducer.isStepTimer);
     const [isPress, setisPress] = useState(false);
-    const [stepss, setStepss] = useState(0);
-    const [timeShow, setTimeShow] = useState(0);
-    const [kmh, setKmh] = useState(0);
     const [totalKm, setTotalKm] = useState(0);
     const [reciveUsdt, setReciveUsdt] = useState(0);
     const [modalVisible, setmodalVisible] = useState(false);
@@ -47,33 +78,42 @@ function Item() {
     const [kmhState, setKmhState] = useState(0)
     const refIDss = useRef('')
     const refLocations = useRef({ latitude: 0, longitude: 0, time: 0 })
+    const refTimeInterval = useRef(null)
+    const refLocationsStore = useRef(null)
 
-    useEffect(() => {
-        // run();
-        const timerInterval = setInterval(() => {
+    const mainFuncThread = () => {
+        refTimeInterval.current = setInterval(() => {
             setTimeRun((preSta) => preSta + 1)
             handleLocationsFunc()
         }, 1000);
-        const timerIntervalGetDataSession = setInterval(() => {
-            getDataSession()
-        })
+    }
+
+    useEffect(() => {
+        mainFuncThread()
         return () => {
-            clearInterval(timerInterval)
-            clearInterval(timerIntervalGetDataSession)
+            clearInterval(refTimeInterval.current)
         }
     }, []);
 
-    const getDataSession = async () => {
-        let dataSession = await getSession(refIDss.current);
-        if (dataSession.data.status != "running") {
-            // run();
-        }
-    }
+    useEffect(() => {
+        dispatch(_action.isStepTimer(timeRun));
+    }, [timeRun])
+
+    useEffect(() => {
+        dispatch(_action.changeScreenState({
+            distance: totalKm
+        }))
+    }, [totalKm])
+
+    useEffect(() => {
+        refLocationsStore.current = selector.screenState.dataLocation
+    }, [selector.screenState.dataLocation?.length])
 
     const handleLocationsFunc = () => {
         Geolocation.getCurrentPosition(
             (position) => {
                 let { longitude, latitude, speed } = position.coords;
+
                 const dateNow = Date.now()
                 if (!refLocations.current.time) {
                     refLocations.current.time = dateNow;
@@ -89,21 +129,22 @@ function Item() {
                         longitude: Number(longitude)
                     }
                 );
-                const timeChangeHour = (dateNow - refLocations.current.time) / 3600000
+                const timeChangeSeconds = (dateNow - refLocations.current.time) / 1000
                 const distanceKm = newDistance / 1000
-                const vtKmH = distanceKm / timeChangeHour
+                const vtKmH = (newDistance / timeChangeSeconds) * 3.6
                 setKmhState(vtKmH)
+
                 if (speed > 0) {
+                    const dataLocationDup = refLocationsStore.current?.concat([
+                        {
+                            latitude: Number(latitude),
+                            longitude: Number(longitude)
+                        }
+                    ])
                     dispatch(
                         _action.changeScreenState({
                             ...selector.screenState,
-                            dataLocation: [
-                                ...selector.screenState.dataLocation,
-                                {
-                                    latitude: Number(latitude),
-                                    longitude: Number(longitude)
-                                }
-                            ]
+                            dataLocation: cloneDeep(dataLocationDup)
                         })
                     );
                 } else if (selector.screenState.dataLocation.length == 0) {
@@ -111,7 +152,6 @@ function Item() {
                         _action.changeScreenState({
                             ...selector.screenState,
                             dataLocation: [
-                                ...selector.screenState.dataLocation,
                                 {
                                     latitude: Number(latitude),
                                     longitude: Number(longitude)
@@ -124,6 +164,7 @@ function Item() {
 
                 let KM_PER_ENERGY = selector.getConstShoe.data.KM_PER_ENERGY[selector.shoeCurrentWear.class];
                 let { min, max } = selector.getConstShoe.data.SPEED_RANGE[selector.shoeCurrentWear.quality];
+
                 dispatch(
                     _action.getShoesId({ _id: selector.shoeCurrentWear._id })
                 );
@@ -138,17 +179,13 @@ function Item() {
                 } else {
                     receivedUSDTt = 0
                 }
-                // setStepss(a => a + Math.floor(speed / 0.5))
-                // setKmh((vtKmH * 3.6))
                 CheckSpeed(refIDss.current, vtKmH, receivedUSDTt, min, max, distanceKm);
-                // setTimeShow(a => a + 1)
                 refLocations.current.latitude = latitude
                 refLocations.current.longitude = longitude
                 refLocations.current.time = dateNow;
             },
             (error) => {
                 console.log(error.code, error.message);
-                setTimeShow(a => a + 1)
             },
             {
                 enableHighAccuracy: true,
@@ -157,40 +194,6 @@ function Item() {
             }
         );
     }
-
-    // const run = async () => {
-    //     if (selector.shoeCurrentWear) {
-    //         if (selector.idSession == "" || selector.idSession == undefined || selector.idSession == null) {
-    //             let dataCreate = await createSession(selector.shoeCurrentWear._id);
-    //             if (Number(dataCreate.code) == 200) {
-    //                 refIDss.current = dataCreate.data._id
-    //             }
-    //         } else {
-    //             refIDss.current = selector.idSession;
-    //         }
-
-    //         clearAS = setInterval(async () => {
-    //             let dataSession = await getSession(refIDss.current);
-    //             if (dataSession.data.status != "running") {
-    //                 clearInterval(clearAS);
-    //                 run();
-    //             }
-    //             let EARN_PER_ENERGY_BY_WEEK = selector.getConstShoe.data.EARN_PER_ENERGY_BY_WEEK[selector.shoeCurrentWear.quality][Math.floor((new Date().getTime() - new Date().getTime(selector.shoeCurrentWear.activatedDate)) / (1000 * 60 * 60 * 24 * 7))];
-
-    //             let KM_PER_ENERGY = selector.getConstShoe.data.KM_PER_ENERGY[selector.shoeCurrentWear.class];
-    //             let { min, max } = selector.getConstShoe.data.SPEED_RANGE[selector.shoeCurrentWear.quality];
-    //             dispatch(
-    //                 _action.getShoesId({ _id: selector.shoeCurrentWear._id })
-    //             );
-    //             dispatch(
-    //                 _action.shoeCurrentWear(selector.getShoesId.data)
-    //             );
-    //             setEnergy(selector.shoeCurrentWear.energy)
-    //         }, 1000);
-    //     }
-
-    // }
-
 
     const putRunningSessionId = (status) => {
         if (selector.run) {
@@ -201,6 +204,11 @@ function Item() {
     }
     const CheckSpeed = (idSs, speed, receivedUSDTt, min, max, distanceKm) => {
         const CurrentSpeed = speed;//(speed * 3.6);
+        dispatch(
+            _action.changeScreenState({
+                speed: CurrentSpeed,
+            })
+        );
         const kmms = distanceKm;
 
         if (CurrentSpeed >= min && CurrentSpeed <= max) {
@@ -240,8 +248,7 @@ function Item() {
             : `${getMinutes}:${getSeconds}`;
     };
     const handlePause = () => {
-
-        clearInterval(clearAS);
+        clearInterval(refTimeInterval.current)
         clearInterval(countRef.current);
         setisPress(false);
         dispatch(
@@ -253,6 +260,7 @@ function Item() {
         );
     };
     const handleResume = () => {
+        mainFuncThread()
         setisPress(false);
         dispatch(
             _action.changeScreenState({
@@ -270,7 +278,6 @@ function Item() {
     };
 
     const handleStepStop = () => {
-        clearInterval(clearAS);
         setmodalVisible(false);
         if (countRef.current) {
             clearTimeout(countRef.current);

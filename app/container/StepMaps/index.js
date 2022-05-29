@@ -30,17 +30,15 @@ function StepMaps() {
         screenState: state.initReducer.screenState,
         initReducer: state.initReducer
     }));
-    const dispatch = useDispatch();
     const [state, setstate] = useState({
         dataGeo: []
     });
-    // const [coordinates] = useState([106.7070421432957, 10.803306292642775]); // longitude, latitude
     const [coordinates, setcoordinates] = useState(
         selector.screenState.currentLocation.latitude !== 0
             ? [
-                  selector.screenState.currentLocation.longitude,
-                  selector.screenState.currentLocation.latitude
-              ]
+                selector.screenState.currentLocation.longitude,
+                selector.screenState.currentLocation.latitude
+            ]
             : []
     );
     const [route, setRoute] = useState({
@@ -57,14 +55,16 @@ function StepMaps() {
         ]
     });
 
+
     useEffect(() => {
-        if (selector.screenState.dataLocation.length > 0) {
+        const dataLocations = selector.screenState.dataLocation
+        if (dataLocations.length > 0) {
             setcoordinates([
-                selector.screenState.dataLocation[
-                    selector.screenState.dataLocation.length - 1
+                dataLocations[
+                    dataLocations.length - 1
                 ].longitude,
-                selector.screenState.dataLocation[
-                    selector.screenState.dataLocation.length - 1
+                dataLocations[
+                    dataLocations.length - 1
                 ].latitude
             ]);
             setRoute({
@@ -74,22 +74,23 @@ function StepMaps() {
                 geometry: {
                     type: 'LineString',
                     coordinates: [
-                        ...selector.screenState.dataLocation.map((e) => [
+                        ...dataLocations.map((e) => [
                             e.longitude,
                             e.latitude
                         ])
+
                     ]
                 }
             });
             return setstate({
                 ...state,
-                dataGeo: selector.screenState.dataLocation.map((e) => [
+                dataGeo: dataLocations.map((e) => [
                     e.longitude,
                     e.latitude
                 ])
             });
         }
-        return () => {};
+        return () => { };
     }, [selector.screenState.dataLocation.length]);
 
     const formatTime = (timer) => {
@@ -101,6 +102,7 @@ function StepMaps() {
             ? `${getHours}:${getMinutes}:${getSeconds}`
             : `${getMinutes}:${getSeconds}`;
     };
+
 
     const renderAnnotations = () => {
         return (
@@ -318,43 +320,3 @@ const styles = StyleSheet.create({
 });
 
 export default StepMaps;
-
-// import React, { Component } from 'react';
-// import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
-// import { stackNavigator } from '../../navigation/nameNavigator';
-
-// class StepMaps extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {};
-//     }
-
-//     render() {
-//         const { navigation, route } = this.props;
-//         return (
-//             <SafeAreaView style={{ flex: 1 }}>
-//                 <View
-//                     style={{
-//                         flex: 1,
-//                         justifyContent: 'center',
-//                         alignItems: 'center'
-//                     }}>
-//                     <Text>Hello! StepMaps</Text>
-//                     <TouchableOpacity
-//                         onPress={() => navigation.goBack()}
-//                         style={{
-//                             height: 40,
-//                             width: 200,
-//                             backgroundColor: 'violet',
-//                             justifyContent: 'center',
-//                             alignItems: 'center'
-//                         }}>
-//                         <Text>Back Home</Text>
-//                     </TouchableOpacity>
-//                 </View>
-//             </SafeAreaView>
-//         );
-//     }
-// }
-
-// export default StepMaps;
