@@ -3,7 +3,8 @@ import { View, Text, TouchableOpacity, Image, Platform } from 'react-native';
 import { borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import { location, getSize, Colors } from '../../common/';
 
-export default function MyTabBar({ state, descriptors, navigation }) {
+export default function MyTabBar({ state, descriptors, navigation })
+{
     return (
         <View
             style={{
@@ -25,7 +26,8 @@ export default function MyTabBar({ state, descriptors, navigation }) {
                 shadowOpacity: 1,
                 shadowRadius: 3
             }}>
-            {state.routes.map((route, index) => {
+            {state.routes.map((route, index) =>
+            {
                 const { options } = descriptors[route.key];
                 // const label =
                 //     options.tabBarLabel !== undefined
@@ -37,25 +39,26 @@ export default function MyTabBar({ state, descriptors, navigation }) {
                     route.name === 'TabHome'
                         ? 'ic_run'
                         : route.name === 'TabBag'
-                        ? 'ic_shoe'
-                        : route.name === 'TabRatings'
-                        ? 'ic_rank'
-                        : route.name === 'TabStore'
-                        ? 'ic_cart'
-                        : '';
+                            ? 'ic_shoe'
+                            : route.name === 'TabRatings'
+                                ? 'ic_rank'
+                                : route.name === 'TabStore'
+                                    ? 'ic_cart'
+                                    : '';
                 const imageFocused =
                     route.name === 'TabHome'
                         ? 'ic_run_red'
                         : route.name === 'TabBag'
-                        ? 'ic_shoe_red'
-                        : route.name === 'TabRatings'
-                        ? 'ic_rank_red'
-                        : route.name === 'TabStore'
-                        ? 'ic_cart_red'
-                        : '';
+                            ? 'ic_shoe_red'
+                            : route.name === 'TabRatings'
+                                ? 'ic_rank_red'
+                                : route.name === 'TabStore'
+                                    ? 'ic_cart_red'
+                                    : '';
                 const isFocused = state.index === index;
 
-                const onPress = () => {
+                const onPress = () =>
+                {
                     const event = navigation.emit({
                         type: 'tabPress',
                         target: route.key
@@ -66,7 +69,8 @@ export default function MyTabBar({ state, descriptors, navigation }) {
                     }
                 };
 
-                const onLongPress = () => {
+                const onLongPress = () =>
+                {
                     navigation.emit({
                         type: 'tabLongPress',
                         target: route.key
@@ -107,7 +111,7 @@ export default function MyTabBar({ state, descriptors, navigation }) {
                             {isFocused && (
                                 <View
                                     style={{
-                                        backgroundColor: 'red',
+                                        backgroundColor: '#2EDBDC',
                                         position: 'absolute',
                                         bottom: 0,
                                         width: '30%',

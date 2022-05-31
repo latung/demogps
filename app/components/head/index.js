@@ -7,8 +7,10 @@ import { connect } from 'react-redux';
 import * as _action from '../../redux/action/ActionHandle';
 import { location, getSize, Colors } from '../../common/';
 import * as ApiServices from "./../../service/index";
-class index extends Component {
-    constructor(props) {
+class index extends Component
+{
+    constructor(props)
+    {
         super(props);
         this.state = {
             modalVisibles: true, // true,
@@ -19,7 +21,8 @@ class index extends Component {
             refreshing: false
         };
     }
-    componentDidMount = () => {
+    componentDidMount = () =>
+    {
         const { getUser, userId } = this.props
         if (userId) {
 
@@ -27,27 +30,33 @@ class index extends Component {
         this.GetUser();
 
     };
-    GetUser = () => {
+    GetUser = () =>
+    {
         const { action } = this.props;
-        ApiServices.getUser().then(res => {
+        ApiServices.getUser().then(res =>
+        {
 
             if (res.code === 200) {
                 action.getUser(res.data);
                 action.setUser(res.data);
-                ApiServices.userId({ _id: res.data && res.data._id }).then(res => {
+                ApiServices.userId({ _id: res.data && res.data._id }).then(res =>
+                {
                     if (res.code === 200) {
                         action.userId(res.data)
                     }
 
-                }).catch(err => {
+                }).catch(err =>
+                {
 
                 })
             }
-        }).catch(err => {
+        }).catch(err =>
+        {
 
         })
     }
-    render() {
+    render()
+    {
         const { navigation, userId } = this.props;
         const balanceUserId = userId.data ? userId.data : { mer: 0, usdt: 0 };
         return (
@@ -324,22 +333,24 @@ class index extends Component {
                                 <Text
                                     style={{
                                         marginHorizontal: getSize.scale(4),
-                                        fontSize: getSize.scale(12)
+                                        fontSize: getSize.scale(12),
+                                        color: "#FFFFFF"
                                     }}>
                                     {balanceUserId && balanceUserId.mer ? Number(balanceUserId.mer).toFixed(2) : "0"}
                                 </Text>
-                                <Image
+                                {/* <Image
                                     style={{
                                         width: getSize.scale(25),
                                         height: getSize.scale(25),
-                                        resizeMode: 'contain'
+                                        resizeMode: 'contain',
                                     }}
                                     source={{ uri: 'ic_coin_t' }}
                                 />
                                 <Text
                                     style={{
                                         marginHorizontal: getSize.scale(4),
-                                        fontSize: getSize.scale(12)
+                                        fontSize: getSize.scale(12),
+                                        color: "#FFFFFF"
                                     }}>
                                     {balanceUserId && balanceUserId.usdt ? Number(balanceUserId.usdt).toFixed(2) : "0"}
                                 </Text>
@@ -354,12 +365,39 @@ class index extends Component {
                                 <Text
                                     style={{
                                         marginHorizontal: getSize.scale(4),
-                                        fontSize: getSize.scale(12)
+                                        fontSize: getSize.scale(12),
+                                        color: "#FFFFFF"
                                     }}>
                                     {balanceUserId && balanceUserId.busd ? Number(balanceUserId.busd).toFixed(2) : "0"}
-                                </Text>
+                                </Text> */}
                             </View>
                             <TouchableOpacity
+                                style={{
+                                    position: "relative",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    marginRight: 10
+                                }}
+                                disabled={this.state.toolTipSol}
+                                onPress={
+                                    // () => navigation.navigate(stackNavigator.WALLET_HOME)
+                                    () =>
+                                        navigation.navigate(stackNavigator.SPENDING_WALLET)
+                                }>
+                                <Image
+                                    style={{
+                                        width: getSize.scale(25),
+                                        height: getSize.scale(25),
+                                        resizeMode: 'contain'
+                                    }}
+                                    source={{ uri: 'ic_plus' }}
+                                />
+
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={{
+                                    position: "relative"
+                                }}
                                 disabled={this.state.toolTipSol}
                                 onPress={
                                     // () => navigation.navigate(stackNavigator.WALLET_HOME)
@@ -374,6 +412,23 @@ class index extends Component {
                                     }}
                                     source={{ uri: 'ic_wallet' }}
                                 />
+                                <View style={{
+                                    position: "absolute",
+                                    right: -5,
+                                    top: -5,
+                                    backgroundColor: "#2EDBDC",
+                                    borderRadius: 50,
+                                    width: getSize.scale(20),
+                                    height: getSize.scale(20),
+                                    zIndex: 10,
+                                    justifyContent: "center",
+                                    alignItems: "center"
+
+                                }}>
+                                    <Text style={{
+                                        color: "#FFFFFF"
+                                    }}>0</Text>
+                                </View>
                             </TouchableOpacity>
                         </View>
                     </Tooltip>

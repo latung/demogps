@@ -243,9 +243,9 @@ class TabBar extends Component
                             flexDirection: 'row',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            backgroundColor: 'rgba(255, 255, 255, 0.9)', //'rgba(89, 89, 89, 0.3)',
+                            backgroundColor: '#FFFFFF',
                             height: getSize.scale(38),
-                            borderRadius: 20,
+                            borderRadius: 10,
                             overflow: 'hidden',
 
                             borderWidth: 0.35,
@@ -279,11 +279,11 @@ class TabBar extends Component
                                 <View
                                     style={{
                                         flex: 0.8,
-                                        backgroundColor: isSneakers ? '#F44369' : 'transparent',
+                                        backgroundColor: isSneakers ? '#2EDBDC' : 'transparent',
                                         width: '100%',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        borderRadius: isSneakers ? 20 : 0
+                                        borderRadius: isSneakers ? 10 : 0
                                     }}>
                                     <Text
                                         style={{
@@ -300,18 +300,19 @@ class TabBar extends Component
                                 style={{
                                     flex: 0.9,
                                     alignItems: 'center',
-                                    overflow: 'hidden'
+                                    overflow: 'hidden',
+
                                 }}
                                 onPress={() => this._handleTabbar('ShoeBoxes')}>
                                 <View
                                     style={{
                                         flex: 0.8,
-                                        backgroundColor: isShoeBoxes ? '#F44369' : 'transparent',
+                                        backgroundColor: isShoeBoxes ? '#2EDBDC' : 'transparent',
                                         paddingVertical: 2,
                                         width: '100%',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        borderRadius: isShoeBoxes ? 20 : 0
+                                        borderRadius: isShoeBoxes ? 10 : 0
                                     }}>
                                     <Text
                                         style={{
@@ -336,7 +337,7 @@ class TabBar extends Component
                                 <View
                                     style={{
                                         flex: 0.8,
-                                        backgroundColor: isGems ? '#F44369' : 'transparent',
+                                        backgroundColor: isGems ? '#2EDBDC' : 'transparent',
                                         paddingVertical: 2,
                                         width: '100%',
                                         alignItems: 'center',
@@ -364,12 +365,12 @@ class TabBar extends Component
                                 <View
                                     style={{
                                         flex: 0.8,
-                                        backgroundColor: isPromos ? '#F44369' : 'transparent',
+                                        backgroundColor: isPromos ? '#2EDBDC' : 'transparent',
                                         paddingVertical: 2,
                                         width: '100%',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        borderRadius: isPromos ? 20 : 0,
+                                        borderRadius: isPromos ? 10 : 0,
                                         borderRadius: 20
                                     }}>
                                     <Text
@@ -396,7 +397,7 @@ class TabBar extends Component
                                 <View
                                     style={{
                                         flex: 1,
-                                        backgroundColor: isBadges ? '#F44369' : 'transparent',
+                                        backgroundColor: isBadges ? '#2EDBDC' : 'transparent',
                                         paddingVertical: 2,
                                         width: '100%',
                                         alignItems: 'center',
@@ -440,10 +441,177 @@ class TabBar extends Component
                             <View
                                 style={{
                                     flex: 1,
+                                    // marginHorizontal: getSize.scale(16),
                                     flexDirection: 'row',
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    borderRadius: 20,
+                                    overflow: 'hidden',
+                                    height: 20
+                                }}>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress={() =>
+                                        // this.props.navigation.dispatch(
+                                        //     DrawerActions.openDrawer()
+                                        // )
+                                        this.setmodalFilter(!modalFilter)
+                                    }
+                                    style={{
+                                        flex: 1,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        overflow: 'hidden'
+                                    }}>
+                                    <View
+                                        style={{
+                                            flex: 1,
+                                            width: '100%',
+                                            alignItems: 'center',
+                                            justifyContent: 'flex-end',
+                                            flexDirection: 'row'
+                                        }}>
+                                        <Text style={{ fontSize: getSize.scale(12), color: "#ffffff" }}>Filter</Text>
+                                        <View
+                                            style={{
+                                                fontSize: getSize.scale(12),
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                backgroundColor: 'red',
+                                                width: getSize.scale(16),
+                                                height: getSize.scale(16),
+                                                borderRadius: 50,
+                                                marginHorizontal: getSize.scale(2)
+                                            }}>
+                                            <Text
+                                                style={{
+                                                    fontSize: getSize.scale(12),
+                                                    color: '#fff',
+                                                    fontWeight: 'bold'
+                                                }}>
+                                                2
+                                            </Text>
+                                        </View>
+                                        <Image
+                                            style={{
+                                                marginLeft: getSize.scale(5),
+                                                width: getSize.scale(20),
+                                                height: getSize.scale(20),
+                                                resizeMode: 'contain'
+                                            }}
+                                            source={{ uri: 'ic_filter' }}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+
+
+                            <View
+                                style={{
+                                    flex: 1.5,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    backgroundColor: '#FFFFFF',
+                                    height: getSize.scale(28),
+                                    borderRadius: 10,
+                                    overflow: 'hidden',
+
+                                    marginHorizontal: getSize.scale(16),
+                                    borderWidth: 0.35,
+                                    borderColor: 'rgba(255, 255, 255, 0.6)',
+                                    elevation: 4,
+                                    shadowColor: 'rgba(89, 89, 89, 0.3)', // "rgba(52, 52, 52, alpha)", //trong suốt
+                                    shadowOffset: {
+                                        width: 0,
+                                        height: 2
+                                    },
+                                    shadowOpacity: 0.5,
+                                    shadowRadius: 6
+                                }}>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress={() =>
+                                        this.setState({
+                                            isSneakersMini: true,
+                                            isShoeboxesMini: false
+                                        })
+                                    }
+                                    style={{
+                                        flex: 1,
+                                        alignItems: 'center',
+                                        borderRadius: isSneakersMini ? 20 : 0,
+                                        overflow: 'hidden',
+                                        margin: getSize.scale(3)
+                                    }}>
+                                    <View
+                                        style={{
+                                            flex: 1,
+                                            backgroundColor: isSneakersMini
+                                                ? '#2EDBDC'
+                                                : 'transparent',
+                                            width: '100%',
+                                            alignItems: 'center',
+                                            justifyContent: 'center'
+                                        }}>
+                                        <Text
+                                            style={{
+                                                fontSize: 14,
+                                                fontWeight: 'bold',
+                                                color: isSneakersMini ? '#fff' : '#000'
+                                            }}>
+                                            Buy
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress={
+                                        () =>
+                                            Toast.showWithGravity(
+                                                'Coming soon',
+                                                Toast.LONG,
+                                                Toast.CENTER
+                                            )
+                                        // this.setState({
+                                        //     isSneakersMini: false,
+                                        //     isShoeboxesMini: true
+                                        // })
+                                    }
+                                    style={{
+                                        flex: 1,
+                                        alignItems: 'center',
+                                        borderRadius: isShoeboxesMini ? 10 : 0,
+                                        overflow: 'hidden'
+                                    }}>
+                                    <View
+                                        style={{
+                                            flex: 1,
+                                            backgroundColor: isShoeboxesMini
+                                                ? '#2EDBDC'
+                                                : 'transparent',
+                                            paddingVertical: 4,
+                                            width: '100%',
+                                            alignItems: 'center',
+                                            justifyContent: 'center'
+                                        }}>
+                                        <Text
+                                            style={{
+                                                fontSize: 14,
+                                                fontWeight: 'bold',
+                                                color: isShoeboxesMini ? '#fff' : '#000'
+                                            }}>
+                                            Rent
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            <View
+                                style={{
+                                    flex: 1,
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 10,
                                     overflow: 'hidden'
                                 }}>
                                 {this.state.py ? (
@@ -501,7 +669,7 @@ class TabBar extends Component
                                                     <View
                                                         style={{
                                                             backgroundColor:
-                                                                isLowestPrice && '#33ff99',
+                                                                isLowestPrice && '#2EDBDC',
                                                             top: 4,
                                                             height: 5,
                                                             width: 'Lowest Price'.length * 6,
@@ -511,7 +679,8 @@ class TabBar extends Component
                                                     <Text
                                                         style={{
                                                             fontSize: 10,
-                                                            paddingHorizontal: getSize.scale(5)
+                                                            paddingHorizontal: getSize.scale(5),
+
                                                         }}>
                                                         Lowest Price
                                                     </Text>
@@ -538,7 +707,7 @@ class TabBar extends Component
                                                     <View
                                                         style={{
                                                             backgroundColor:
-                                                                isHighestPrice && '#33ff99',
+                                                                isHighestPrice && '#2EDBDC',
                                                             top: 4,
                                                             height: 5,
                                                             width: 'Highest Price'.length * 6,
@@ -548,7 +717,8 @@ class TabBar extends Component
                                                     <Text
                                                         style={{
                                                             fontSize: 10,
-                                                            paddingHorizontal: getSize.scale(5)
+                                                            paddingHorizontal: getSize.scale(5),
+
                                                         }}>
                                                         Highest Price
                                                     </Text>
@@ -575,7 +745,7 @@ class TabBar extends Component
                                                     <View
                                                         style={{
                                                             backgroundColor:
-                                                                isLatestPrice && '#33ff99',
+                                                                isLatestPrice && '#2EDBDC',
                                                             top: 4,
                                                             height: 5,
                                                             width: 'Latest'.length * 6,
@@ -618,9 +788,10 @@ class TabBar extends Component
                                         <View
                                             style={{
                                                 flex: 9,
-                                                justifyContent: 'center'
+                                                justifyContent: 'center',
+
                                             }}>
-                                            <Text style={{ fontSize: getSize.scale(12) }}>
+                                            <Text style={{ fontSize: getSize.scale(12), color: "#ffffff" }}>
                                                 {this.state.titlePrice}
                                             </Text>
                                         </View>
@@ -637,179 +808,13 @@ class TabBar extends Component
                                                     height: getSize.scale(13),
                                                     resizeMode: 'contain'
                                                 }}
-                                                source={{ uri: 'ic_arrow' }}
+                                                source={{ uri: 'ic_arrow_grey' }}
                                             />
                                         </View>
                                     </View>
                                 </TouchableOpacity>
                             </View>
 
-                            <View
-                                style={{
-                                    flex: 1.5,
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    backgroundColor: 'rgba(255, 255, 255, 0.9)', //'rgba(89, 89, 89, 0.3)',
-                                    height: getSize.scale(28),
-                                    borderRadius: 20,
-                                    overflow: 'hidden',
-
-                                    marginHorizontal: getSize.scale(16),
-                                    borderWidth: 0.35,
-                                    borderColor: 'rgba(255, 255, 255, 0.6)',
-                                    elevation: 4,
-                                    shadowColor: 'rgba(89, 89, 89, 0.3)', // "rgba(52, 52, 52, alpha)", //trong suốt
-                                    shadowOffset: {
-                                        width: 0,
-                                        height: 2
-                                    },
-                                    shadowOpacity: 0.5,
-                                    shadowRadius: 6
-                                }}>
-                                <TouchableOpacity
-                                    activeOpacity={1}
-                                    onPress={() =>
-                                        this.setState({
-                                            isSneakersMini: true,
-                                            isShoeboxesMini: false
-                                        })
-                                    }
-                                    style={{
-                                        flex: 1,
-                                        alignItems: 'center',
-                                        borderRadius: isSneakersMini ? 20 : 0,
-                                        overflow: 'hidden',
-                                        margin: getSize.scale(3)
-                                    }}>
-                                    <View
-                                        style={{
-                                            flex: 1,
-                                            backgroundColor: isSneakersMini
-                                                ? '#F44369'
-                                                : 'transparent',
-                                            width: '100%',
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
-                                        }}>
-                                        <Text
-                                            style={{
-                                                fontSize: 14,
-                                                fontWeight: 'bold',
-                                                color: isSneakersMini ? '#fff' : '#000'
-                                            }}>
-                                            Buy
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    activeOpacity={1}
-                                    onPress={
-                                        () =>
-                                            Toast.showWithGravity(
-                                                'Coming soon',
-                                                Toast.LONG,
-                                                Toast.CENTER
-                                            )
-                                        // this.setState({
-                                        //     isSneakersMini: false,
-                                        //     isShoeboxesMini: true
-                                        // })
-                                    }
-                                    style={{
-                                        flex: 1,
-                                        alignItems: 'center',
-                                        borderRadius: isShoeboxesMini ? 20 : 0,
-                                        overflow: 'hidden'
-                                    }}>
-                                    <View
-                                        style={{
-                                            flex: 1,
-                                            backgroundColor: isShoeboxesMini
-                                                ? '#F44369'
-                                                : 'transparent',
-                                            paddingVertical: 4,
-                                            width: '100%',
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
-                                        }}>
-                                        <Text
-                                            style={{
-                                                fontSize: 14,
-                                                fontWeight: 'bold',
-                                                color: isShoeboxesMini ? '#fff' : '#000'
-                                            }}>
-                                            Rent
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-
-                            <View
-                                style={{
-                                    flex: 1,
-                                    // marginHorizontal: getSize.scale(16),
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    overflow: 'hidden',
-                                    height: 20
-                                }}>
-                                <TouchableOpacity
-                                    activeOpacity={1}
-                                    onPress={() =>
-                                        // this.props.navigation.dispatch(
-                                        //     DrawerActions.openDrawer()
-                                        // )
-                                        this.setmodalFilter(!modalFilter)
-                                    }
-                                    style={{
-                                        flex: 1,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        overflow: 'hidden'
-                                    }}>
-                                    <View
-                                        style={{
-                                            flex: 1,
-                                            width: '100%',
-                                            alignItems: 'center',
-                                            justifyContent: 'flex-end',
-                                            flexDirection: 'row'
-                                        }}>
-                                        <Text style={{ fontSize: getSize.scale(12) }}>Filter</Text>
-                                        <View
-                                            style={{
-                                                fontSize: getSize.scale(12),
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                backgroundColor: 'red',
-                                                width: getSize.scale(16),
-                                                height: getSize.scale(16),
-                                                borderRadius: 50,
-                                                marginHorizontal: getSize.scale(2)
-                                            }}>
-                                            <Text
-                                                style={{
-                                                    fontSize: getSize.scale(12),
-                                                    color: '#fff',
-                                                    fontWeight: 'bold'
-                                                }}>
-                                                2
-                                            </Text>
-                                        </View>
-                                        <Image
-                                            style={{
-                                                marginLeft: getSize.scale(5),
-                                                width: getSize.scale(20),
-                                                height: getSize.scale(20),
-                                                resizeMode: 'contain'
-                                            }}
-                                            source={{ uri: 'ic_filter' }}
-                                        />
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
                         </View>
                     ) : (
                         <View
@@ -826,7 +831,7 @@ class TabBar extends Component
                                     flexDirection: 'row',
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    borderRadius: 20,
+                                    borderRadius: 10,
                                     overflow: 'hidden'
                                 }}>
                                 {this.state.py ? (
@@ -881,7 +886,7 @@ class TabBar extends Component
                                                     <View
                                                         style={{
                                                             backgroundColor:
-                                                                isLowestPrice && '#33ff99',
+                                                                isLowestPrice && '#2EDBDC',
                                                             top: 4,
                                                             height: 5,
                                                             width: 'Lowest Price'.length * 6,
@@ -915,7 +920,7 @@ class TabBar extends Component
                                                     <View
                                                         style={{
                                                             backgroundColor:
-                                                                isHighestPrice && '#33ff99',
+                                                                isHighestPrice && '#2EDBDC',
                                                             top: 4,
                                                             height: 5,
                                                             width: 'Highest Price'.length * 6,
@@ -949,7 +954,7 @@ class TabBar extends Component
                                                     <View
                                                         style={{
                                                             backgroundColor:
-                                                                isLatestPrice && '#33ff99',
+                                                                isLatestPrice && '#2EDBDC',
                                                             top: 4,
                                                             height: 5,
                                                             width: 'Latest'.length * 6,

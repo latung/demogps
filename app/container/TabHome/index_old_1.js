@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import
-    {
-        View,
-        Text,
-        Platform,
-        SafeAreaView,
-        TouchableOpacity,
-        ImageBackground,
-        Image,
-        TextInput,
-        StatusBar
-    } from 'react-native';
+{
+    View,
+    Text,
+    Platform,
+    SafeAreaView,
+    TouchableOpacity,
+    ImageBackground,
+    Image,
+    TextInput,
+    StatusBar
+} from 'react-native';
 import { stackNavigator, tabNavigator } from '../../navigation/nameNavigator';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as _action from '../../redux/action/ActionHandle';
-import { Popup, Header } from '../../components';
+import { Header } from '../../components';
 import { location, getSize, Colors } from '../../common';
 
 class TabHome extends Component

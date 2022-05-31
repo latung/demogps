@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, Platform, ImageBackground } from 'react-native';
 import { stackNavigator } from '../../navigation/nameNavigator';
 import { Popup, Header } from '../../components';
 import { getSize, location } from '../../common';
@@ -28,25 +28,16 @@ class TabRatings extends Component
                     <Head navigation={navigation} />
                 </View>
 
-                <View
+                <ImageBackground
                     style={{
-                        flex: 8,
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                    <Text>Comming soon</Text>
-                    {/* <TouchableOpacity
-                        onPress={() => navigation.navigate(stackNavigator.STEP)}
-                        style={{
-                            height: 40,
-                            width: 200,
-                            backgroundColor: 'violet',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                        <Text>Đi đến màn hình Đi dạo</Text>
-                    </TouchableOpacity> */}
-                </View>
+                        width: getSize.Width,
+                        height: getSize.Height,
+                        position: 'absolute',
+                        resizeMode: 'contain',
+                        zIndex: -2
+                    }}
+                    source={{ uri: 'ic_bg_comingsoon' }}
+                />
             </SafeAreaView>
         );
     }

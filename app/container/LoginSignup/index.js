@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {
+import
+{
     View,
     Text,
     StyleSheet,
@@ -26,8 +27,10 @@ import Activication from './activication';
 import { CONST_STORAGE, storage } from '../../common';
 import * as ApiServices from "./../../service/index";
 const Stack = createNativeStackNavigator();
-class LoginSignup extends Component {
-    constructor(props) {
+class LoginSignup extends Component
+{
+    constructor(props)
+    {
         super(props);
         this.state = {
             email: '',
@@ -39,31 +42,38 @@ class LoginSignup extends Component {
             count: 60
         };
     }
-    onChangeText = (name, itemValue) => {
-        this.setState(state => {
+    onChangeText = (name, itemValue) =>
+    {
+        this.setState(state =>
+        {
             return {
                 [name]: itemValue
             }
         })
     }
-    RegisterCode = () => {
+    RegisterCode = () =>
+    {
         const { action } = this.props;
         const { email } = this.state;
         if (email?.trim()) {
             this.countDown()
-            this.setState(state => {
+            this.setState(state =>
+            {
                 return {
                     isCountDown: true
                 }
-            }, () => {
-                ApiServices.resendRegisterCode({ email: email?.trim()?.toLocaleLowerCase() }).then(res => {
+            }, () =>
+            {
+                ApiServices.resendRegisterCode({ email: email?.trim()?.toLocaleLowerCase() }).then(res =>
+                {
                     if (res.code === 200) {
                         action.resendRegisterCode(res);
                     }
                     if (res.code === 400) {
                         alert(res.message)
                     }
-                }).catch(err => {
+                }).catch(err =>
+                {
                     console.log(err)
                 })
                 // action.resendRegisterCode({ email: email });
@@ -92,29 +102,35 @@ class LoginSignup extends Component {
         }
     }
 
-    SubmitCode = () => {
+    SubmitCode = () =>
+    {
         const { action } = this.props;
         const { email, verificationcode } = this.state;
 
 
-        this.setState(state => {
+        this.setState(state =>
+        {
             return {
                 isSummitCode: true,
             }
-        }, () => {
+        }, () =>
+        {
             action.setUser({
                 email: email?.trim()?.toLocaleLowerCase()
             });
             ApiServices.submitCode({
                 verificationCode: verificationcode,
                 email: email?.trim()?.toLocaleLowerCase()
-            }).then(res => {
+            }).then(res =>
+            {
                 if (res.code === 200) {
-                    this.setState(state => {
+                    this.setState(state =>
+                    {
                         return {
                             isSummitCode: false
                         }
-                    }, () => {
+                    }, () =>
+                    {
                         const { token } = res.data;
                         storage.setItem(CONST_STORAGE.TOKEN_SET_PASSWORD, token);
                         action.submitCode(res.data)
@@ -122,17 +138,20 @@ class LoginSignup extends Component {
                     })
                 }
                 if (res.code === 400) {
-                    this.setState(state => {
+                    this.setState(state =>
+                    {
                         return {
                             isSummitCode: false
                         }
-                    }, () => {
+                    }, () =>
+                    {
                         alert(res.message)
                     })
                 }
                 console.log(res);
 
-            }).catch(err => {
+            }).catch(err =>
+            {
                 console.log(err)
             })
             // action.submitCode({
@@ -171,9 +190,11 @@ class LoginSignup extends Component {
         })
     }
 
-    countDown = () => {
+    countDown = () =>
+    {
         let { count } = this.state;
-        let interval = setInterval(() => {
+        let interval = setInterval(() =>
+        {
             if (count == 0) {
                 clearInterval(interval);
                 this.setState({
@@ -187,11 +208,13 @@ class LoginSignup extends Component {
         }, 1000);
     }
 
-    backAction = () => {
+    backAction = () =>
+    {
 
         this.props.navigation.goBack()
     };
-    componentDidMount() {
+    componentDidMount()
+    {
         // const { submitCode, action } = this.props;
 
         BackHandler.addEventListener(
@@ -200,16 +223,20 @@ class LoginSignup extends Component {
         );
     }
 
-    componentWillUnmount() {
+    componentWillUnmount()
+    {
         BackHandler.removeEventListener(
             "hardwareBackPress",
             this.backAction
         );
     }
-    SetIsHiddenBottom = (type) => {
+    SetIsHiddenBottom = (type) =>
+    {
         if (!type) {
-            setTimeout(() => {
-                this.setState(state => {
+            setTimeout(() =>
+            {
+                this.setState(state =>
+                {
                     return {
                         isHiddenBottom: type
                     }
@@ -217,7 +244,8 @@ class LoginSignup extends Component {
             }, 50);
         }
         else {
-            this.setState(state => {
+            this.setState(state =>
+            {
                 return {
                     isHiddenBottom: type
                 }
@@ -226,9 +254,11 @@ class LoginSignup extends Component {
 
     }
 
-    SetIsAccount = () => {
+    SetIsAccount = () =>
+    {
 
-        this.setState(state => {
+        this.setState(state =>
+        {
             return {
                 isAccount: !state.isAccount
             }
@@ -238,7 +268,8 @@ class LoginSignup extends Component {
     }
 
 
-    render() {
+    render()
+    {
         const {
             User,
             isHiddenBottom,
@@ -285,7 +316,8 @@ class LoginSignup extends Component {
                 </View>}
                 <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
                     <TouchableWithoutFeedback
-                        onPress={() => {
+                        onPress={() =>
+                        {
                             Keyboard.dismiss();
                             this.SetIsHiddenBottom(false);
                         }}
@@ -351,18 +383,34 @@ class LoginSignup extends Component {
                                         width: '100%',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        justifyContent: 'flex-end'
+                                        flex: 1,
+                                        justifyContent: 'flex-end',
+                                        marginBottom: getSize.scale(10)
                                     }}>
                                     <Text
                                         style={{
                                             fontSize: getSize.scale(12),
                                             width: '70%',
-                                            textAlign: 'center'
+                                            textAlign: 'center',
+                                            color: "#0E90F2",
+                                            fontStyle: "italic"
                                         }}>
-                                        Make sure you agree to MOVEARN's
+                                        Make sure you agree to
+
+
                                         <Text
                                             style={{
-                                                color: 'red'
+                                                fontStyle: "italic",
+                                                color: "#0E90F2",
+                                                fontWeight: "bold"
+                                            }}>
+                                            {' '}
+                                            BINAN STEP
+                                        </Text>
+                                        <Text
+                                            style={{
+                                                color: '#2EDBDC',
+                                                fontStyle: "italic"
                                             }}>
                                             {' '}
                                             User Agreement
@@ -370,7 +418,8 @@ class LoginSignup extends Component {
                                         &
                                         <Text
                                             style={{
-                                                color: 'red'
+                                                color: '#2EDBDC',
+                                                fontStyle: "italic"
                                             }}>
                                             {' '}
                                             User Privacy

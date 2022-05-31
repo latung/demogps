@@ -55,7 +55,7 @@ class Profile extends Component
                 <ImageBackground
                     style={{
                         width: getSize.Width,
-                        height: getSize.scale(334),
+                        height: getSize.scale(410),
                         position: 'absolute',
                         resizeMode: 'cover',
                         zIndex: -2,
@@ -168,7 +168,7 @@ class Profile extends Component
                                         <Text
                                             style={{
                                                 fontSize: getSize.scale(14),
-                                                color: 'rgba(44, 44, 44, 1)',
+                                                color: '#FFFFFF',
                                                 fontWeight: 'bold'
                                             }}>
                                             {`${user.username} `}
@@ -216,7 +216,7 @@ class Profile extends Component
                                         <Text
                                             style={{
                                                 fontSize: getSize.scale(14),
-                                                color: 'rgba(118, 118, 118, 1)'
+                                                color: '#FFFFFF',
                                             }}>
                                             {`${user.email} `}
                                         </Text>
@@ -296,7 +296,7 @@ class Profile extends Component
                                             <Text
                                                 style={{
                                                     fontSize: getSize.scale(14),
-                                                    color: 'rgba(244, 67, 105, 1)',
+                                                    color: '#2EDBDC',
                                                     fontWeight: 'bold'
                                                 }}>
                                                 {Totalkm.data?.total_run_distance || 0}
@@ -404,7 +404,7 @@ class Profile extends Component
                         </View>
                     </View>
                     <View style={{ flex: 3, justifyContent: 'space-between' }}>
-                        <View style={{ flex: 0.2 }} />
+                        <View style={{ flex: 1.5 }} />
                         <View
                             style={{
                                 flex: 1.5,
@@ -486,8 +486,8 @@ class Profile extends Component
                             <TouchableOpacity onPress={() => action.login(false)}>
                                 <Image
                                     style={{
-                                        width: getSize.scale(111),
-                                        height: getSize.scale(40),
+                                        width: getSize.scale(200),
+                                        height: getSize.scale(100),
                                         resizeMode: 'contain'
                                     }}
                                     source={{ uri: 'ic_user_btn_logout' }}

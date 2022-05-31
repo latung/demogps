@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
-import {
+import
+{
     View,
     Text,
     SafeAreaView,
@@ -32,8 +33,10 @@ import * as ApiServices from "./../../service/index";
 
 const TIME_REFRESH_WALLET = 3;
 
-class WalletHome extends Component {
-    constructor(props) {
+class WalletHome extends Component
+{
+    constructor(props)
+    {
         super(props);
         this.popupBotomRef = new createRef();
         this.popupRef = new createRef();
@@ -109,20 +112,25 @@ class WalletHome extends Component {
         };
     }
 
-    onShowPoup = () => {
+    onShowPoup = () =>
+    {
         this.popupRef.Show();
     };
 
-    onColsePopup = () => {
+    onColsePopup = () =>
+    {
         this.popupRef.Close();
     };
-    toggleAnimation = (type) => {
+    toggleAnimation = (type) =>
+    {
         if (type) {
-            this.setState(state => {
+            this.setState(state =>
+            {
                 return {
                     viewState: false
                 }
-            }, () => {
+            }, () =>
+            {
                 Animated.timing(this.state.animationValue, {
                     toValue: 150,
                     duration: 500,
@@ -149,12 +157,15 @@ class WalletHome extends Component {
                 toValue: 0,
                 duration: 300,
                 useNativeDriver: false
-            }).start(() => {
-                this.setState(state => {
+            }).start(() =>
+            {
+                this.setState(state =>
+                {
                     return {
                         viewState: true
                     }
-                }, () => {
+                }, () =>
+                {
                     Animated.timing(this.state.animationOpacity1, {
                         toValue: 1,
                         duration: 300,
@@ -167,98 +178,122 @@ class WalletHome extends Component {
 
 
     }
-    _onRefresh = () => {
-        this.setState(state => {
+    _onRefresh = () =>
+    {
+        this.setState(state =>
+        {
             return { refreshing: true }
-        }, () => {
+        }, () =>
+        {
             this.BalanceUserIdBnb();
             this.BalanceUserId();
-            this.setState(state => {
+            this.setState(state =>
+            {
                 return { refreshing: false }
             })
 
         });
 
     }
-    BalanceUserIdBnb = () => {
+    BalanceUserIdBnb = () =>
+    {
 
         const { action, user } = this.props;
-        ApiServices.userIdBnb({ _id: user._id }).then(res => {   //
+        ApiServices.userIdBnb({ _id: user._id }).then(res =>
+        {   //
             console.log("res", res);
             if (res.code === 200) {
                 action.userIdBnb(res.data)
             }
 
-        }).catch(err => {
+        }).catch(err =>
+        {
 
         })
 
 
     }
-    BalanceUserId = () => {
+    BalanceUserId = () =>
+    {
         const { action, user } = this.props;
-        ApiServices.userId({ _id: user._id }).then(res => {
+        ApiServices.userId({ _id: user._id }).then(res =>
+        {
             if (res.code === 200) {
                 action.userId(res.data)
             }
 
-        }).catch(err => {
+        }).catch(err =>
+        {
 
         })
     }
-    componentDidMount() {
-        this.timeIntervalRef = setInterval(() => {
+    componentDidMount()
+    {
+        this.timeIntervalRef = setInterval(() =>
+        {
             this.BalanceUserIdBnb()
             this.BalanceUserId()
         }, TIME_REFRESH_WALLET * 1000);
-        this.props.navigation.addListener('blur', () => {
+        this.props.navigation.addListener('blur', () =>
+        {
             clearInterval(this.timeIntervalRef)
         })
     }
 
-    onShowPoupBottomR = () => {
+    onShowPoupBottomR = () =>
+    {
         this.popupBotomRRef.Show();
 
     }
-    onColsePopupBottomR = () => {
+    onColsePopupBottomR = () =>
+    {
         this.popupBotomRRef.Close();
 
     }
-    onShowPoupBottom = () => {
+    onShowPoupBottom = () =>
+    {
         this.popupBotomRef.Show();
 
     }
-    onColsePopupBottom = () => {
+    onColsePopupBottom = () =>
+    {
         this.popupBotomRef.Close();
 
     }
-    onShowPoup = () => {
+    onShowPoup = () =>
+    {
         this.popupRef.Show();
 
     }
 
-    onColsePopup = () => {
+    onColsePopup = () =>
+    {
         this.popupRef.Close();
 
     }
-    onShowPoupDetail = () => {
+    onShowPoupDetail = () =>
+    {
         this.popupDetailRef.Show();
 
     }
 
-    onColsePopupDetail = () => {
+    onColsePopupDetail = () =>
+    {
         this.popupDetailRef.Close();
 
     }
-    onShowPoupExternal = () => {
+    onShowPoupExternal = () =>
+    {
         this.popupExternalRef.Show();
 
     }
-    onColsePopupExternal = () => {
+    onColsePopupExternal = () =>
+    {
         this.popupExternalRef.Close();
 
     }
-    render() {
+    render()
+    {
 
         const { navigation, userId, user, getRate, getRateBnb, userIdBnb } = this.props;
 
@@ -286,7 +321,7 @@ class WalletHome extends Component {
             }]
 
         return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#000000", }}>
                 <ImageBackground
                     style={{
                         width: getSize.Width,
@@ -302,7 +337,7 @@ class WalletHome extends Component {
                     style={{
                         width: getSize.Width,
                         height: getSize.scale(430),
-                        backgroundColor: 'rgba(247, 245, 248, 1)',
+                        backgroundColor: '#565874',
 
                         borderBottomLeftRadius: getSize.scale(32),
                         borderBottomRightRadius: getSize.scale(32),
@@ -357,7 +392,8 @@ class WalletHome extends Component {
                         </View>
                         <View style={{ flex: 2, justifyContent: 'center', alignItems: 'flex-end' }}>
                             <TouchableOpacity
-                                onPress={() => {
+                                onPress={() =>
+                                {
                                     this.props.navigation.navigate(stackNavigator.WALLET_SETTINGS);
                                 }}>
                                 <Image
@@ -384,6 +420,7 @@ class WalletHome extends Component {
 
                     }}>
                     <View style={{ flex: 1 }}>
+
                         <View
                             style={{
                                 flex: 1.5,
@@ -391,52 +428,82 @@ class WalletHome extends Component {
                                 alignItems: 'center',
 
                             }}>
-                            <Text
-                                style={{
-                                    fontSize: getSize.scale(14),
-                                    color: 'rgba(118, 118, 118, 1)',
-                                    fontStyle: 'italic'
-                                }}>
-                                Total balance
-                            </Text>
                             <View
                                 style={{
+
+                                    alignItems: "flex-start",
+                                    width: "100%"
+                                }}>
+                                <View
+                                    style={{
+                                        borderRadius: getSize.scale(100),
+                                        paddingHorizontal: getSize.scale(24),
+                                        paddingVertical: getSize.scale(8),
+
+                                        backgroundColor: '#96CFE1',
+                                        marginVertical: getSize.scale(16),
+                                        alignItems: "flex-start",
+                                        justifyContent: "space-between",
+                                        flexDirection: "row"
+                                    }}>
+                                    <Text style={{ color: '#ffffff', fontWeight: 'bold' }}>
+                                        {address}
+                                    </Text>
+                                    <Image source={{ uri: "ic_copy" }} style={{ width: 20, height: 20, resizeMode: "contain" }} />
+                                </View>
+                            </View>
+
+
+                            <View
+                                style={{
+                                    justifyContent: 'flex-start',
+                                    alignItems: 'flex-start',
+                                    flexDirection: 'row',
+
+                                    width: "100%"
+                                }}>
+                                <Text
+                                    style={{
+                                        fontSize: getSize.scale(16),
+                                        color: '#FFFFFF',
+                                        fontStyle: 'italic',
+                                        marginTop: getSize.scale(10)
+
+                                    }}>
+                                    Total balance:
+                                </Text>
+                                <View style={{
                                     justifyContent: 'space-between',
                                     alignItems: 'center',
-                                    flexDirection: 'column'
+                                    flexDirection: 'column',
+                                    marginLeft: getSize.scale(10),
+                                    marginBottom: getSize.scale(20)
                                 }}>
-                                <Text
-                                    style={{
-                                        fontSize: getSize.scale(32),
-                                        fontWeight: 'bold',
-                                        fontStyle: 'italic',
-                                        color: 'rgba(244, 67, 105, 1)',
-                                        marginVertical: getSize.scale(8)
-                                    }}>
-                                    $ {totalBalanceUsd ? Number(totalBalanceUsd).toFixed(2) : "0"}
-                                </Text>
-                                <Text
-                                    style={{
-                                        fontSize: getSize.scale(18),
-                                        fontStyle: 'italic',
-                                        color: 'rgba(44, 44, 44, 1)',
-                                        textAlign: 'center'
-                                    }}>
-                                    MOV:  {totalBalancemer ? Number(totalBalancemer).toFixed(2) : "0"}
-                                </Text>
+
+                                    <Text
+                                        style={{
+                                            fontSize: getSize.scale(32),
+                                            fontWeight: 'bold',
+                                            fontStyle: 'italic',
+                                            color: '#FFFFFF',
+
+                                        }}>
+                                        $ {totalBalanceUsd ? Number(totalBalanceUsd).toFixed(2) : "0"}
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            fontSize: getSize.scale(18),
+                                            fontStyle: 'italic',
+                                            color: '#FFFFFF',
+                                            textAlign: 'center',
+
+                                        }}>
+                                        MOV:  {totalBalancemer ? Number(totalBalancemer).toFixed(2) : "0"}
+                                    </Text>
+                                </View>
+
                             </View>
-                            <View
-                                style={{
-                                    borderRadius: getSize.scale(100),
-                                    paddingHorizontal: getSize.scale(24),
-                                    paddingVertical: getSize.scale(8),
-                                    backgroundColor: 'rgba(167, 155, 191, 1)',
-                                    marginVertical: getSize.scale(16)
-                                }}>
-                                <Text style={{ color: '#ffffff', fontWeight: 'bold' }}>
-                                    {address}
-                                </Text>
-                            </View>
+
                             <View
                                 style={{
                                     flexDirection: 'row',
@@ -465,7 +532,8 @@ class WalletHome extends Component {
                                                 fontStyle: 'italic',
                                                 fontSize: getSize.scale(14),
                                                 textAlign: 'center',
-                                                marginTop: getSize.scale(8)
+                                                marginTop: getSize.scale(8),
+                                                color: '#FFFFFF',
                                             }}>
                                             Receive
                                         </Text>
@@ -490,7 +558,8 @@ class WalletHome extends Component {
                                                 fontStyle: 'italic',
                                                 fontSize: getSize.scale(14),
                                                 textAlign: 'center',
-                                                marginTop: getSize.scale(8)
+                                                marginTop: getSize.scale(8),
+                                                color: '#FFFFFF',
                                             }}>
                                             Transfer
                                         </Text>
@@ -519,7 +588,8 @@ class WalletHome extends Component {
                                                 fontStyle: 'italic',
                                                 fontSize: getSize.scale(14),
                                                 textAlign: 'center',
-                                                marginTop: getSize.scale(8)
+                                                marginTop: getSize.scale(8),
+                                                color: '#FFFFFF',
                                             }}>
                                             Trade
                                         </Text>
@@ -543,7 +613,8 @@ class WalletHome extends Component {
                                     <Text
                                         style={{
                                             fontWeight: 'bold',
-                                            fontSize: getSize.scale(16)
+                                            fontSize: getSize.scale(16),
+                                            color: '#FFFFFF',
                                         }}>
                                         Wallet Account
                                     </Text>
@@ -561,7 +632,8 @@ class WalletHome extends Component {
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                            {dataBalance && dataBalance.map((item, index) => {
+                            {dataBalance && dataBalance.map((item, index) =>
+                            {
                                 return <View
                                     style={{
                                         justifyContent: 'space-between',
@@ -802,7 +874,7 @@ class WalletHome extends Component {
                                     paddingHorizontal: getSize.scale(16),
                                     alignItems: 'center',
                                     justifyContent: 'space-between',
-                                    backgroundColor: '#ffffff',
+                                    backgroundColor: '#96CFE1',
                                     paddingVertical: getSize.scale(10),
                                     borderRadius: 20,
                                     alignItems: 'center',
@@ -846,11 +918,106 @@ class WalletHome extends Component {
                                                 fontSize: getSize.scale(32),
                                                 fontWeight: 'bold',
                                                 fontStyle: 'italic',
-                                                color: 'rgba(244, 67, 105, 1)',
+                                                color: '#ffffff',
                                                 marginVertical: getSize.scale(16)
                                             }}>
                                             158.5
                                         </Text>
+                                    </View>
+
+                                    <Text
+                                        style={{
+                                            fontSize: getSize.scale(14),
+                                            color: 'rgba(44, 44, 44, 1)',
+                                            fontWeight: 'bold',
+                                            marginVertical: getSize.scale(16)
+                                        }}>
+                                        Transaction records
+                                    </Text>
+                                    <View style={{ height: getSize.Width / 1.5 }}>
+                                        <FlatList
+                                            showsHorizontalScrollIndicator={false}
+                                            showsVerticalScrollIndicator={false}
+                                            keyExtractor={(item, index) => index}
+                                            data={data}
+                                            renderItem={({ item, index }) => (
+                                                <View style={{ flex: 1 }}>
+                                                    <View
+                                                        style={{
+                                                            width: getSize.Width - getSize.scale(96)
+                                                        }}>
+                                                        <TouchableOpacity
+                                                            activeOpacity={1}
+                                                            style={{
+                                                                flex: 1,
+                                                                flexDirection: 'row',
+                                                                alignItems: 'center',
+                                                                justifyContent: 'space-between'
+                                                            }}>
+                                                            <View
+                                                                style={{
+                                                                    flexDirection: 'row',
+                                                                    alignItems: 'flex-start'
+                                                                }}>
+                                                                <Image
+                                                                    style={{
+                                                                        width: getSize.scale(16),
+                                                                        height: getSize.scale(50),
+                                                                        resizeMode: 'contain'
+                                                                    }}
+                                                                    source={{
+                                                                        uri: 'ic_wallet_line_trans'
+                                                                    }}
+                                                                />
+                                                                <View
+                                                                    style={{
+                                                                        justifyContent:
+                                                                            'space-evenly'
+                                                                    }}>
+                                                                    <Text
+                                                                        style={{
+                                                                            flex: 1,
+                                                                            fontSize:
+                                                                                getSize.scale(12),
+                                                                            fontStyle: 'italic'
+                                                                        }}>
+                                                                        {item.dateTime}
+                                                                    </Text>
+                                                                    <Text
+                                                                        style={{
+                                                                            flex: 1,
+                                                                            fontSize:
+                                                                                getSize.scale(14),
+                                                                            fontWeight: 'bold',
+                                                                            fontStyle: 'italic',
+                                                                            color:
+                                                                                item.status === 1
+                                                                                    ? 'rgba(36, 158, 26, 1)'
+                                                                                    : item.status ===
+                                                                                        2
+                                                                                        ? 'rgba(240, 137, 17, 1)'
+                                                                                        : 'rgba(218, 33, 21, 1)'
+                                                                        }}>
+                                                                        {item.statusName}
+                                                                    </Text>
+                                                                </View>
+                                                            </View>
+                                                            <Text
+                                                                style={{
+                                                                    fontSize: getSize.scale(14)
+                                                                }}>
+                                                                {`${item.merValue} MOV`}
+                                                            </Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                </View>
+                                            )}
+                                        // refreshControl={<RefreshControl onRefresh={this.handleReload} refreshing={false} />}
+                                        // ListEmptyComponent={this.renderEmptyList()}
+                                        // ListFooterComponent={this.renderFooter()}
+                                        // onEndReached={this.handleLoadMore}
+                                        // onEndReachedThreshold={0.2}
+                                        />
                                     </View>
                                     <View
                                         style={{
@@ -952,100 +1119,6 @@ class WalletHome extends Component {
                                         </View>
                                     </View>
 
-                                    <Text
-                                        style={{
-                                            fontSize: getSize.scale(14),
-                                            color: 'rgba(44, 44, 44, 1)',
-                                            fontWeight: 'bold',
-                                            marginVertical: getSize.scale(16)
-                                        }}>
-                                        Transaction records
-                                    </Text>
-                                    <View style={{ height: getSize.Width / 1.5 }}>
-                                        <FlatList
-                                            showsHorizontalScrollIndicator={false}
-                                            showsVerticalScrollIndicator={false}
-                                            keyExtractor={(item, index) => index}
-                                            data={data}
-                                            renderItem={({ item, index }) => (
-                                                <View style={{ flex: 1 }}>
-                                                    <View
-                                                        style={{
-                                                            width: getSize.Width - getSize.scale(96)
-                                                        }}>
-                                                        <TouchableOpacity
-                                                            activeOpacity={1}
-                                                            style={{
-                                                                flex: 1,
-                                                                flexDirection: 'row',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'space-between'
-                                                            }}>
-                                                            <View
-                                                                style={{
-                                                                    flexDirection: 'row',
-                                                                    alignItems: 'flex-start'
-                                                                }}>
-                                                                <Image
-                                                                    style={{
-                                                                        width: getSize.scale(16),
-                                                                        height: getSize.scale(50),
-                                                                        resizeMode: 'contain'
-                                                                    }}
-                                                                    source={{
-                                                                        uri: 'ic_wallet_line_trans'
-                                                                    }}
-                                                                />
-                                                                <View
-                                                                    style={{
-                                                                        justifyContent:
-                                                                            'space-evenly'
-                                                                    }}>
-                                                                    <Text
-                                                                        style={{
-                                                                            flex: 1,
-                                                                            fontSize:
-                                                                                getSize.scale(12),
-                                                                            fontStyle: 'italic'
-                                                                        }}>
-                                                                        {item.dateTime}
-                                                                    </Text>
-                                                                    <Text
-                                                                        style={{
-                                                                            flex: 1,
-                                                                            fontSize:
-                                                                                getSize.scale(14),
-                                                                            fontWeight: 'bold',
-                                                                            fontStyle: 'italic',
-                                                                            color:
-                                                                                item.status === 1
-                                                                                    ? 'rgba(36, 158, 26, 1)'
-                                                                                    : item.status ===
-                                                                                        2
-                                                                                        ? 'rgba(240, 137, 17, 1)'
-                                                                                        : 'rgba(218, 33, 21, 1)'
-                                                                        }}>
-                                                                        {item.statusName}
-                                                                    </Text>
-                                                                </View>
-                                                            </View>
-                                                            <Text
-                                                                style={{
-                                                                    fontSize: getSize.scale(14)
-                                                                }}>
-                                                                {`${item.merValue} MOV`}
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                    </View>
-                                                </View>
-                                            )}
-                                        // refreshControl={<RefreshControl onRefresh={this.handleReload} refreshing={false} />}
-                                        // ListEmptyComponent={this.renderEmptyList()}
-                                        // ListFooterComponent={this.renderFooter()}
-                                        // onEndReached={this.handleLoadMore}
-                                        // onEndReachedThreshold={0.2}
-                                        />
-                                    </View>
                                 </View>
                             </View>
 
@@ -1079,7 +1152,8 @@ class WalletHome extends Component {
                 </Modal>
                 {/* Popup */}
                 <Poup
-                    ref={(target) => {
+                    ref={(target) =>
+                    {
                         this.popupRef = target;
                     }}
                     onTouchOutside={this.onColsePopup}

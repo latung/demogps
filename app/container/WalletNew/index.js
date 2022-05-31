@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {
+import
+{
     View,
     Text,
     SafeAreaView,
@@ -18,8 +19,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as _action from '../../redux/action/ActionHandle';
 import { BackupCode } from '../../service';
-class NewWallet extends Component {
-    constructor(props) {
+class NewWallet extends Component
+{
+    constructor(props)
+    {
         super(props);
         this.state = {
             name: '',
@@ -80,36 +83,44 @@ class NewWallet extends Component {
             ]
         };
     }
-    onChangeText = (name, itemValue) => {
-        this.setState((state) => {
+    onChangeText = (name, itemValue) =>
+    {
+        this.setState((state) =>
+        {
             return {
                 [name]: itemValue
             };
         });
     };
-    SetIsHiddenBottom = (type) => {
+    SetIsHiddenBottom = (type) =>
+    {
         if (!type) {
-            setTimeout(() => {
-                this.setState((state) => {
+            setTimeout(() =>
+            {
+                this.setState((state) =>
+                {
                     return {
                         isHiddenBottom: type
                     };
                 });
             }, 50);
         } else {
-            this.setState((state) => {
+            this.setState((state) =>
+            {
                 return {
                     isHiddenBottom: type
                 };
             });
         }
     };
-    CopyPrivateKey = async () => {
+    CopyPrivateKey = async () =>
+    {
 
         const content = await Clipboard.setString(this.state.privateKey);
         alert("Copy Success!")
     }
-    componentDidMount = async () => {
+    componentDidMount = async () =>
+    {
         let { SetPassBackup } = this.props
 
         // let dataSet = await BackupCode(user._id, SetPassBackup);
@@ -119,29 +130,32 @@ class NewWallet extends Component {
         if (Number(dataSet.data.code) == 200) {
 
 
-            this.setState(state => {
+            this.setState(state =>
+            {
                 return {
                     privateKey: dataSet.data.data.privateKey
                 }
             })
         } else {
-            this.setState(state => {
+            this.setState(state =>
+            {
                 return {
                     codeBackup: "erro"
                 }
             })
         }
     }
-    render() {
+    render()
+    {
         const { navigation, action } = this.props;
         const { data, isSeedPhrase, modalMER } = this.state;
         return (
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#000000" }}>
                 <View
                     style={{
                         width: getSize.Width,
                         height: getSize.scale(320),
-                        backgroundColor: 'rgba(247, 245, 248, 1)',
+                        backgroundColor: '#555774',
 
                         borderBottomLeftRadius: getSize.scale(32),
                         borderBottomRightRadius: getSize.scale(32),
@@ -287,7 +301,8 @@ class NewWallet extends Component {
                                         <TouchableOpacity
                                             style={styles.containerBtn}
                                             disabled={this.state.privateKey ? false : true}
-                                            onPress={() => {
+                                            onPress={() =>
+                                            {
                                                 this.CopyPrivateKey();
                                             }}>
                                             <Text style={styles.txtCopy}>
@@ -414,7 +429,8 @@ class NewWallet extends Component {
                                     paddingHorizontal: getSize.scale(16)
                                 }}>
                                 <TouchableOpacity
-                                    onPress={() => {
+                                    onPress={() =>
+                                    {
                                         if (isSeedPhrase) {
                                             return this.setState({
                                                 ...this.state,

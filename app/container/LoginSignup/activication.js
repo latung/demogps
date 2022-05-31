@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {
+import
+{
     View,
     Text,
     StyleSheet,
@@ -14,14 +15,17 @@ import { tabNavigator, stackNavigator } from '../../navigation/nameNavigator';
 import * as _action from '../../redux/action/ActionHandle';
 import { location, getSize, Colors } from '../../common/';
 
-class Activicaction extends Component {
-    constructor(props) {
+class Activicaction extends Component
+{
+    constructor(props)
+    {
         super(props);
         this.state = {};
     }
 
 
-    render() {
+    render()
+    {
         const {
             isAccount,
             isCountDown,
@@ -121,7 +125,7 @@ class Activicaction extends Component {
                                         style={{
                                             fontSize: getSize.scale(15),
                                             fontWeight: 'bold',
-                                            color: '#F44369'
+                                            color: '#2EDBDC'
                                         }}>
                                         Get code
                                     </Text>
@@ -132,7 +136,7 @@ class Activicaction extends Component {
                                             style={{
                                                 fontSize: getSize.scale(15),
                                                 fontWeight: 'bold',
-                                                color: '#F44369'
+                                                color: '#2EDBDC'
                                             }}>
                                             {count}s
                                         </Text>
@@ -271,7 +275,7 @@ const styles = StyleSheet.create({
     txtBack: {
         fontSize: getSize.scale(20),
         fontWeight: 'bold',
-        color: '#767676'
+        color: '#FFFFFF'
     }
 });
 export default Activicaction;

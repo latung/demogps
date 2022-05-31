@@ -283,7 +283,7 @@ class Transfer extends Component
                     justifyContent: "center",
                     alignItems: "center"
                 }}>
-                    <ActivityIndicator size="large" color="#F44369" />
+                    <ActivityIndicator size="large" color="#2EDBDC" />
                 </View>}
                 <View
                     style={{
@@ -380,7 +380,7 @@ class Transfer extends Component
                                 <View
                                     style={{
                                         flex: 1,
-                                        backgroundColor: isSpending ? '#F44369' : 'transparent',
+                                        backgroundColor: isSpending ? '#2EDBDC' : 'transparent',
                                         width: '100%',
                                         alignItems: 'center',
                                         justifyContent: 'center'
@@ -408,7 +408,7 @@ class Transfer extends Component
                                 <View
                                     style={{
                                         flex: 1,
-                                        backgroundColor: isExternal ? '#F44369' : 'transparent',
+                                        backgroundColor: isExternal ? '#2EDBDC' : 'transparent',
                                         width: '100%',
                                         alignItems: 'center',
                                         justifyContent: 'center'
@@ -529,7 +529,7 @@ class Transfer extends Component
                                             source={{ uri: 'ic_frame' }}
                                             style={{
                                                 width: getSize.Width - getSize.scale(32),
-                                                height: getSize.scale(117),
+                                                height: getSize.scale(97),
                                                 justifyContent: 'center',
                                                 alignItems: 'center'
                                             }}>
@@ -600,7 +600,7 @@ class Transfer extends Component
                                                                 fontSize: getSize.scale(14),
                                                                 marginLeft: getSize.scale(16),
                                                                 fontWeight: 'bold',
-                                                                color: '#F44369',
+                                                                color: '#2EDBDC',
                                                                 fontStyle: 'italic'
                                                             }}>
                                                             All

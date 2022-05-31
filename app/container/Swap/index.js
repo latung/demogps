@@ -326,7 +326,7 @@ class Swap extends Component
             <SafeAreaView
                 style={{
                     flex: 1,
-                    backgroundColor: '#ffffff'
+                    backgroundColor: '#000000'
                 }}>
                 <ImageBackground
                     style={{
@@ -449,7 +449,7 @@ class Swap extends Component
                                 source={{ uri: 'ic_frame' }}
                                 style={{
                                     width: getSize.Width - getSize.scale(32),
-                                    height: getSize.scale(117)
+                                    height: getSize.scale(97)
                                 }}>
                                 <View
                                     style={{
@@ -496,7 +496,7 @@ class Swap extends Component
                                                 fontSize: getSize.scale(14),
                                                 fontWeight: 'bold',
                                                 fontStyle: 'italic',
-                                                color: 'rgba(244, 67, 105, 1)',
+                                                color: '#2EDBDC',
                                                 marginLeft: getSize.scale(16)
                                             }}>
                                             All
@@ -564,7 +564,7 @@ class Swap extends Component
                                 source={{ uri: 'ic_frame' }}
                                 style={{
                                     width: getSize.Width - getSize.scale(32),
-                                    height: getSize.scale(117)
+                                    height: getSize.scale(97)
                                 }}>
                                 <View
                                     style={{
@@ -609,7 +609,7 @@ class Swap extends Component
                                     </View>
                                 </View>
                             </ImageBackground>
-                            <View style={{ alignItems: 'center', marginTop: getSize.scale(16) }}>
+                            <View style={{ alignItems: 'flex-start', marginTop: getSize.scale(16) }}>
                                 <Text
                                     style={{
                                         color: 'rgba(44, 44, 44, 1)',

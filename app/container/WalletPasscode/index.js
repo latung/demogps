@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {
+import
+{
     View,
     Text,
     SafeAreaView,
@@ -21,8 +22,10 @@ import { connect } from 'react-redux';
 import * as _action from '../../redux/action/ActionHandle';
 import { set_pass, check_pass } from '../../service';
 
-class WalletPasscode extends Component {
-    constructor(props) {
+class WalletPasscode extends Component
+{
+    constructor(props)
+    {
         super(props);
         this.state = {
             name: '',
@@ -37,11 +40,13 @@ class WalletPasscode extends Component {
             isSetpass: false
         };
     }
-    componentDidMount() {
+    componentDidMount()
+    {
 
 
     }
-    handle = () => {
+    handle = () =>
+    {
         const { navigation, action, userIdBnb, user } = this.props;
         let isPass = userIdBnb.data.isPass;
 
@@ -49,7 +54,8 @@ class WalletPasscode extends Component {
 
             if (this.state.isCreate) {
 
-                this.setState(state => {
+                this.setState(state =>
+                {
                     return {
                         isConfirm: true,
                         isCreate: false
@@ -63,11 +69,13 @@ class WalletPasscode extends Component {
 
                 if (this.state.inputCreatePasscode === this.state.inputConfirmPasscode) {
 
-                    this.setState(state => {
+                    this.setState(state =>
+                    {
                         return {
                             isSetpass: true
                         }
-                    }, async () => {
+                    }, async () =>
+                    {
                         // action.passCodeWallet({ _id: user._id, pass: this.state.inputConfirmPasscode });
                         let dataSet = await set_pass(user._id, this.state.inputConfirmPasscode);
                         // console.log(' dataSet í s', dataSet);
@@ -79,7 +87,8 @@ class WalletPasscode extends Component {
                         } else {
                             alert(dataSet.data.message)
                         }
-                        this.setState(state => {
+                        this.setState(state =>
+                        {
                             return {
                                 isSetpass: false
                             }
@@ -96,11 +105,13 @@ class WalletPasscode extends Component {
 
         }
         else {
-            this.setState(state => {
+            this.setState(state =>
+            {
                 return {
                     isSetpass: true
                 }
-            }, async () => {
+            }, async () =>
+            {
                 let dataSet = await check_pass(user._id, this.state.inputPasscode);
                 // let dataSet = await check_pass("627b6068698ae1a4a6a142eb", "1");
                 if (Number(dataSet.data.code) == 200) {
@@ -114,7 +125,8 @@ class WalletPasscode extends Component {
                 } else {
                     alert(dataSet.data.message)
                 }
-                this.setState(state => {
+                this.setState(state =>
+                {
                     return {
                         isSetpass: false
                     }
@@ -126,7 +138,8 @@ class WalletPasscode extends Component {
 
     };
 
-    render() {
+    render()
+    {
         const { navigation, action, userIdBnb, passCodeWallet } = this.props;
         const { isSetpass, isCreate } = this.state;
 
@@ -134,7 +147,7 @@ class WalletPasscode extends Component {
 
 
         return (
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#000000", }}>
                 <ImageBackground
                     style={{
                         width: getSize.Width,
@@ -157,7 +170,7 @@ class WalletPasscode extends Component {
                     justifyContent: "center",
                     alignItems: "center"
                 }}>
-                    <ActivityIndicator size="large" color="#F44369" />
+                    <ActivityIndicator size="large" color="#2EDBDC" />
                 </View>}
                 <View
                     style={{
@@ -257,14 +270,16 @@ class WalletPasscode extends Component {
                                             fontWeight: 'bold',
                                             color: "#000000"
                                         }}
-                                        onChangeText={(text) => {
+                                        onChangeText={(text) =>
+                                        {
                                             this.setState({
                                                 ...this.state,
                                                 inputPasscode: text
                                             })
                                         }
                                         }
-                                        value={() => {
+                                        value={() =>
+                                        {
                                             this.state.inputPasscode
                                         }}
                                         placeholder={'******'}
@@ -278,14 +293,16 @@ class WalletPasscode extends Component {
                                             fontWeight: 'bold',
                                             color: "#000000"
                                         }}
-                                        onChangeText={(text) => {
+                                        onChangeText={(text) =>
+                                        {
                                             this.setState({
                                                 ...this.state,
                                                 inputCreatePasscode: text
                                             })
                                         }
                                         }
-                                        value={() => {
+                                        value={() =>
+                                        {
                                             this.state.inputCreatePasscode
                                         }}
                                         placeholder={'******'}
@@ -299,14 +316,16 @@ class WalletPasscode extends Component {
                                             fontWeight: 'bold',
                                             color: "#000000"
                                         }}
-                                        onChangeText={(text) => {
+                                        onChangeText={(text) =>
+                                        {
                                             this.setState({
                                                 ...this.state,
                                                 inputConfirmPasscode: text
                                             })
                                         }
                                         }
-                                        value={() => {
+                                        value={() =>
+                                        {
                                             this.state.inputConfirmPasscode
                                         }}
                                         placeholder={'******'}

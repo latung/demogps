@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect, forwardRef } from 'react';
-import {
+
+import
+{
     View,
     Image,
     TouchableOpacity,
@@ -51,7 +53,8 @@ import { cloneDeep } from 'lodash'
 
 // let countTest = 0
 
-function Item() {
+function Item()
+{
     const navigation = useNavigation();
     const selector = useSelector((state) => ({
         screenState: state.initReducer.screenState,
@@ -81,37 +84,46 @@ function Item() {
     const refTimeInterval = useRef(null)
     const refLocationsStore = useRef(null)
 
-    const mainFuncThread = () => {
-        refTimeInterval.current = setInterval(() => {
+    const mainFuncThread = () =>
+    {
+        refTimeInterval.current = setInterval(() =>
+        {
             setTimeRun((preSta) => preSta + 1)
             handleLocationsFunc()
         }, 1000);
     }
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         mainFuncThread()
-        return () => {
+        return () =>
+        {
             clearInterval(refTimeInterval.current)
         }
     }, []);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         dispatch(_action.isStepTimer(timeRun));
     }, [timeRun])
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         dispatch(_action.changeScreenState({
             distance: totalKm
         }))
     }, [totalKm])
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         refLocationsStore.current = selector.screenState.dataLocation
     }, [selector.screenState.dataLocation?.length])
 
-    const handleLocationsFunc = () => {
+    const handleLocationsFunc = () =>
+    {
         Geolocation.getCurrentPosition(
-            (position) => {
+            (position) =>
+            {
                 let { longitude, latitude, speed } = position.coords;
 
                 const dateNow = Date.now()
@@ -184,7 +196,8 @@ function Item() {
                 refLocations.current.longitude = longitude
                 refLocations.current.time = dateNow;
             },
-            (error) => {
+            (error) =>
+            {
                 console.log(error.code, error.message);
             },
             {
@@ -195,14 +208,16 @@ function Item() {
         );
     }
 
-    const putRunningSessionId = (status) => {
+    const putRunningSessionId = (status) =>
+    {
         if (selector.run) {
             dispatch(
                 _action.putRunningSessionId({ distance: selector.screenState.distance, status: status, _id: selector.run.data._id }));
         }
 
     }
-    const CheckSpeed = (idSs, speed, receivedUSDTt, min, max, distanceKm) => {
+    const CheckSpeed = (idSs, speed, receivedUSDTt, min, max, distanceKm) =>
+    {
         const CurrentSpeed = speed;//(speed * 3.6);
         dispatch(
             _action.changeScreenState({
@@ -219,7 +234,8 @@ function Item() {
 
     }
 
-    const getSpeedRange = () => {
+    const getSpeedRange = () =>
+    {
         let result = '';
         if (selector.getConstShoe) {
             const speedRange = selector.getConstShoe.data.SPEED_RANGE;
@@ -238,7 +254,8 @@ function Item() {
         return result;
     }
     // TIMER
-    const formatTime = (timer) => {
+    const formatTime = (timer) =>
+    {
         const getSeconds = `0${timer % 60}`.slice(-2);
         const minutes = `${Math.floor(timer / 60)}`;
         const getMinutes = `0${minutes % 60}`.slice(-2);
@@ -247,7 +264,8 @@ function Item() {
             ? `${getHours}:${getMinutes}:${getSeconds}`
             : `${getMinutes}:${getSeconds}`;
     };
-    const handlePause = () => {
+    const handlePause = () =>
+    {
         clearInterval(refTimeInterval.current)
         clearInterval(countRef.current);
         setisPress(false);
@@ -259,7 +277,8 @@ function Item() {
             })
         );
     };
-    const handleResume = () => {
+    const handleResume = () =>
+    {
         mainFuncThread()
         setisPress(false);
         dispatch(
@@ -272,12 +291,14 @@ function Item() {
         if (countRef.current) {
             clearTimeout(countRef.current);
         }
-        countRef.current = setInterval(() => {
+        countRef.current = setInterval(() =>
+        {
             dispatch(_action.isStepTimer(++selector.initReducer.isStepTimer));
         }, 1000);
     };
 
-    const handleStepStop = () => {
+    const handleStepStop = () =>
+    {
         setmodalVisible(false);
         if (countRef.current) {
             clearTimeout(countRef.current);
@@ -316,7 +337,8 @@ function Item() {
                         marginHorizontal: getSize.scale(16)
                     }}>
                     <TouchableOpacity
-                        onPress={() => {
+                        onPress={() =>
+                        {
                             clearInterval(countRef.current);
                             setisPress(false);
                             dispatch(
@@ -385,119 +407,6 @@ function Item() {
 
             {/* Content */}
             <View style={{ flex: 7 }}>
-                <View
-                    style={{
-                        flex: 2,
-                        width: '100%',
-                        flexDirection: 'row',
-                        justifyContent: 'space-evenly'
-                    }}>
-                    <View
-                        style={{
-                            flex: 1,
-                            alignItems: 'center',
-                            justifyContent: 'flex-start'
-                        }}>
-                        <Image
-                            style={{
-                                width: getSize.scale(22),
-                                height: getSize.scale(22),
-                                resizeMode: 'contain'
-                            }}
-                            source={{ uri: 'ic_clock_grey' }}
-                        />
-                        <Text
-                            style={{
-                                fontSize: getSize.scale(24),
-                                color: '#000',
-                                fontWeight: 'bold',
-                                fontStyle: 'italic',
-                                marginTop: getSize.scale(11)
-                            }}>
-                            {`${formatTime(timeRun)}`}
-                        </Text>
-                        <Text
-                            style={{
-                                fontSize: getSize.scale(14),
-                                color: '#A79BBF',
-                                // fontWeight: 'bold',
-                                fontStyle: 'italic',
-                                marginTop: getSize.scale(8)
-                            }}>
-                            time
-                        </Text>
-                    </View>
-
-                    <View
-                        style={{
-                            flex: 1,
-                            alignItems: 'center',
-                            justifyContent: 'flex-start'
-                        }}>
-                        <Image
-                            style={{
-                                width: getSize.scale(24),
-                                height: getSize.scale(24),
-                                resizeMode: 'contain'
-                            }}
-                            source={{ uri: 'ic_fast' }}
-                        />
-                        <Text
-                            style={{
-                                fontSize: getSize.scale(24),
-                                color: '#000',
-                                fontWeight: 'bold',
-                                fontStyle: 'italic',
-                                marginTop: getSize.scale(11)
-                            }}>
-                            {kmhState.toFixed(2) || '0.00'}
-                        </Text>
-                        <Text
-                            style={{
-                                fontSize: getSize.scale(14),
-                                color: '#A79BBF',
-                                // fontWeight: 'bold',
-                                fontStyle: 'italic',
-                                marginTop: getSize.scale(8)
-                            }}>
-                            km/h
-                        </Text>
-                    </View>
-                    <View
-                        style={{
-                            flex: 1,
-                            alignItems: 'center'
-                        }}>
-                        <Image
-                            style={{
-                                width: getSize.scale(24),
-                                height: getSize.scale(24),
-                                resizeMode: 'contain'
-                            }}
-                            source={{ uri: 'ic_ray' }}
-                        />
-                        <Text
-                            style={{
-                                fontSize: getSize.scale(24),
-                                color: '#000',
-                                fontWeight: 'bold',
-                                fontStyle: 'italic',
-                                marginTop: getSize.scale(11)
-                            }}>
-                            {energy || 0}
-                        </Text>
-                        <Text
-                            style={{
-                                fontSize: getSize.scale(14),
-                                color: '#A79BBF',
-                                // fontWeight: 'bold',
-                                fontStyle: 'italic',
-                                marginTop: getSize.scale(8)
-                            }}>
-                            energy
-                        </Text>
-                    </View>
-                </View>
 
                 <View
                     style={{
@@ -509,7 +418,7 @@ function Item() {
                         size={getSize.scale(294)}
                         width={18}
                         fill={(kmhState * 100) / 20} // {selector.screenState.speed} speedMin:8 - fillMin:0 : speedMax:20 - fillMax:100
-                        tintColor="rgba(244, 67, 105, 1)" // "#00e0ff"
+                        tintColor="#2EDBDC" // "#00e0ff"
                         arcSweepAngle={280}
                         rotation={220}
                         lineCap="round"
@@ -546,7 +455,7 @@ function Item() {
                                     <Text
                                         style={{
                                             fontSize: getSize.scale(64),
-                                            color: 'rgba(244, 67, 105, 1)',
+                                            color: '#2EDBDC',
                                             fontWeight: 'bold',
                                             fontStyle: 'italic'
                                         }}>
@@ -584,7 +493,8 @@ function Item() {
                                             marginLeft: getSize.scale(8),
                                             color: '#000',
                                             fontWeight: 'bold',
-                                            fontStyle: 'italic'
+                                            fontStyle: 'italic',
+                                            color: "#ffffff"
                                         }}>
                                         {`${Number(reciveUsdt).toFixed(2)}`}
                                     </Text>
@@ -593,6 +503,123 @@ function Item() {
                         )}
                     </AnimatedCircularProgress>
                 </View>
+                <View
+                    style={{
+                        flex: 2,
+                        width: '100%',
+                        flexDirection: 'row',
+                        justifyContent: 'space-evenly'
+                    }}>
+                    <View
+                        style={{
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'flex-start'
+                        }}>
+                        <Image
+                            style={{
+                                width: getSize.scale(22),
+                                height: getSize.scale(22),
+                                resizeMode: 'contain'
+                            }}
+                            source={{ uri: 'ic_clock_grey' }}
+                        />
+                        <Text
+                            style={{
+                                fontSize: getSize.scale(24),
+                                color: '#000',
+                                fontWeight: 'bold',
+                                fontStyle: 'italic',
+                                marginTop: getSize.scale(11),
+                                color: "#ffffff"
+                            }}>
+                            {`${formatTime(timeRun)}`}
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: getSize.scale(14),
+                                color: '#A79BBF',
+                                // fontWeight: 'bold',
+                                fontStyle: 'italic',
+                                marginTop: getSize.scale(8)
+                            }}>
+                            time
+                        </Text>
+                    </View>
+
+                    <View
+                        style={{
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'flex-start'
+                        }}>
+                        <Image
+                            style={{
+                                width: getSize.scale(24),
+                                height: getSize.scale(24),
+                                resizeMode: 'contain'
+                            }}
+                            source={{ uri: 'ic_fast' }}
+                        />
+                        <Text
+                            style={{
+                                fontSize: getSize.scale(24),
+                                color: '#000',
+                                fontWeight: 'bold',
+                                fontStyle: 'italic',
+                                marginTop: getSize.scale(11),
+                                color: "#ffffff"
+                            }}>
+                            {kmhState.toFixed(2) || '0.00'}
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: getSize.scale(14),
+                                color: '#A79BBF',
+                                // fontWeight: 'bold',
+                                fontStyle: 'italic',
+                                marginTop: getSize.scale(8)
+                            }}>
+                            km/h
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            flex: 1,
+                            alignItems: 'center'
+                        }}>
+                        <Image
+                            style={{
+                                width: getSize.scale(24),
+                                height: getSize.scale(24),
+                                resizeMode: 'contain'
+                            }}
+                            source={{ uri: 'ic_ray' }}
+                        />
+                        <Text
+                            style={{
+                                fontSize: getSize.scale(24),
+                                color: '#000',
+                                fontWeight: 'bold',
+                                fontStyle: 'italic',
+                                marginTop: getSize.scale(11),
+                                color: "#ffffff"
+                            }}>
+                            {energy || 0}
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: getSize.scale(14),
+                                color: '#A79BBF',
+                                // fontWeight: 'bold',
+                                fontStyle: 'italic',
+                                marginTop: getSize.scale(8)
+                            }}>
+                            energy
+                        </Text>
+                    </View>
+                </View>
+
             </View>
 
             {/* Footer */}
@@ -630,7 +657,8 @@ function Item() {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => {
+                        onPress={() =>
+                        {
                             handlePause();
                             return navigation.navigate(tabNavigator.TAB_BAG);
                         }}>

@@ -137,7 +137,7 @@ export default function ItemFilter({ ...props })
                                             fontSize: 12,
                                             fontStyle: 'italic',
                                             fontWeight: 'bold',
-                                            color: '#F44369'
+                                            color: '#2EDBDC'
                                         }}>
                                         Clear filter
                                     </Text>
@@ -193,7 +193,7 @@ export default function ItemFilter({ ...props })
                                                     <Text
                                                         style={{
                                                             marginLeft: 10,
-                                                            color: '#F44369',
+                                                            color: '#2EDBDC',
                                                             fontWeight: 'bold'
                                                         }}>
                                                         Jogging
@@ -229,7 +229,7 @@ export default function ItemFilter({ ...props })
                                                     <Text
                                                         style={{
                                                             marginLeft: 10,
-                                                            color: '#F44369',
+                                                            color: '#2EDBDC',
                                                             fontWeight: 'bold'
                                                         }}>
                                                         runner
@@ -264,7 +264,7 @@ export default function ItemFilter({ ...props })
                                                     <Text
                                                         style={{
                                                             marginLeft: 10,
-                                                            color: '#F44369',
+                                                            color: '#2EDBDC',
                                                             fontWeight: 'bold'
                                                         }}>
                                                         Training
@@ -328,7 +328,7 @@ export default function ItemFilter({ ...props })
                                                     <Text
                                                         style={{
                                                             marginLeft: 20,
-                                                            color: '#F44369',
+                                                            color: '#2EDBDC',
                                                             fontWeight: 'bold',
 
                                                         }}>
@@ -365,7 +365,7 @@ export default function ItemFilter({ ...props })
                                                     <Text
                                                         style={{
                                                             marginLeft: 10,
-                                                            color: '#F44369',
+                                                            color: '#2EDBDC',
                                                             fontWeight: 'bold'
                                                         }}>
                                                         Rare
@@ -400,7 +400,7 @@ export default function ItemFilter({ ...props })
                                                     <Text
                                                         style={{
                                                             marginLeft: 20,
-                                                            color: '#F44369',
+                                                            color: '#2EDBDC',
                                                             fontWeight: 'bold'
                                                         }}>
                                                         Legendary
@@ -439,7 +439,7 @@ export default function ItemFilter({ ...props })
                                             style={{
                                                 // fontStyle: 'italic',
                                                 fontWeight: 'bold',
-                                                color: '#F44369',
+                                                color: '#2EDBDC',
                                                 fontSize: 20
                                             }}></Text>
                                     </View>
@@ -472,8 +472,8 @@ export default function ItemFilter({ ...props })
                                                 // backgroundColor: Colors.WHITE
                                             }}>
                                             <Image
-                                                style={{ width: '100%', height: 37 }}
-                                                source={{ uri: 'ic_btn_cancel_by' }}
+                                                style={{ width: '100%', height: 45 }}
+                                                source={{ uri: 'ic_btn_cancel' }}
                                             />
                                         </TouchableOpacity>
                                     </View>
@@ -510,8 +510,8 @@ export default function ItemFilter({ ...props })
                                                                     CONFIRM
                                                                 </Text> */}
                                             <Image
-                                                style={{ width: '100%', height: 37 }}
-                                                source={{ uri: 'ic_btn_confirm_buy' }}
+                                                style={{ width: '100%', height: 45 }}
+                                                source={{ uri: 'ic_btn_confirm' }}
                                             />
                                         </TouchableOpacity>
                                     </View>

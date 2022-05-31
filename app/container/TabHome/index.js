@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {
+import
+{
     View,
     Text,
     Platform,
@@ -26,8 +27,10 @@ import { location, getSize, Colors } from '../../common/';
 import * as ApiServices from "./../../service/index";
 import AsyncStorage from '@react-native-community/async-storage';
 
-class TabHome extends Component {
-    constructor(props) {
+class TabHome extends Component
+{
+    constructor(props)
+    {
         super(props);
         this.state = {
             modalVisibles: true, // true,
@@ -45,30 +48,37 @@ class TabHome extends Component {
         };
     }
 
-    componentDidUpdate(preProp) {
+    componentDidUpdate(preProp)
+    {
         if (preProp?.shoesIdWear !== this.props.shoesIdWear) {
             this.LoadData()
         }
     }
 
-    shoesIdWear = (id) => {
+    shoesIdWear = (id) =>
+    {
 
 
         const { action } = this.props;
-        this.setState(state => {
+        this.setState(state =>
+        {
             return {
                 isshoesIdWear: true,
             }
-        }, () => {
-            ApiServices.shoesIdWear({ _id: id }).then(res => {
+        }, () =>
+        {
+            ApiServices.shoesIdWear({ _id: id }).then(res =>
+            {
                 if (res.code === 200) {
                     action.shoesIdWear(res.data);
                     this.LoadData();
-                    this.setState(state => {
+                    this.setState(state =>
+                    {
                         return {
                             isshoesIdWear: false
                         }
-                    }, () => {
+                    }, () =>
+                    {
                         this.setmodalBuy(false);
                         this.setmodalTransfer(false);
                     });
@@ -76,9 +86,11 @@ class TabHome extends Component {
                 if (res.code === 404) {
                     alert(res.message)
                 }
-            }).catch(err => {
+            }).catch(err =>
+            {
                 alert("Fail!");
-                this.setState(state => {
+                this.setState(state =>
+                {
                     return {
                         isshoesIdWear: false
                     }
@@ -87,27 +99,33 @@ class TabHome extends Component {
 
         })
     }
-    putShoe = (isSelling, id) => {
+    putShoe = (isSelling, id) =>
+    {
 
 
         const { action } = this.props;
         const { price } = this.state;
         let pr = isSelling ? price : 0;
-        this.setState(state => {
+        this.setState(state =>
+        {
             return {
                 isPutShoe: true,
             }
-        }, () => {
-            ApiServices.putShoesId({ price: pr, isSelling: isSelling, _id: id }).then(res => {
+        }, () =>
+        {
+            ApiServices.putShoesId({ price: pr, isSelling: isSelling, _id: id }).then(res =>
+            {
                 console.log('putShoe', res);
                 if (res.code === 200) {
                     action.putShoesId(res.data);
                     this.LoadData();
-                    this.setState(state => {
+                    this.setState(state =>
+                    {
                         return {
                             isPutShoe: false
                         }
-                    }, () => {
+                    }, () =>
+                    {
                         this.setmodalBuy(false);
                         this.setmodalTransfer(false);
                     });
@@ -115,9 +133,11 @@ class TabHome extends Component {
                 if (res.code === 404) {
                     alert(res.message)
                 }
-            }).catch(err => {
+            }).catch(err =>
+            {
                 alert("Fail!");
-                this.setState(state => {
+                this.setState(state =>
+                {
                     return {
                         isPutShoe: false
                     }
@@ -128,27 +148,33 @@ class TabHome extends Component {
         })
 
     }
-    setmodalBuy = (type) => {
-        this.setState(state => {
+    setmodalBuy = (type) =>
+    {
+        this.setState(state =>
+        {
             return {
                 modalBuy: type
             }
         })
     }
-    setmodalTransfer = (type) => {
-        this.setState(state => {
+    setmodalTransfer = (type) =>
+    {
+        this.setState(state =>
+        {
             return {
                 modalTransfer: type
             }
         })
     }
 
-    getIsShowModalInstruction = async () => {
+    getIsShowModalInstruction = async () =>
+    {
         const isShow = await AsyncStorage.getItem('NOT_SHOW_INSTRUCTION')
         this.setState({ isShowModalInstruction: isShow === 'having' ? false : true })
     }
 
-    componentDidMount = () => {
+    componentDidMount = () =>
+    {
 
         // Permissions location
         location.requestPermissions();
@@ -160,58 +186,73 @@ class TabHome extends Component {
 
 
     };
-    _onRefresh = () => {
+    _onRefresh = () =>
+    {
         const { action } = this.props;
-        this.setState(state => {
+        this.setState(state =>
+        {
             return { refreshing: true }
-        }, () => {
-            ApiServices.shoes().then(res => {
+        }, () =>
+        {
+            ApiServices.shoes().then(res =>
+            {
                 console.log(res);
                 if (res.code === 200) {
-                    this.setState(state => {
+                    this.setState(state =>
+                    {
                         return { refreshing: false }
-                    }, () => {
+                    }, () =>
+                    {
                         action.shoes(res.data);
                         this.setShoeCurrentWear(res.data, action)
                     });
 
                 }
-            }).catch(err => {
+            }).catch(err =>
+            {
 
             })
 
         });
     }
-    LoadData = () => {
+    LoadData = () =>
+    {
         const { action } = this.props;
-        ApiServices.getConstShoe().then(res => {
+        ApiServices.getConstShoe().then(res =>
+        {
             if (res.code === 200) {
                 action.getConstShoe(res.data);
             }
-        }).catch(err => {
+        }).catch(err =>
+        {
 
         })
-        ApiServices.shoes().then(res => {
+        ApiServices.shoes().then(res =>
+        {
 
             if (res.code === 200) {
                 action.shoes(res.data);
                 this.setShoeCurrentWear(res.data, action)
             }
-        }).catch(err => {
+        }).catch(err =>
+        {
 
         })
-        ApiServices.market({ pageSize: 20, page: 1 }).then(res => {
+        ApiServices.market({ pageSize: 20, page: 1 }).then(res =>
+        {
             if (res.code === 200) {
                 action.market(res.data.shoes);
             }
-        }).catch(err => {
+        }).catch(err =>
+        {
 
         })
 
     }
 
 
-    setShoeCurrentWear = (shoes, action) => {
+    setShoeCurrentWear = (shoes, action) =>
+    {
 
         for (let i = 0; i < shoes.length; i++) {
             const element = shoes[i];
@@ -228,23 +269,28 @@ class TabHome extends Component {
         }
     }
 
-    setKeyIsShowModalInstruction = async () => {
+    setKeyIsShowModalInstruction = async () =>
+    {
         await AsyncStorage.setItem('NOT_SHOW_INSTRUCTION', 'having')
     }
 
 
-    onChangeText = (name, itemValue) => {
-        this.setState(state => {
+    onChangeText = (name, itemValue) =>
+    {
+        this.setState(state =>
+        {
             return {
                 [name]: itemValue
             }
         })
     }
-    _getCurrentLocation = async () => {
+    _getCurrentLocation = async () =>
+    {
         const { action, screenState } = this.props;
         return location
             .getCurrentLocation()
-            .then((currentLocation) => {
+            .then((currentLocation) =>
+            {
                 if (currentLocation) {
                     const { longitude, latitude } = currentLocation;
                     action.changeScreenState({
@@ -256,7 +302,8 @@ class TabHome extends Component {
                     });
                 }
             })
-            .catch((err) => {
+            .catch((err) =>
+            {
                 if (err === 1) {
                     return Toast.show('Chưa cấp quyền định vị');
                 }
@@ -270,11 +317,13 @@ class TabHome extends Component {
     };
 
 
-    render() {
+    render()
+    {
         const { navigation, screenState, getConstShoe, action, getShoesId, userId, shoeCurrentWear, shoes } = this.props;
         const { modalVisible, modalTransfer, modalBuy, price, isPutShoe, isshoesIdWear, isShowModalInstruction } = this.state;
         const balanceUserId = userId.data ? userId.data : { mer: 0, usdt: 0 };
-        let dataS = shoes.data ? shoes.data.filter((item, index) => {
+        let dataS = shoes.data ? shoes.data.filter((item, index) =>
+        {
             return !item.isWearing;
         }).slice(-4) : [];
         if (dataS.length < 4) {
@@ -286,7 +335,7 @@ class TabHome extends Component {
         let isWearr = shoeCurrentWear._id ? true : false;
         const ShoeWeared = isWearr ? shoeCurrentWear : getShoesId.data;
         return (
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, position: "relative" }}>
                 <ImageBackground
                     style={{
                         width: getSize.Width,
@@ -314,7 +363,7 @@ class TabHome extends Component {
                 >
                     <View style={{ flex: 1, height: getSize.Height / 1.12 }}>
                         <View style={{
-                            flex: 1,
+                            flex: 1.5,
 
                             margin: getSize.scale(16)
                         }}>
@@ -322,14 +371,14 @@ class TabHome extends Component {
                                 <Tooltip
                                     isVisible={this.state.toolTipSneaker}
                                     content={
-                                        <View style={{ flex: 1 }}>
+                                        <View style={{ flex: 1, backgroundColor: "#d1f4f2" }}>
                                             <Text
                                                 style={{
                                                     textAlign: 'center',
                                                     fontSize: getSize.scale(14),
                                                     position: 'absolute',
-                                                    top: 0,
-                                                    right: 0
+                                                    top: 5,
+                                                    right: 5
                                                 }}>
                                                 STEP 3/5
                                             </Text>
@@ -356,7 +405,8 @@ class TabHome extends Component {
                                                     paddingBottom: getSize.scale(16)
                                                 }}>
                                                 <TouchableOpacity
-                                                    onPress={() => {
+                                                    onPress={() =>
+                                                    {
                                                         this.setState({ toolTipSneaker: false })
                                                         this.setKeyIsShowModalInstruction()
                                                     }
@@ -398,7 +448,8 @@ class TabHome extends Component {
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity
-                                                    onPress={() => {
+                                                    onPress={() =>
+                                                    {
                                                         this.setState({
                                                             toolTipSneaker: false,
                                                             toolTipSol: true
@@ -419,7 +470,7 @@ class TabHome extends Component {
                                                             overflow: 'hidden',
                                                             justifyContent: 'center',
                                                             alignItems: 'center',
-                                                            backgroundColor: 'rgba(244, 67, 105, 1)',
+                                                            backgroundColor: '#2EDBDC',
                                                             borderWidth: 1,
                                                             borderColor: 'rgba(244, 67, 105, 0.3)',
                                                             elevation: 4,
@@ -477,20 +528,11 @@ class TabHome extends Component {
                                                     justifyContent: 'center',
                                                     alignItems: 'center',
                                                     flexDirection: 'row',
-                                                    padding: getSize.scale(16)
+                                                    padding: getSize.scale(5)
                                                 }}
                                                 source={{ uri: 'ic_home_frame' }}>
-                                                <View style={{ flex: 1 }}>
-                                                    <Image
-                                                        style={{
-                                                            width: getSize.scale(176),
-                                                            height: getSize.scale(176),
-                                                            resizeMode: 'contain'
-                                                        }}
-                                                        source={{ uri: ShoeWeared.img }}
-                                                    />
-                                                </View>
-                                                <View style={{ flex: 1, marginLeft: getSize.scale(16) }}>
+
+                                                <View style={{ flex: 1, marginLeft: getSize.scale(5) }}>
                                                     <View
                                                         style={{
                                                             borderWidth: 1,
@@ -521,7 +563,7 @@ class TabHome extends Component {
                                                             justifyContent: 'center',
                                                             alignItems: 'flex-start',
                                                             width: '50%',
-                                                            backgroundColor: 'rgba(167, 155, 191, 0.2)',
+                                                            backgroundColor: '#ECE9F2',
                                                             borderColor: '#A79BBF'
                                                         }}>
                                                         <View
@@ -529,8 +571,8 @@ class TabHome extends Component {
                                                                 borderRadius: 20,
                                                                 borderWidth: 1,
                                                                 paddingHorizontal: getSize.scale(8),
-                                                                backgroundColor: '#F44369',
-                                                                borderColor: '#F44369',
+                                                                backgroundColor: '#2EDBDC',
+                                                                borderColor: '#2EDBDC',
                                                                 margin: 1
                                                             }}>
                                                             <Text
@@ -551,7 +593,8 @@ class TabHome extends Component {
                                                             justifyContent: 'center',
                                                             alignItems: 'center',
                                                             width: '30%',
-                                                            borderColor: '#A79BBF'
+                                                            borderColor: '#A79BBF',
+                                                            backgroundColor: "#FFFFFF"
                                                         }}>
                                                         <Text
                                                             style={{
@@ -562,19 +605,30 @@ class TabHome extends Component {
                                                         </Text>
                                                     </View>
                                                 </View>
+                                                <View style={{ flex: 1 }}>
+                                                    <Image
+                                                        style={{
+                                                            width: getSize.scale(176),
+                                                            height: getSize.scale(176),
+                                                            resizeMode: 'contain'
+                                                        }}
+                                                        source={{ uri: ShoeWeared.img }}
+                                                    />
+                                                </View>
                                             </ImageBackground>
                                         }
                                         {isWearr && <View
                                             style={{
                                                 position: 'absolute',
                                                 top: getSize.scale(-16),
+                                                right: getSize.scale(0),
                                                 marginHorizontal: getSize.scale(32),
                                                 borderWidth: 1,
-                                                borderRadius: 20,
+                                                borderRadius: 10,
                                                 borderColor: '#A79BBF',
                                                 paddingHorizontal: getSize.scale(16),
                                                 paddingVertical: getSize.scale(4),
-                                                backgroundColor: Colors.WHITE,
+                                                backgroundColor: '#ECECEC',
                                                 flexDirection: 'row'
                                             }}>
                                             <Text
@@ -604,13 +658,151 @@ class TabHome extends Component {
 
                         <View
                             style={{
+                                flex: 0.5,
+                                //marginTop: getSize.scale(-64),
+                                justifyContent: 'space-between',
+                                marginHorizontal: getSize.scale(16),
+                                flexDirection: 'row',
+                                zIndex: -1,
+                                marginBottom: getSize.scale(10)
+                            }}>
+                            <View
+                                style={{
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    flexDirection: 'row',
+                                    alignItems: 'center'
+                                }}>
+                                <TouchableOpacity
+                                    style={{
+                                        justifyContent: 'center',
+                                        flexDirection: 'row',
+                                        alignItems: 'center'
+                                    }}>
+                                    <Image
+                                        style={{
+                                            width: getSize.scale(34),
+                                            height: getSize.scale(34),
+                                            resizeMode: 'contain'
+                                        }}
+                                        source={{ uri: 'ic_mail' }}
+                                    />
+                                    <View
+                                        style={{
+                                            borderRadius: 10,
+                                            overflow: 'hidden',
+                                            marginLeft: getSize.scale(4)
+                                        }}>
+                                        <Text
+                                            style={{
+                                                backgroundColor: '#A79BBF',
+                                                color: '#fff',
+                                                fontStyle: 'italic',
+                                                fontWeight: 'bold',
+                                                fontSize: getSize.scale(10),
+                                                padding: getSize.scale(4)
+                                            }}>
+                                            Feedback
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+
+                            <View
+                                style={{
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+
+                                }}>
+                                <TouchableOpacity
+                                    style={{
+                                        justifyContent: 'center',
+                                        flexDirection: 'row',
+                                        alignItems: 'center'
+                                    }}>
+                                    <Image
+                                        style={{
+                                            width: getSize.scale(34),
+                                            height: getSize.scale(34),
+                                            resizeMode: 'contain'
+                                        }}
+                                        source={{ uri: 'ic_cmm' }}
+                                    />
+                                    <View
+                                        style={{
+                                            borderRadius: 10,
+                                            overflow: 'hidden',
+                                            marginLeft: getSize.scale(4)
+                                        }}>
+                                        <Text
+                                            style={{
+                                                backgroundColor: '#A79BBF',
+                                                color: '#fff',
+                                                fontStyle: 'italic',
+                                                fontWeight: 'bold',
+                                                fontSize: getSize.scale(10),
+                                                padding: getSize.scale(4)
+                                            }}>
+                                            FAQ
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+
+                            <View
+                                style={{
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    flexDirection: 'row',
+                                    alignItems: 'center'
+                                }}>
+                                <TouchableOpacity
+                                    style={{
+                                        justifyContent: 'center',
+                                        flexDirection: 'row',
+                                        alignItems: 'center'
+                                    }}>
+                                    <Image
+                                        style={{
+                                            width: getSize.scale(34),
+                                            height: getSize.scale(34),
+                                            resizeMode: 'contain'
+                                        }}
+                                        source={{ uri: 'ic_question' }}
+                                    />
+                                    <View
+                                        style={{
+                                            borderRadius: 10,
+                                            overflow: 'hidden',
+                                            marginLeft: getSize.scale(4)
+                                        }}>
+                                        <Text
+                                            style={{
+                                                backgroundColor: '#A79BBF',
+                                                color: '#fff',
+                                                fontStyle: 'italic',
+                                                fontWeight: 'bold',
+                                                fontSize: getSize.scale(10),
+                                                padding: getSize.scale(4)
+                                            }}>
+                                            About
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <View
+                            style={{
                                 flex: 1,
                                 flexDirection: 'row',
                                 marginHorizontal: getSize.scale(16),
                                 justifyContent: 'space-between',
                                 alignItems: 'flex-start'
                             }}>
-                            {datashoes && datashoes.map((item, index) => {
+                            {datashoes && datashoes.map((item, index) =>
+                            {
                                 if (item.readableId || item.readableId == 0) {
                                     return <View style={{ flex: 1, alignItems: 'center' }}>
                                         <ImageBackground
@@ -766,14 +958,15 @@ class TabHome extends Component {
                                                                 justifyContent: "center",
                                                                 alignItems: "center"
                                                             }}>
-                                                                <ActivityIndicator size="large" color="#F44369" />
+                                                                <ActivityIndicator size="large" color="#2EDBDC" />
                                                             </View>}
                                                             <View style={{
                                                                 // flex: 1,
                                                                 alignItems: 'flex-end'
                                                             }}>
                                                                 <TouchableOpacity
-                                                                    onPress={() => {
+                                                                    onPress={() =>
+                                                                    {
                                                                         this.putShoe(!item.isSelling, item._id)
                                                                     }}
                                                                     style={{
@@ -818,7 +1011,8 @@ class TabHome extends Component {
                                                                     // flex: 1
                                                                 }}>
                                                                     <TouchableOpacity
-                                                                        onPress={() => {
+                                                                        onPress={() =>
+                                                                        {
                                                                             // setmodalTransfer(!modalTransfer);
                                                                             return this.setmodalBuy(item.readableId);
                                                                         }}
@@ -907,7 +1101,7 @@ class TabHome extends Component {
                                                             // backgroundColor: "#0000004e"
 
                                                         }}>
-                                                            <ActivityIndicator size="large" color="#F44369" />
+                                                            <ActivityIndicator size="large" color="#2EDBDC" />
                                                         </View>}
                                                         {isshoesIdWear && <View style={{
                                                             width: "100%",
@@ -920,7 +1114,7 @@ class TabHome extends Component {
                                                             // backgroundColor: "#0000004e"
 
                                                         }}>
-                                                            <ActivityIndicator size="large" color="#F44369" />
+                                                            <ActivityIndicator size="large" color="#2EDBDC" />
                                                         </View>}
                                                         <View
                                                             style={{
@@ -954,7 +1148,9 @@ class TabHome extends Component {
                                                                         marginRight: getSize.scale(8),
                                                                         paddingVertical: getSize.scale(4),
                                                                         paddingHorizontal: getSize.scale(32),
-                                                                        backgroundColor: 'rgba(9, 116, 241, 1)'
+                                                                        borderColor: "#1A5BA8",
+                                                                        backgroundColor: '0E90F2',
+
                                                                     }}>
                                                                     <Text
                                                                         style={{
@@ -1387,7 +1583,7 @@ class TabHome extends Component {
                                                                     borderWidth: 1,
                                                                     borderBottomWidth: 2,
                                                                     borderRightWidth: 2,
-                                                                    backgroundColor: "#F44369"
+                                                                    backgroundColor: "#2EDBDC"
                                                                 }}
                                                                 onPress={() => this.shoesIdWear(item._id)}>
                                                                 {/* <Image
@@ -1421,7 +1617,8 @@ class TabHome extends Component {
                                                         }}>
                                                             <TouchableOpacity
                                                                 disabled={item.isSelling ? true : false}
-                                                                onPress={() => {
+                                                                onPress={() =>
+                                                                {
                                                                     this.setmodalBuy(item.readableId)
                                                                 }}
                                                                 style={{
@@ -1437,7 +1634,7 @@ class TabHome extends Component {
                                                                     borderWidth: 1,
                                                                     borderBottomWidth: 2,
                                                                     borderRightWidth: 2,
-                                                                    backgroundColor: "#F44369"
+                                                                    backgroundColor: "#2EDBDC"
                                                                 }}>
                                                                 {/* <Text
                                                                     style={{
@@ -1459,7 +1656,8 @@ class TabHome extends Component {
                                                             </TouchableOpacity>
                                                             <TouchableOpacity
                                                                 disabled={item.isSelling ? false : true}
-                                                                onPress={() => {
+                                                                onPress={() =>
+                                                                {
                                                                     this.putShoe(!item.isSelling, item._id)
 
                                                                 }}
@@ -1476,7 +1674,7 @@ class TabHome extends Component {
                                                                     borderWidth: 1,
                                                                     borderBottomWidth: 2,
                                                                     borderRightWidth: 2,
-                                                                    backgroundColor: "#F44369"
+                                                                    backgroundColor: "#2EDBDC"
                                                                 }}>
                                                                 {/* <Text
                                                                     style={{
@@ -1560,20 +1758,22 @@ class TabHome extends Component {
 
                         <View style={{
                             flex: 1,
-                            alignItems: 'center'
+                            alignItems: 'center',
+
                         }}>
                             <View style={{ flex: 1, zIndex: 1 }}>
                                 <Tooltip
                                     isVisible={this.state.toolTipStart}
+
                                     content={
-                                        <View style={{ flex: 1 }}>
+                                        <View style={{ flex: 1, backgroundColor: "#d1f4f2" }}>
                                             <Text
                                                 style={{
                                                     textAlign: 'center',
                                                     fontSize: getSize.scale(14),
                                                     position: 'absolute',
-                                                    top: 0,
-                                                    right: 0
+                                                    top: 5,
+                                                    right: 5
                                                 }}>
                                                 STEP 2/5
                                             </Text>
@@ -1592,6 +1792,7 @@ class TabHome extends Component {
                                                     token earnings
                                                 </Text>
                                             </View>
+
                                             <View
                                                 style={{
                                                     flex: 1,
@@ -1600,7 +1801,8 @@ class TabHome extends Component {
                                                     paddingBottom: getSize.scale(16)
                                                 }}>
                                                 <TouchableOpacity
-                                                    onPress={() => {
+                                                    onPress={() =>
+                                                    {
                                                         this.setState({ toolTipStart: false })
                                                         this.setKeyIsShowModalInstruction()
                                                     }
@@ -1642,7 +1844,8 @@ class TabHome extends Component {
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity
-                                                    onPress={() => {
+                                                    onPress={() =>
+                                                    {
                                                         this.setState({
                                                             toolTipStart: false,
                                                             toolTipSneaker: true
@@ -1663,7 +1866,7 @@ class TabHome extends Component {
                                                             overflow: 'hidden',
                                                             justifyContent: 'center',
                                                             alignItems: 'center',
-                                                            backgroundColor: 'rgba(244, 67, 105, 1)',
+                                                            backgroundColor: '#2EDBDC',
                                                             borderWidth: 1,
                                                             borderColor: 'rgba(244, 67, 105, 0.3)',
                                                             elevation: 4,
@@ -1687,13 +1890,15 @@ class TabHome extends Component {
                                                     </View>
                                                 </TouchableOpacity>
                                             </View>
+
                                         </View>
                                     }
                                     placement="top">
                                     <TouchableOpacity
                                         style={{ alignItems: 'center' }}
                                         disabled={this.state.toolTipStart}
-                                        onPress={() => {
+                                        onPress={() =>
+                                        {
                                             // Start
                                             // action.changeScreenState({
                                             //     ...screenState,
@@ -1717,143 +1922,9 @@ class TabHome extends Component {
                                         />
                                     </TouchableOpacity>
                                 </Tooltip>
+
                             </View>
 
-                            <View
-                                style={{
-                                    flex: 3,
-                                    marginTop: getSize.scale(-64),
-                                    justifyContent: 'space-between',
-                                    marginHorizontal: getSize.scale(16),
-                                    flexDirection: 'row',
-                                    zIndex: -1
-                                }}>
-                                <View
-                                    style={{
-                                        flex: 1,
-                                        justifyContent: 'center',
-                                        flexDirection: 'row',
-                                        alignItems: 'center'
-                                    }}>
-                                    <TouchableOpacity
-                                        style={{
-                                            justifyContent: 'center',
-                                            flexDirection: 'row',
-                                            alignItems: 'center'
-                                        }}>
-                                        <Image
-                                            style={{
-                                                width: getSize.scale(34),
-                                                height: getSize.scale(34),
-                                                resizeMode: 'contain'
-                                            }}
-                                            source={{ uri: 'ic_mail' }}
-                                        />
-                                        <View
-                                            style={{
-                                                borderRadius: 10,
-                                                overflow: 'hidden',
-                                                marginLeft: getSize.scale(4)
-                                            }}>
-                                            <Text
-                                                style={{
-                                                    backgroundColor: '#A79BBF',
-                                                    color: '#fff',
-                                                    fontStyle: 'italic',
-                                                    fontWeight: 'bold',
-                                                    fontSize: getSize.scale(10),
-                                                    padding: getSize.scale(4)
-                                                }}>
-                                                Feedback
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-
-                                <View
-                                    style={{
-                                        flex: 1,
-                                        justifyContent: 'center',
-                                        flexDirection: 'row',
-                                        alignItems: 'center'
-                                    }}>
-                                    <TouchableOpacity
-                                        style={{
-                                            justifyContent: 'center',
-                                            flexDirection: 'row',
-                                            alignItems: 'center'
-                                        }}>
-                                        <Image
-                                            style={{
-                                                width: getSize.scale(34),
-                                                height: getSize.scale(34),
-                                                resizeMode: 'contain'
-                                            }}
-                                            source={{ uri: 'ic_cmm' }}
-                                        />
-                                        <View
-                                            style={{
-                                                borderRadius: 10,
-                                                overflow: 'hidden',
-                                                marginLeft: getSize.scale(4)
-                                            }}>
-                                            <Text
-                                                style={{
-                                                    backgroundColor: '#A79BBF',
-                                                    color: '#fff',
-                                                    fontStyle: 'italic',
-                                                    fontWeight: 'bold',
-                                                    fontSize: getSize.scale(10),
-                                                    padding: getSize.scale(4)
-                                                }}>
-                                                FAQ
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-
-                                <View
-                                    style={{
-                                        flex: 1,
-                                        justifyContent: 'center',
-                                        flexDirection: 'row',
-                                        alignItems: 'center'
-                                    }}>
-                                    <TouchableOpacity
-                                        style={{
-                                            justifyContent: 'center',
-                                            flexDirection: 'row',
-                                            alignItems: 'center'
-                                        }}>
-                                        <Image
-                                            style={{
-                                                width: getSize.scale(34),
-                                                height: getSize.scale(34),
-                                                resizeMode: 'contain'
-                                            }}
-                                            source={{ uri: 'ic_question' }}
-                                        />
-                                        <View
-                                            style={{
-                                                borderRadius: 10,
-                                                overflow: 'hidden',
-                                                marginLeft: getSize.scale(4)
-                                            }}>
-                                            <Text
-                                                style={{
-                                                    backgroundColor: '#A79BBF',
-                                                    color: '#fff',
-                                                    fontStyle: 'italic',
-                                                    fontWeight: 'bold',
-                                                    fontSize: getSize.scale(10),
-                                                    padding: getSize.scale(4)
-                                                }}>
-                                                About
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
                         </View>
 
                     </View>
@@ -1875,13 +1946,14 @@ class TabHome extends Component {
                                 flex: 1,
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                backgroundColor: 'rgba(89, 89, 89, 0.6)'
+                                backgroundColor: 'rgba(89, 89, 89, 0.6)',
+                                position: "relative"
                             }}>
                             <View
                                 style={{
                                     width: getSize.Width - getSize.scale(48),
-                                    height: getSize.Width / 1.5,
-                                    backgroundColor: 'white',
+                                    height: getSize.Width / 2,
+                                    backgroundColor: "#d1f4f2",
                                     borderRadius: 20,
                                     alignItems: 'center',
                                     shadowColor: '#000',
@@ -1894,16 +1966,7 @@ class TabHome extends Component {
                                     elevation: 5
                                 }}>
                                 <View style={{ flex: 1 }}>
-                                    <Text
-                                        style={{
-                                            textAlign: 'center',
-                                            fontSize: getSize.scale(14),
-                                            position: 'absolute',
-                                            top: getSize.scale(8),
-                                            right: getSize.scale(16)
-                                        }}>
-                                        STEP 1/5
-                                    </Text>
+
                                     <View
                                         style={{
                                             flex: 1,
@@ -1929,108 +1992,127 @@ class TabHome extends Component {
                                             gamifying personal fitness & traveling experience
                                         </Text>
                                     </View>
+
+                                </View>
+                            </View>
+                            <View
+                                style={{
+                                    flex: 1,
+                                    justifyContent: 'space-between',
+                                    flexDirection: 'row',
+                                    alignItems: "center",
+                                    position: "absolute",
+                                    bottom: 10,
+                                    width: "100%"
+                                }}>
+                                <TouchableOpacity
+                                    onPress={() =>
+                                    {
+                                        this.setState({
+                                            modalVisible: false,
+                                            toolTipStart: false
+                                        })
+                                        this.setKeyIsShowModalInstruction()
+                                    }
+                                    }
+                                    style={{
+                                        justifyContent: 'center',
+                                        flexDirection: 'row',
+                                        alignItems: 'center'
+                                    }}>
                                     <View
                                         style={{
-                                            flex: 1,
-                                            justifyContent: 'space-evenly',
-                                            flexDirection: 'row'
+                                            width: getSize.scale(100),
+                                            height: getSize.scale(40),
+                                            borderRadius: 20,
+                                            overflow: 'hidden',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            // backgroundColor: 'rgba(89, 89, 89, 0.6)',
+                                            // borderWidth: 1,
+                                            // borderColor: 'rgba(89, 89, 89, 0.1)',
+                                            elevation: 4,
+                                            shadowColor: 'rgba(89, 89, 89, 0.3)',
+                                            shadowOffset: {
+                                                width: 0,
+                                                height: 2
+                                            },
+                                            shadowOpacity: 0.25,
+                                            shadowRadius: 4
                                         }}>
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                this.setState({
-                                                    modalVisible: false,
-                                                    toolTipStart: false
-                                                })
-                                                this.setKeyIsShowModalInstruction()
-                                            }
-                                            }
+                                        <Text
                                             style={{
-                                                justifyContent: 'center',
-                                                flexDirection: 'row',
-                                                alignItems: 'center'
+                                                color: '#fff',
+                                                fontStyle: 'italic',
+                                                fontWeight: 'bold',
+                                                fontSize: getSize.scale(18)
                                             }}>
-                                            <View
-                                                style={{
-                                                    width: getSize.scale(100),
-                                                    height: getSize.scale(40),
-                                                    borderRadius: 20,
-                                                    overflow: 'hidden',
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center',
-                                                    backgroundColor: 'rgba(89, 89, 89, 0.6)',
-                                                    borderWidth: 1,
-                                                    borderColor: 'rgba(89, 89, 89, 0.1)',
-                                                    elevation: 4,
-                                                    shadowColor: 'rgba(89, 89, 89, 0.3)',
-                                                    shadowOffset: {
-                                                        width: 0,
-                                                        height: 2
-                                                    },
-                                                    shadowOpacity: 0.25,
-                                                    shadowRadius: 4
-                                                }}>
-                                                <Text
-                                                    style={{
-                                                        color: '#fff',
-                                                        fontStyle: 'italic',
-                                                        fontWeight: 'bold',
-                                                        fontSize: getSize.scale(18)
-                                                    }}>
-                                                    SKIP
-                                                </Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                this.setState({
-                                                    modalVisible: false,
-                                                    toolTipStart: true
-                                                })
-                                                this.setKeyIsShowModalInstruction()
-                                            }
-                                            }
-                                            style={{
-                                                justifyContent: 'center',
-                                                flexDirection: 'row',
-                                                alignItems: 'center'
-                                            }}>
-                                            <View
-                                                style={{
-                                                    width: getSize.scale(100),
-                                                    height: getSize.scale(40),
-                                                    borderRadius: 20,
-                                                    overflow: 'hidden',
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center',
-                                                    backgroundColor: 'rgba(244, 67, 105, 1)',
-                                                    borderWidth: 1,
-                                                    borderColor: 'rgba(244, 67, 105, 0.3)',
-                                                    elevation: 4,
-                                                    shadowColor: 'rgba(89, 89, 89, 0.3)', // "rgba(52, 52, 52, alpha)", //trong suốt
-                                                    shadowOffset: {
-                                                        width: 0,
-                                                        height: 2
-                                                    },
-                                                    shadowOpacity: 0.25,
-                                                    shadowRadius: 4
-                                                }}>
-                                                <Text
-                                                    style={{
-                                                        color: '#fff',
-                                                        fontStyle: 'italic',
-                                                        fontWeight: 'bold',
-                                                        fontSize: getSize.scale(18)
-                                                    }}>
-                                                    NEXT
-                                                </Text>
-                                            </View>
-                                        </TouchableOpacity>
+                                            SKIP
+                                        </Text>
                                     </View>
-                                </View>
+                                </TouchableOpacity>
+                                <Text
+                                    style={{
+                                        textAlign: 'center',
+                                        fontSize: getSize.scale(18),
+                                        fontWeight: "bold",
+                                        color: "#FFFFFF"
+                                    }}>
+                                    STEP 1/5
+                                </Text>
+                                <TouchableOpacity
+                                    onPress={() =>
+                                    {
+                                        this.setState({
+                                            modalVisible: false,
+                                            toolTipStart: true
+                                        })
+                                        this.setKeyIsShowModalInstruction()
+                                    }
+                                    }
+                                    style={{
+                                        justifyContent: 'center',
+                                        flexDirection: 'row',
+                                        alignItems: 'center'
+                                    }}>
+                                    <View
+                                        style={{
+                                            width: getSize.scale(100),
+                                            height: getSize.scale(40),
+                                            borderRadius: 20,
+                                            overflow: 'hidden',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            // backgroundColor: 'rgba(244, 67, 105, 1)',
+                                            // borderWidth: 1,
+                                            // borderColor: 'rgba(244, 67, 105, 0.3)',
+                                            elevation: 4,
+                                            shadowColor: 'rgba(89, 89, 89, 0.3)', // "rgba(52, 52, 52, alpha)", //trong suốt
+                                            shadowOffset: {
+                                                width: 0,
+                                                height: 2
+                                            },
+                                            shadowOpacity: 0.25,
+                                            shadowRadius: 4,
+                                            flexDirection: "row"
+                                        }}>
+                                        <Text
+                                            style={{
+                                                color: '#2EDBDC',
+                                                fontStyle: 'italic',
+                                                fontWeight: 'bold',
+                                                fontSize: getSize.scale(18)
+                                            }}>
+                                            NEXT
+                                        </Text>
+                                        <Image source={{ uri: "ic_next" }} style={{ width: 20, height: 20, resizeMode: "contain", marginLeft: 5 }} />
+                                    </View>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </Modal>}
                 </View>
+
             </SafeAreaView>
         );
     }

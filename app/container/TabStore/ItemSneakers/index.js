@@ -90,10 +90,14 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                         <ImageBackground
                             source={{ uri: 'ic_head_frame_shoe' }}
                             style={{
-                                width: '100%',
-                                height: getSize.scale(30),
+
+                                width: getSize.scale(100),
+                                height: getSize.scale(28),
                                 flexDirection: 'row',
                                 alignItems: 'center',
+                                position: "absolute",
+                                right: 0,
+                                top: 0,
                                 marginTop: getSize.scale(-10)
                             }}>
                             <View style={{ width: '100%' }}>
@@ -155,52 +159,16 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                     justifyContent: 'center',
                                     alignItems: 'center'
                                 }}>
-                                <Image
-                                    source={{ uri: item.img }}
-                                    style={{
-                                        flex: 7,
-                                        width: getSize.scale(136),
-                                        height: getSize.scale(136),
-                                        resizeMode: 'contain'
-                                    }}
-                                />
                                 <View
                                     style={{
                                         flex: 1,
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center'
-                                    }}>
-                                    <View
-                                        style={{
-                                            borderRadius: 50,
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            flexDirection: 'row',
-                                            backgroundColor: 'rgba(26, 91, 168, 1)',
-                                            paddingHorizontal: getSize.scale(8),
-                                            paddingVertical: getSize.scale(2)
-                                        }}>
-                                        <Text
-                                            style={{
-                                                color: '#fff',
-                                                fontWeight: 'bold',
-                                                marginLeft: getSize.scale(2),
-                                                fontSize: getSize.scale(12)
-                                            }}>
-                                            {`# ${item.readableId}`}
-                                        </Text>
-                                    </View>
-                                </View>
-
-                                <View
-                                    style={{
-                                        flex: 1.5,
                                         width: '85%',
                                         paddingHorizontal: getSize.scale(16),
                                         flexDirection: 'row',
                                         justifyContent: 'space-between',
-                                        alignItems: 'center'
+                                        alignItems: 'center',
+
+                                        marginTop: getSize.scale(30)
                                     }}>
                                     <View
                                         style={{
@@ -212,7 +180,8 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                         <Text
                                             style={{
                                                 color: '#000',
-                                                fontSize: getSize.scale(10)
+                                                fontSize: getSize.scale(10),
+                                                fontStyle: "italic"
                                             }}>
                                             Energy:
                                         </Text>
@@ -235,7 +204,9 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                         <Text
                                             style={{
                                                 color: '#000',
-                                                fontSize: getSize.scale(10)
+                                                fontSize: getSize.scale(10),
+
+                                                fontStyle: "italic"
                                             }}>
                                             Luck:
                                         </Text>
@@ -249,6 +220,52 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                         </Text>
                                     </View>
                                 </View>
+                                <View
+                                    style={{
+                                        flex: 1,
+                                        flexDirection: 'row',
+                                        justifyContent: 'flex-start',
+                                        width: "70%",
+                                        alignItems: 'center',
+                                        marginTop: getSize.scale(5),
+
+                                    }}>
+                                    <View
+                                        style={{
+                                            borderRadius: 50,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            flexDirection: 'row',
+                                            backgroundColor: '#565874',
+                                            paddingHorizontal: getSize.scale(8),
+                                            paddingVertical: getSize.scale(2),
+                                            borderColor: "#FFFFFF",
+                                            borderWidth: 1,
+
+                                        }}>
+                                        <Text
+                                            style={{
+                                                color: '#fff',
+                                                fontWeight: 'bold',
+                                                marginLeft: getSize.scale(2),
+                                                fontSize: getSize.scale(12)
+                                            }}>
+                                            {`# ${item.readableId}`}
+                                        </Text>
+                                    </View>
+                                </View>
+
+                                <Image
+                                    source={{ uri: item.img }}
+                                    style={{
+                                        flex: 7,
+                                        width: getSize.scale(136),
+                                        height: getSize.scale(136),
+                                        resizeMode: 'contain'
+                                    }}
+                                />
+
+
                             </TouchableOpacity>
                         </View>
 
@@ -290,7 +307,7 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                             // backgroundColor: "#0000004e"
 
                                         }}>
-                                            <ActivityIndicator size="large" color="#F44369" />
+                                            <ActivityIndicator size="large" color="#565874" />
                                         </View>}
                                         <View
                                             style={{
@@ -856,7 +873,7 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                 paddingHorizontal: getSize.scale(16),
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
-                                backgroundColor: '#ffffff',
+                                backgroundColor: '#96CFE1',
                                 paddingVertical: getSize.scale(10),
                                 borderRadius: 20,
                                 alignItems: 'center',
@@ -881,24 +898,13 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                 // backgroundColor: "#0000004e"
 
                             }}>
-                                <ActivityIndicator size="large" color="#F44369" />
+                                <ActivityIndicator size="large" color="#565874" />
                             </View>}
                             <View
                                 style={{
                                     justifyContent: 'center',
                                     alignItems: 'center'
                                 }}>
-                                <Image
-                                    style={{
-                                        height: getSize.scale(158),
-                                        width: getSize.scale(158),
-                                        resizeMode: 'contain',
-                                        marginVertical: getSize.scale(16)
-                                    }}
-                                    source={{
-                                        uri: item.img
-                                    }}
-                                />
                                 <View
                                     style={{
                                         justifyContent: 'space-around',
@@ -918,12 +924,13 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                                 justifyContent: 'center',
                                                 flexDirection: 'row',
                                                 alignItems: 'center',
-                                                borderWidth: 0.5,
+                                                borderWidth: 1,
                                                 borderRadius: 20,
+                                                borderColor: "#ffffff",
                                                 marginVertical: getSize.scale(8),
                                                 marginRight: getSize.scale(8),
                                                 paddingVertical: getSize.scale(4),
-                                                backgroundColor: 'rgba(9, 116, 241, 1)'
+                                                backgroundColor: '#565874'
                                             }}>
                                             <Text
                                                 style={{
@@ -972,106 +979,132 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                         </View>
                                     </View>
                                 </View>
+
+
                             </View>
+                            <View style={{
+                                justifyContent: 'space-between',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginTop: getSize.scale(8),
+                                width: "100%"
+                            }}>
+                                <View
+                                    style={{
+                                        justifyContent: 'flex-start',
+                                        flexDirection: 'column',
+                                        alignItems: 'flex-start',
 
-                            <View
-                                style={{
-                                    justifyContent: 'space-between',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    marginTop: getSize.scale(8)
-                                }}>
-                                <View style={{ flex: 1 }}>
-                                    <Text
-                                        style={{
-                                            color: '#767676',
-                                            fontStyle: 'italic'
-                                        }}>
-                                        Class
-                                    </Text>
-                                    <View
-                                        style={{
-                                            justifyContent: 'center',
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                            borderWidth: 0.5,
-                                            borderRadius: 20,
-                                            marginVertical: getSize.scale(8),
-                                            marginRight: getSize.scale(8),
-                                            paddingVertical: getSize.scale(4)
-                                        }}>
+                                    }}>
+                                    <View style={{ flex: 1 }}>
                                         <Text
                                             style={{
-                                                color: '#000',
-                                                fontWeight: 'bold',
-                                                fontSize: getSize.scale(14)
+                                                color: '#767676',
+                                                fontStyle: 'italic'
                                             }}>
-                                            {item.class}
+                                            Class
                                         </Text>
+                                        <View
+                                            style={{
+                                                justifyContent: 'center',
+                                                flexDirection: 'row',
+                                                alignItems: 'center',
+                                                borderWidth: 0.5,
+                                                borderRadius: 10,
+                                                marginVertical: getSize.scale(8),
+                                                marginRight: getSize.scale(8),
+                                                paddingVertical: getSize.scale(4),
+                                                paddingHorizontal: getSize.scale(10),
+                                                backgroundColor: "#ffffff"
+                                            }}>
+                                            <Text
+                                                style={{
+                                                    color: '#000',
+                                                    fontWeight: 'bold',
+                                                    fontSize: getSize.scale(14)
+                                                }}>
+                                                {item.class}
+                                            </Text>
+                                        </View>
                                     </View>
-                                </View>
 
-                                <View style={{ flex: 1 }}>
-                                    <Text
-                                        style={{
-                                            color: '#767676',
-                                            fontStyle: 'italic'
-                                        }}>
-                                        Speed
-                                    </Text>
-                                    <View
-                                        style={{
-                                            justifyContent: 'center',
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                            borderWidth: 0.5,
-                                            borderRadius: 20,
-                                            marginVertical: getSize.scale(8),
-                                            marginRight: getSize.scale(8),
-                                            paddingVertical: getSize.scale(4)
-                                        }}>
+                                    <View style={{ flex: 1 }}>
                                         <Text
                                             style={{
-                                                color: '#000',
-                                                fontWeight: 'bold',
-                                                fontSize: getSize.scale(13)
+                                                color: '#767676',
+                                                fontStyle: 'italic'
                                             }}>
-                                            {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h`}
+                                            Speed
                                         </Text>
+                                        <View
+                                            style={{
+                                                justifyContent: 'center',
+                                                flexDirection: 'row',
+                                                alignItems: 'center',
+                                                borderWidth: 0.5,
+                                                borderRadius: 10,
+                                                marginVertical: getSize.scale(8),
+                                                marginRight: getSize.scale(8),
+                                                paddingVertical: getSize.scale(4),
+                                                paddingHorizontal: getSize.scale(10),
+                                                backgroundColor: "#ffffff"
+                                            }}>
+                                            <Text
+                                                style={{
+                                                    color: '#000',
+                                                    fontWeight: 'bold',
+                                                    fontSize: getSize.scale(13)
+                                                }}>
+                                                {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max} km/h`}
+                                            </Text>
+                                        </View>
                                     </View>
-                                </View>
 
-                                <View style={{ flex: 1 }}>
-                                    <Text
-                                        style={{
-                                            color: '#767676',
-                                            fontStyle: 'italic'
-                                        }}>
-                                        Luck
-                                    </Text>
-                                    <View
-                                        style={{
-                                            justifyContent: 'center',
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                            borderWidth: 0.5,
-                                            borderRadius: 20,
-                                            marginVertical: getSize.scale(8),
-                                            marginRight: getSize.scale(8),
-                                            paddingVertical: getSize.scale(4)
-                                        }}>
+                                    <View style={{ flex: 1 }}>
                                         <Text
                                             style={{
-                                                color: '#000',
-                                                fontWeight: 'bold',
-                                                fontSize: getSize.scale(14)
+                                                color: '#767676',
+                                                fontStyle: 'italic'
                                             }}>
-                                            {`${constShoe.LUCK[item.quality]}`}
+                                            Luck
                                         </Text>
+                                        <View
+                                            style={{
+                                                justifyContent: 'center',
+                                                flexDirection: 'row',
+                                                alignItems: 'center',
+                                                borderWidth: 0.5,
+                                                borderRadius: 10,
+                                                marginVertical: getSize.scale(8),
+                                                marginRight: getSize.scale(8),
+                                                paddingVertical: getSize.scale(4),
+                                                paddingHorizontal: getSize.scale(10),
+                                                backgroundColor: "#ffffff"
+                                            }}>
+                                            <Text
+                                                style={{
+                                                    color: '#000',
+                                                    fontWeight: 'bold',
+                                                    fontSize: getSize.scale(14)
+                                                }}>
+                                                {`${constShoe.LUCK[item.quality]}`}
+                                            </Text>
+                                        </View>
                                     </View>
                                 </View>
+                                <Image
+                                    style={{
+                                        height: getSize.scale(170),
+                                        width: getSize.scale(170),
+                                        resizeMode: 'contain',
+                                        marginVertical: getSize.scale(16)
+                                    }}
+                                    source={{
+                                        uri: item.img
+                                    }}
+                                />
+
                             </View>
-
                             <View
                                 style={{
                                     justifyContent: 'center',
@@ -1110,7 +1143,7 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                                 fontSize: getSize.scale(12),
                                                 fontStyle: 'italic',
                                                 fontWeight: 'bold',
-                                                color: 'rgba(118, 118, 118, 1)'
+                                                color: '#ffffff'
                                             }}>
                                             Base
                                         </Text>
@@ -1135,7 +1168,8 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                         shadowOpacity: 0.5,
                                         shadowRadius: 9,
                                         elevation: 2,
-                                        overflow: 'hidden'
+                                        overflow: 'hidden',
+                                        backgroundColor: "#ffffff"
                                     }}>
                                     <View
                                         style={{
@@ -1263,7 +1297,7 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                         <View
                             style={{
                                 width: '100%',
-                                backgroundColor: '#ffffff',
+                                backgroundColor: '#96CFE1',
                                 paddingVertical: getSize.scale(16),
                                 borderRadius: 20,
                                 alignItems: 'center',
@@ -1298,7 +1332,7 @@ export default function ItemSneakers({ item, index, buyShoe, isbuyShoe, constSho
                                     <Text
                                         style={{
                                             fontWeight: 'bold',
-                                            color: '#F44369',
+                                            color: '#FFFFFF',
                                             fontSize: getSize.scale(20)
                                         }}>
                                         {`${price} BUSD`}

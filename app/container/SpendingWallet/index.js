@@ -9,8 +9,10 @@ import Poup from "./modal";
 
 
 import * as ApiServices from "./../../service/index";
-class Wallet extends Component {
-    constructor(props) {
+class Wallet extends Component
+{
+    constructor(props)
+    {
         super(props);
         this.popupBotomRef = new createRef();
         this.popupRef = new createRef();
@@ -26,41 +28,50 @@ class Wallet extends Component {
 
         };
     }
-    _onRefresh = () => {
-        this.setState(state => {
+    _onRefresh = () =>
+    {
+        this.setState(state =>
+        {
             return { refreshing: true }
-        }, () => {
+        }, () =>
+        {
             this.BalanceUserIdBnb();
             this.BalanceUserId();
-            this.setState(state => {
+            this.setState(state =>
+            {
                 return { refreshing: false }
             })
 
         });
 
     }
-    GetRate = () => {
+    GetRate = () =>
+    {
         const { action } = this.props;
-        ApiServices.getRate().then(res => {
+        ApiServices.getRate().then(res =>
+        {
 
             if (res.price) {
                 action.getRate(res)
             }
 
-        }).catch(err => {
+        }).catch(err =>
+        {
 
         })
 
     }
 
-    componentDidMount() {
+    componentDidMount()
+    {
 
 
         this.BalanceUserIdBnb();
 
         this.GetRate();
 
-        this.props.navigation?.addListener('focus', () => {
+        this.props.navigation?.addListener('focus', () =>
+        {
             this.setState({
                 isSpending: true,
                 isWallet: false
@@ -72,8 +83,10 @@ class Wallet extends Component {
         // this.onShowPoup()
     }
 
-    componentWillUnmount() {
-        this.setState(state => {
+    componentWillUnmount()
+    {
+        this.setState(state =>
+        {
             return {
                 isSpending: true,
                 isWallet: false
@@ -81,7 +94,8 @@ class Wallet extends Component {
         })
 
     }
-    onShowPoupBottom = () => {
+    onShowPoupBottom = () =>
+    {
         this.popupBotomRef.Show();
         // setTimeout(() =>
         // {
@@ -89,47 +103,57 @@ class Wallet extends Component {
         // }, 300);
 
     }
-    onColsePopupBottom = () => {
+    onColsePopupBottom = () =>
+    {
         this.popupBotomRef.Close();
 
     }
-    onShowPoup = () => {
+    onShowPoup = () =>
+    {
         this.popupRef.Show();
 
     }
-    onColsePopup = () => {
+    onColsePopup = () =>
+    {
         this.popupRef.Close();
 
     }
-    BalanceUserIdBnb = () => {
+    BalanceUserIdBnb = () =>
+    {
 
         const { action, user } = this.props;
-        ApiServices.userIdBnb({ _id: user._id }).then(res => {   //
+        ApiServices.userIdBnb({ _id: user._id }).then(res =>
+        {   //
             console.log("res", res);
             if (res.code === 200) {
                 action.userIdBnb(res.data)
             }
 
-        }).catch(err => {
+        }).catch(err =>
+        {
 
         })
 
 
     }
 
-    BalanceUserId = () => {
+    BalanceUserId = () =>
+    {
         const { action, user } = this.props;
-        ApiServices.userId({ _id: user._id }).then(res => {
+        ApiServices.userId({ _id: user._id }).then(res =>
+        {
             if (res.code === 200) {
                 action.userId(res.data)
             }
 
-        }).catch(err => {
+        }).catch(err =>
+        {
 
         })
     }
 
-    checkIsPass = () => {
+    checkIsPass = () =>
+    {
         const { userIdBnb, navigation } = this.props;
         // if (!userIdBnb.data.isPass) {
         //     navigation.navigate(stackNavigator.WALLET_PASSCODE)
@@ -143,7 +167,8 @@ class Wallet extends Component {
 
     }
 
-    renderItem = ({ item, index }) => {
+    renderItem = ({ item, index }) =>
+    {
         const { userId } = this.props;
 
         const balanceUserid = userId.data;
@@ -198,7 +223,8 @@ class Wallet extends Component {
                             fontWeight: '100',
                             fontSize: 20,
                             fontStyle: "italic",
-                            fontWeight: "bold"
+                            fontWeight: "bold",
+                            color: "#FFFFFF"
                         }}>{item.name ? item.name : ""}</Text>
                 </View>
                 <View style={{
@@ -211,12 +237,14 @@ class Wallet extends Component {
                     fontWeight: '100',
                     fontSize: 16,
                     fontStyle: "italic",
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    color: "#FFFFFF"
                 }} >{(item.amount).toString()}</Text></View>
             </TouchableOpacity>
         </View>
     }
-    render() {
+    render()
+    {
         const { navigation, userId, user, getRate } = this.props;
         const { isSpending, isWallet, data } = this.state;
         const balanceUserid = userId.data;
@@ -249,7 +277,7 @@ class Wallet extends Component {
 
             <SafeAreaView style={{
                 flex: 1,
-                backgroundColor: "#ffffff"
+                backgroundColor: "#000000"
             }}>
 
                 <View style={{
@@ -300,7 +328,8 @@ class Wallet extends Component {
                                     alignItems: 'center',
                                     borderWidth: 1,
                                     borderRadius: 30,
-                                    backgroundColor: '#D6D6D6',
+                                    backgroundColor: '#FFFFFF',
+                                    borderColor: '#D6D6D6',
                                     overflow: 'hidden',
                                     flex: 1,
                                     height: 50,
@@ -320,7 +349,8 @@ class Wallet extends Component {
                                             isSpending: true,
                                             isWallet: false,
                                             isBadges: false
-                                        }, () => {
+                                        }, () =>
+                                        {
 
                                             this.props.navigation.navigate(
                                                 stackNavigator.SPENDING_WALLET
@@ -332,8 +362,8 @@ class Wallet extends Component {
                                         style={{
                                             height: "100%",
                                             backgroundColor: isSpending
-                                                ? 'white'
-                                                : '#D6D6D6',
+                                                ? '#2EDBDC'
+                                                : '#FFFFFF',
                                             paddingVertical: 4,
                                             width: '100%',
                                             alignItems: 'center',
@@ -367,7 +397,8 @@ class Wallet extends Component {
                                             isSpending: false,
                                             isWallet: true,
                                             isBadges: false
-                                        }, () => {
+                                        }, () =>
+                                        {
                                             this.checkIsPass()
                                             // this.onShowPoupBottom()
                                             // this.props.navigation.navigate(
@@ -383,8 +414,8 @@ class Wallet extends Component {
                                         style={{
                                             height: "100%",
                                             backgroundColor: isWallet
-                                                ? 'white'
-                                                : '#D6D6D6',
+                                                ? '#2EDBDC'
+                                                : '#FFFFFF',
                                             paddingVertical: 4,
                                             width: '100%',
                                             alignItems: 'center',
@@ -409,7 +440,8 @@ class Wallet extends Component {
                             // backgroundColor: "#000000",
 
                         }}
-                            onPress={() => {
+                            onPress={() =>
+                            {
                                 this.props.navigation.navigate(
                                     stackNavigator.WALLET_SETTINGS
                                 )
@@ -443,7 +475,8 @@ class Wallet extends Component {
                             <Text style={{
                                 fontStyle: "italic",
                                 fontWeight: "bold",
-                                fontSize: 20
+                                fontSize: 20,
+
                             }}>
                                 {/* Spending Account */}
 
@@ -478,7 +511,7 @@ class Wallet extends Component {
                                 marginBottom: 20,
                                 borderRadius: 30,
                                 borderColor: "#888888",
-
+                                backgroundColor: "#565874",
                                 borderWidth: 1,
                                 borderBottomWidth: 2,
                                 borderRightWidth: 2,
@@ -540,7 +573,7 @@ class Wallet extends Component {
                             borderWidth: 1,
                             borderBottomWidth: 2,
                             borderRightWidth: 2,
-                            backgroundColor: "#F44369",
+                            backgroundColor: "#2EDBDC",
                             // opacity: this.state.disabledTouch ? 0.5 : 1,
                             width: "60%",
                             marginVertical: 10
@@ -568,7 +601,7 @@ class Wallet extends Component {
                             borderWidth: 1,
                             borderBottomWidth: 2,
                             borderRightWidth: 2,
-                            backgroundColor: "#F44369",
+                            backgroundColor: "#2EDBDC",
                             // opacity: this.state.disabledTouch ? 0.5 : 1,
                             width: "60%"
                         }}>

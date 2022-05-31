@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {
+import
+{
     View,
     Text,
     StyleSheet,
@@ -23,8 +24,10 @@ import Activication from './activication';
 import * as ApiServices from "./../../service/index";
 import { CONST_STORAGE, storage } from '../../common';
 const Stack = createNativeStackNavigator();
-class Login extends Component {
-    constructor(props) {
+class Login extends Component
+{
+    constructor(props)
+    {
         super(props);
         this.state = {
             email: '',
@@ -36,26 +39,33 @@ class Login extends Component {
             count: 56
         };
     }
-    onChangeText = (name, itemValue) => {
-        this.setState(state => {
+    onChangeText = (name, itemValue) =>
+    {
+        this.setState(state =>
+        {
             return {
                 [name]: itemValue
             }
         })
     }
 
-    setEmailLogin = async () => {
+    setEmailLogin = async () =>
+    {
         const emailStore = await storage.getItem(CONST_STORAGE.EMAIL_LOGIN)
         this.setState({ email: emailStore })
     }
 
-    componentDidMount() {
+    componentDidMount()
+    {
         this.setEmailLogin()
     }
-    SetIsHiddenBottom = (type) => {
+    SetIsHiddenBottom = (type) =>
+    {
         if (!type) {
-            setTimeout(() => {
-                this.setState(state => {
+            setTimeout(() =>
+            {
+                this.setState(state =>
+                {
                     return {
                         isHiddenBottom: type
                     }
@@ -63,7 +73,8 @@ class Login extends Component {
             }, 50);
         }
         else {
-            this.setState(state => {
+            this.setState(state =>
+            {
                 return {
                     isHiddenBottom: type
                 }
@@ -72,31 +83,37 @@ class Login extends Component {
 
     }
 
-    Login = () => {
+    Login = () =>
+    {
 
         const { password, email } = this.state;
         const { action, navigation } = this.props;
         if (email?.trim() && password) {
-            this.setState(state => {
+            this.setState(state =>
+            {
                 return {
                     isLogin: true
                 }
-            }, () => {
+            }, () =>
+            {
                 ApiServices.postLogin({
                     email: email?.trim()?.toLocaleLowerCase(),
                     password: password,
 
-                }).then(async (res) => {
+                }).then(async (res) =>
+                {
                     if (res.code === 200) {
 
                         const { token } = res.data;
                         await storage.setItem(CONST_STORAGE.TOKEN_ACCESS, token);
                         await storage.setItem(CONST_STORAGE.EMAIL_LOGIN, email)
-                        this.setState(state => {
+                        this.setState(state =>
+                        {
                             return {
                                 isLogin: false
                             }
-                        }, () => {
+                        }, () =>
+                        {
                             action.postLogin(res.data)
                             action.login(true);
 
@@ -106,20 +123,24 @@ class Login extends Component {
                     if (res.code === 400 || res.code === 404) {
 
 
-                        this.setState(state => {
+                        this.setState(state =>
+                        {
                             return {
                                 isLogin: false
                             }
-                        }, () => {
+                        }, () =>
+                        {
                             alert('Incorrect email adress/password');
                         })
 
                     }
 
 
-                }).catch(err => {
+                }).catch(err =>
+                {
 
-                    this.setState(state => {
+                    this.setState(state =>
+                    {
                         return {
                             isLogin: false
                         }
@@ -132,7 +153,8 @@ class Login extends Component {
     }
 
 
-    render() {
+    render()
+    {
         const { isHiddenBottom, password, email, isLogin } = this.state
         const { action } = this.props;
 
@@ -159,11 +181,12 @@ class Login extends Component {
                     justifyContent: "center",
                     alignItems: "center"
                 }}>
-                    <ActivityIndicator size="large" color="#F44369" />
+                    <ActivityIndicator size="large" color="#2EDBDC" />
                 </View>}
                 <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
                     <TouchableWithoutFeedback
-                        onPress={() => {
+                        onPress={() =>
+                        {
                             Keyboard.dismiss();
                             this.SetIsHiddenBottom(false);
                         }}
@@ -195,7 +218,8 @@ class Login extends Component {
                                     style={{
                                         fontStyle: 'italic',
                                         fontWeight: 'bold',
-                                        fontSize: getSize.scale(30)
+                                        fontSize: getSize.scale(30),
+                                        color: "#FFFFFF"
                                     }}>
                                     LOGIN NOW
                                 </Text>
@@ -216,18 +240,34 @@ class Login extends Component {
                                         width: '100%',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        justifyContent: 'flex-end'
+                                        flex: 1,
+                                        justifyContent: 'flex-end',
+                                        marginBottom: getSize.scale(10)
                                     }}>
                                     <Text
                                         style={{
                                             fontSize: getSize.scale(12),
                                             width: '70%',
-                                            textAlign: 'center'
+                                            textAlign: 'center',
+                                            color: "#0E90F2",
+                                            fontStyle: "italic"
                                         }}>
-                                        Make sure you agree to MOVEARN's
+                                        Make sure you agree to
+
+
                                         <Text
                                             style={{
-                                                color: 'red'
+                                                fontStyle: "italic",
+                                                color: "#0E90F2",
+                                                fontWeight: "bold"
+                                            }}>
+                                            {' '}
+                                            BINAN STEP
+                                        </Text>
+                                        <Text
+                                            style={{
+                                                color: '#2EDBDC',
+                                                fontStyle: "italic"
                                             }}>
                                             {' '}
                                             User Agreement
@@ -235,7 +275,8 @@ class Login extends Component {
                                         &
                                         <Text
                                             style={{
-                                                color: 'red'
+                                                color: '#2EDBDC',
+                                                fontStyle: "italic"
                                             }}>
                                             {' '}
                                             User Privacy

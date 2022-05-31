@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
-import {
-View,
-Image,
-TouchableOpacity,
-ImageBackground,
-StyleSheet,
-Text,
-Modal,
-Platform,
-TextInput,
-ActivityIndicator
+import
+{
+    View,
+    Image,
+    TouchableOpacity,
+    ImageBackground,
+    StyleSheet,
+    Text,
+    Modal,
+    Platform,
+    TextInput,
+    ActivityIndicator
 } from 'react-native';
 import { getSize, Colors } from '../../../common';
 import { useNavigation } from '@react-navigation/native';
@@ -27,7 +28,8 @@ export default forwardRef(function ItemSneakers({ item,
     isshoesIdWear,
     constShoe,
 
-}, ref) {
+}, ref)
+{
     const navigation = useNavigation();
     const selector = useSelector((state) => ({
 
@@ -44,14 +46,18 @@ export default forwardRef(function ItemSneakers({ item,
         ClosemodalTransfer: () => { ClosemodalTransfer() },
         ClosemodalmodalBuy: () => { ClosemodalmodalBuy() }
     }))
-    const ClosemodalmodalBuy = () => {
+    const ClosemodalmodalBuy = () =>
+    {
         setmodalBuy(false)
     }
-    const ClosemodalTransfer = () => {
+    const ClosemodalTransfer = () =>
+    {
         setmodalTransfer(false)
     }
-    useEffect(() => {
-        return () => {
+    useEffect(() =>
+    {
+        return () =>
+        {
             if (selector.shoes.isSuccess) {
                 setmodalTransfer(false);
                 setmodalBuy(false)
@@ -101,11 +107,14 @@ export default forwardRef(function ItemSneakers({ item,
                         <ImageBackground
                             source={{ uri: 'ic_head_frame_shoe' }}
                             style={{
-                                width: '100%',
-                                height: getSize.scale(30),
+                                width: getSize.scale(100),
+                                height: getSize.scale(28),
                                 flexDirection: 'row',
                                 alignItems: 'center',
-                                marginTop: getSize.scale(-12)
+                                marginTop: getSize.scale(-12),
+                                position: "absolute",
+                                right: 0,
+                                top: 0
                             }}>
                             <View style={{ width: '100%' }}>
                                 <View
@@ -123,7 +132,7 @@ export default forwardRef(function ItemSneakers({ item,
                                             fontWeight: 'bold',
                                             color: '#2C2C2C'
                                         }}>
-                                        {item.class ? item.class: 'none'}
+                                        {item.class ? item.class : 'none'}
                                     </Text>
                                     <View
                                         style={{
@@ -167,21 +176,13 @@ export default forwardRef(function ItemSneakers({ item,
                                     justifyContent: 'center',
                                     alignItems: 'center'
                                 }}>
-                                <Image
-                                    source={{ uri: item.img && item.img }}
-                                    style={{
-                                        flex: 7,
-                                        width: getSize.scale(136),
-                                        height: getSize.scale(136),
-                                        resizeMode: 'contain'
-                                    }}
-                                />
                                 <View
                                     style={{
-                                        flex: 1,
+                                        flex: 3,
                                         flexDirection: 'row',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center'
+                                        justifyContent: 'flex-start',
+                                        alignItems: 'center',
+                                        width: "60%"
                                     }}>
                                     <View
                                         style={{
@@ -189,9 +190,11 @@ export default forwardRef(function ItemSneakers({ item,
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                             flexDirection: 'row',
-                                            backgroundColor: 'rgba(26, 91, 168, 1)',
+                                            backgroundColor: '#565874',
                                             paddingHorizontal: getSize.scale(8),
-                                            paddingVertical: getSize.scale(2)
+                                            paddingVertical: getSize.scale(2),
+                                            borderColor: "#FFFFFF",
+                                            borderWidth: 1
                                         }}>
                                         <Text
                                             style={{
@@ -204,6 +207,16 @@ export default forwardRef(function ItemSneakers({ item,
                                         </Text>
                                     </View>
                                 </View>
+                                <Image
+                                    source={{ uri: item.img && item.img }}
+                                    style={{
+                                        flex: 5,
+                                        width: getSize.scale(136),
+                                        height: getSize.scale(136),
+                                        resizeMode: 'contain'
+                                    }}
+                                />
+
 
                                 {[
 
@@ -231,7 +244,7 @@ export default forwardRef(function ItemSneakers({ item,
                                             }}>
                                             <Text
                                                 style={{
-                                                    color: 'rgba(44, 44, 44, 1)',
+                                                    color: '#000000',
                                                     fontStyle: 'italic',
                                                     fontSize: getSize.scale(10)
                                                 }}>
@@ -323,7 +336,7 @@ export default forwardRef(function ItemSneakers({ item,
                                     paddingHorizontal: getSize.scale(16),
                                     alignItems: 'center',
                                     justifyContent: 'space-between',
-                                    backgroundColor: "#ffffff",
+                                    backgroundColor: "#96CFE1",
                                     paddingVertical: 10,
                                     borderRadius: 20,
                                     alignItems: 'center',
@@ -398,14 +411,15 @@ export default forwardRef(function ItemSneakers({ item,
                                     justifyContent: "center",
                                     alignItems: "center"
                                 }}>
-                                    <ActivityIndicator size="large" color="#F44369" />
+                                    <ActivityIndicator size="large" color="#565874" />
                                 </View>}
                                 <View style={{
                                     // flex: 1,
                                     alignItems: 'flex-end'
                                 }}>
                                     <TouchableOpacity
-                                        onPress={() => {
+                                        onPress={() =>
+                                        {
                                             item._id && putShoe(!item.isSelling, item._id)
                                         }}
                                         style={{
@@ -417,7 +431,7 @@ export default forwardRef(function ItemSneakers({ item,
 
                                         }}>
 
-                                        <Image style={{ width: "100%", height: 44 }} source={{ uri: "ic_btn_confirm_long" }} />
+                                        <Image style={{ width: "100%", height: 46 }} source={{ uri: "ic_wallet_btn_confirm" }} />
                                     </TouchableOpacity>
                                 </View>
 
@@ -450,7 +464,8 @@ export default forwardRef(function ItemSneakers({ item,
                                         // flex: 1
                                     }}>
                                         <TouchableOpacity
-                                            onPress={() => {
+                                            onPress={() =>
+                                            {
                                                 // setmodalTransfer(!modalTransfer);
                                                 return setmodalBuy(!modalBuy);
                                             }}
@@ -514,7 +529,7 @@ export default forwardRef(function ItemSneakers({ item,
                                 paddingHorizontal: getSize.scale(16),
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
-                                backgroundColor: '#ffffff',
+                                backgroundColor: '#96CFE1',
                                 paddingVertical: getSize.scale(10),
                                 borderRadius: 20,
                                 alignItems: 'center',
@@ -539,7 +554,7 @@ export default forwardRef(function ItemSneakers({ item,
                                 // backgroundColor: "#0000004e"
 
                             }}>
-                                <ActivityIndicator size="large" color="#F44369" />
+                                <ActivityIndicator size="large" color="#565874" />
                             </View>}
                             {isshoesIdWear && <View style={{
                                 width: "100%",
@@ -552,12 +567,13 @@ export default forwardRef(function ItemSneakers({ item,
                                 // backgroundColor: "#0000004e"
 
                             }}>
-                                <ActivityIndicator size="large" color="#F44369" />
+                                <ActivityIndicator size="large" color="#565874" />
                             </View>}
                             <View
                                 style={{
                                     justifyContent: 'center',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    width: "100%",
                                 }}>
                                 <Image
                                     style={{
@@ -572,8 +588,11 @@ export default forwardRef(function ItemSneakers({ item,
                                 />
                                 <View
                                     style={{
-                                        justifyContent: 'center',
-                                        flexDirection: 'row'
+                                        justifyContent: 'flex-start',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        width: "100%",
+                                        // backgroundColor: "red"
                                     }}>
                                     <View
                                         style={{
@@ -586,7 +605,7 @@ export default forwardRef(function ItemSneakers({ item,
                                             marginRight: getSize.scale(8),
                                             paddingVertical: getSize.scale(4),
                                             paddingHorizontal: getSize.scale(32),
-                                            backgroundColor: 'rgba(9, 116, 241, 1)'
+                                            backgroundColor: '#565874'
                                         }}>
                                         <Text
                                             style={{
@@ -610,7 +629,7 @@ export default forwardRef(function ItemSneakers({ item,
                                 <View style={{ flex: 1 }}>
                                     <Text
                                         style={{
-                                            color: '#767676',
+                                            color: '#000000',
                                             fontStyle: 'italic'
                                         }}>
                                         Class
@@ -640,7 +659,7 @@ export default forwardRef(function ItemSneakers({ item,
                                 <View style={{ flex: 1 }}>
                                     <Text
                                         style={{
-                                            color: '#767676',
+                                            color: '#000000',
                                             fontStyle: 'italic'
                                         }}>
                                         Rarity
@@ -658,7 +677,7 @@ export default forwardRef(function ItemSneakers({ item,
                                         }}>
                                         <Text
                                             style={{
-                                                color: '#000',
+                                                color: '#000000',
                                                 fontWeight: 'bold',
                                                 fontSize: getSize.scale(13)
                                             }}>
@@ -670,7 +689,7 @@ export default forwardRef(function ItemSneakers({ item,
                                 <View style={{ flex: 1 }}>
                                     <Text
                                         style={{
-                                            color: '#767676',
+                                            color: '#000000',
                                             fontStyle: 'italic'
                                         }}>
                                         Energy
@@ -894,7 +913,7 @@ export default forwardRef(function ItemSneakers({ item,
                                                 style={{
                                                     fontSize: getSize.scale(12),
                                                     fontStyle: 'italic',
-                                                    color: 'rgba(44, 44, 44, 1)'
+                                                    color: '#000000'
                                                 }}>
                                                 Speed
                                             </Text>
@@ -909,7 +928,7 @@ export default forwardRef(function ItemSneakers({ item,
                                                 style={{
                                                     fontSize: getSize.scale(12),
                                                     fontWeight: 'bold',
-                                                    color: 'rgba(44, 44, 44, 1)'
+                                                    color: '#000000'
                                                 }}>
                                                 {`${constShoe.SPEED_RANGE[item.quality].min} - ${constShoe.SPEED_RANGE[item.quality].max}`} km/h
 
@@ -935,7 +954,7 @@ export default forwardRef(function ItemSneakers({ item,
                                                 style={{
                                                     fontSize: getSize.scale(12),
                                                     fontStyle: 'italic',
-                                                    color: 'rgba(44, 44, 44, 1)'
+                                                    color: '#000000'
                                                 }}>
                                                 Durability
                                             </Text>
@@ -950,7 +969,7 @@ export default forwardRef(function ItemSneakers({ item,
                                                 style={{
                                                     fontSize: getSize.scale(12),
                                                     fontWeight: 'bold',
-                                                    color: 'rgba(44, 44, 44, 1)'
+                                                    color: '#000000'
                                                 }}>
                                                 {`${item.energy}`}
                                             </Text>
@@ -975,7 +994,7 @@ export default forwardRef(function ItemSneakers({ item,
                                                 style={{
                                                     fontSize: getSize.scale(12),
                                                     fontStyle: 'italic',
-                                                    color: 'rgba(44, 44, 44, 1)'
+                                                    color: '#000000'
                                                 }}>
                                                 Luck
                                             </Text>
@@ -990,7 +1009,7 @@ export default forwardRef(function ItemSneakers({ item,
                                                 style={{
                                                     fontSize: getSize.scale(12),
                                                     fontWeight: 'bold',
-                                                    color: 'rgba(244, 67, 105, 1)'
+                                                    color: '#000000'
                                                 }}>
                                                 {`${constShoe.LUCK[item.quality]}`}
                                             </Text>
@@ -1019,7 +1038,7 @@ export default forwardRef(function ItemSneakers({ item,
                                         borderWidth: 1,
                                         borderBottomWidth: 2,
                                         borderRightWidth: 2,
-                                        backgroundColor: "#F44369"
+                                        backgroundColor: "#2EDBDC"
                                     }}
                                     onPress={() => item._id && shoesIdWear(item._id)}>
                                     {/* <Image
@@ -1053,7 +1072,8 @@ export default forwardRef(function ItemSneakers({ item,
                             }}>
                                 <TouchableOpacity
                                     disabled={item.isSelling ? true : false}
-                                    onPress={() => {
+                                    onPress={() =>
+                                    {
                                         setmodalBuy(!modalBuy)
                                     }}
                                     style={{
@@ -1069,7 +1089,7 @@ export default forwardRef(function ItemSneakers({ item,
                                         borderWidth: 1,
                                         borderBottomWidth: 2,
                                         borderRightWidth: 2,
-                                        backgroundColor: "#F44369"
+                                        backgroundColor: "#2EDBDC"
                                     }}>
                                     {/* <Text
                                                                     style={{
@@ -1091,7 +1111,8 @@ export default forwardRef(function ItemSneakers({ item,
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     disabled={item.isSelling ? false : true}
-                                    onPress={() => {
+                                    onPress={() =>
+                                    {
                                         item._id && putShoe(!item.isSelling, item._id)
 
                                     }}
@@ -1108,7 +1129,7 @@ export default forwardRef(function ItemSneakers({ item,
                                         borderWidth: 1,
                                         borderBottomWidth: 2,
                                         borderRightWidth: 2,
-                                        backgroundColor: "#F44369"
+                                        backgroundColor: "#2EDBDC"
                                     }}>
                                     {/* <Text
                                                                     style={{

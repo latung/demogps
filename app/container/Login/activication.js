@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {
+import
+{
     View,
     Text,
     StyleSheet,
@@ -13,13 +14,16 @@ import { tabNavigator, stackNavigator } from '../../navigation/nameNavigator';
 import * as _action from '../../redux/action/ActionHandle';
 import { location, getSize, Colors } from '../../common/';
 
-class Activicaction extends Component {
-    constructor(props) {
+class Activicaction extends Component
+{
+    constructor(props)
+    {
         super(props);
         this.state = {};
     }
 
-    render() {
+    render()
+    {
         const { email, password } = this.props;
 
         return (
@@ -115,7 +119,8 @@ class Activicaction extends Component {
                                     justifyContent: 'center',
                                     alignItems: 'center'
                                 }}
-                                onPress={() => {
+                                onPress={() =>
+                                {
                                     this.props.Login()
                                 }}>
                                 <Image
@@ -136,25 +141,35 @@ class Activicaction extends Component {
                                 }}>
                                 <Text
                                     style={{
-                                        color: '#2C2C2C',
+                                        color: '#FFFFFF',
                                         fontSize: getSize.scale(13),
                                         fontStyle: 'italic'
                                     }}
-                                    onPress={() => {
+                                    onPress={() =>
+                                    {
                                         this.props.navigation.navigate(
-                                            stackNavigator.SIGNUP, {isForgotPass: true}
+                                            stackNavigator.SIGNUP, { isForgotPass: true }
                                         );
                                     }}>
                                     Forgot password?
                                 </Text>
                             </TouchableOpacity>
+                            <View style={{
+                                width: getSize.scale(80), height: getSize.scale(2),
+                                backgroundColor: "#C1BACF",
+                                marginVertical: getSize.scale(10)
+                            }}>
+
+                            </View>
                             <TouchableOpacity
                                 style={{
                                     width: '100%',
                                     justifyContent: 'center',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    marginVertical: getSize.scale(8)
                                 }}
-                                onPress={() => {
+                                onPress={() =>
+                                {
                                     return this.props.navigation.navigate(
                                         stackNavigator.SIGNUP
                                     );

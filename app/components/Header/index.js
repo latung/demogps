@@ -318,6 +318,7 @@ class Index extends Component
 
                             </View>
                             <TouchableOpacity
+
                                 disabled={this.state.toolTipSol}
                                 onPress={
                                     // () => navigation.navigate(stackNavigator.WALLET_HOME)
@@ -332,6 +333,7 @@ class Index extends Component
                                     }}
                                     source={{ uri: 'ic_wallet' }}
                                 />
+
                             </TouchableOpacity>
                         </View>
                     </Tooltip>

@@ -245,6 +245,7 @@ class LoginNewpass extends Component
                                     style={{
                                         fontStyle: 'italic',
                                         fontWeight: 'bold',
+                                        color: "#FFFFFF",
                                         fontSize: getSize.scale(30)
                                     }}>
                                     SET NEW PASSWORD

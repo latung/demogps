@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
-import {
+import
+{
     View,
     Text,
     TextInput,
@@ -20,8 +21,10 @@ import { connect } from 'react-redux';
 import * as _action from '../../redux/action/ActionHandle';
 import { LoadingIndicator } from '../../components'
 
-class Recvice extends Component {
-    constructor(props) {
+class Recvice extends Component
+{
+    constructor(props)
+    {
         super(props);
 
         this.state = {
@@ -29,13 +32,15 @@ class Recvice extends Component {
             loadingQR: true,
         };
     }
-    CopyPrivateKey = async () => {
+    CopyPrivateKey = async () =>
+    {
         const { userIdBnb } = this.props;
         const address = userIdBnb.data.address ? userIdBnb.data.address : "";
         const content = await Clipboard.setString(address);
         alert("Copy Success!")
     }
-    render() {
+    render()
+    {
         const { navigation, userIdBnb } = this.props;
         const { loadingQR } =
             this.state;
@@ -143,7 +148,7 @@ class Recvice extends Component {
                             Scan address to receive payment
                         </Text> */}
                     </View>
-                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                    <View style={{ justifyContent: 'center', alignItems: 'flex-start', flex: 1, paddingLeft: getSize.scale(20) }}>
                         <Text
                             style={{
                                 color: 'rgba(118, 118, 118, 1)',
@@ -155,13 +160,14 @@ class Recvice extends Component {
                         <View
                             style={{
                                 justifyContent: 'center',
-                                alignItems: 'center',
-                                marginTop: getSize.scale(8)
+                                alignItems: 'flex-start',
+                                marginTop: getSize.scale(8),
+
                             }}>
                             <ImageBackground
                                 style={{
                                     width: getSize.Width - getSize.scale(121),
-                                    height: getSize.scale(38),
+                                    height: getSize.scale(41),
                                     resizeMode: 'contain'
                                 }}
                                 source={{ uri: 'ic_frame_address' }}>
@@ -181,19 +187,22 @@ class Recvice extends Component {
                                     </Text>
                                 </View>
                             </ImageBackground>
-                        </View>
-
-                        <View style={{ justifyContent: 'center', marginTop: getSize.scale(64) }}>
-                            <TouchableOpacity onPress={() => this.CopyPrivateKey()}>
+                            <TouchableOpacity onPress={() => this.CopyPrivateKey()} style={{
+                                marginTop: getSize.scale(-15)
+                            }}>
                                 <Image
                                     style={{
-                                        width: getSize.Width,
-                                        height: getSize.scale(40),
+                                        width: getSize.scale(170),
+                                        height: getSize.scale(80),
                                         resizeMode: 'contain'
                                     }}
                                     source={{ uri: 'ic_copy_address' }}
                                 />
                             </TouchableOpacity>
+                        </View>
+
+                        <View style={{ justifyContent: 'center', marginTop: getSize.scale(64) }}>
+
                         </View>
                     </View>
                 </View>

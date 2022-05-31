@@ -80,7 +80,7 @@ class WalletSettings extends Component
         const { navigation, action } = this.props;
         // console.log(this.props);
         return (
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#000000" }}>
                 <ImageBackground
                     style={{
                         width: getSize.Width,

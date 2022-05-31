@@ -206,7 +206,7 @@ class TabBar extends Component
                             alignItems: 'center',
                             justifyContent: 'center',
                             height: getSize.scale(38),
-                            borderRadius: 20,
+                            borderRadius: 10,
                             overflow: 'hidden',
 
                             borderWidth: 1,
@@ -228,7 +228,8 @@ class TabBar extends Component
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 paddingHorizontal: getSize.scale(4),
-                                height: '100%'
+                                height: '100%',
+                                backgroundColor: "#FFFFFF"
                             }}>
                             <TouchableOpacity
                                 activeOpacity={1}
@@ -241,11 +242,11 @@ class TabBar extends Component
                                 <View
                                     style={{
                                         flex: 0.8,
-                                        backgroundColor: isSneakers ? '#F44369' : 'transparent',
+                                        backgroundColor: isSneakers ? '#2EDBDC' : 'transparent',
                                         width: '100%',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        borderRadius: isSneakers ? 20 : 0
+                                        borderRadius: isSneakers ? 10 : 0
                                     }}>
                                     <Text
                                         style={{
@@ -268,12 +269,12 @@ class TabBar extends Component
                                 <View
                                     style={{
                                         flex: 0.8,
-                                        backgroundColor: isShoeBoxes ? '#F44369' : 'transparent',
+                                        backgroundColor: isShoeBoxes ? '#2EDBDC' : 'transparent',
                                         paddingVertical: 2,
                                         width: '100%',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        borderRadius: isShoeBoxes ? 20 : 0
+                                        borderRadius: isShoeBoxes ? 10 : 0
                                     }}>
                                     <Text
                                         style={{
@@ -297,7 +298,7 @@ class TabBar extends Component
                                 <View
                                     style={{
                                         flex: 0.8,
-                                        backgroundColor: isGems ? '#F44369' : 'transparent',
+                                        backgroundColor: isGems ? '#2EDBDC' : 'transparent',
                                         paddingVertical: 2,
                                         width: '100%',
                                         alignItems: 'center',
@@ -325,7 +326,7 @@ class TabBar extends Component
                                 <View
                                     style={{
                                         flex: 0.8,
-                                        backgroundColor: isPromos ? '#F44369' : 'transparent',
+                                        backgroundColor: isPromos ? '#2EDBDC' : 'transparent',
                                         paddingVertical: 2,
                                         width: '100%',
                                         alignItems: 'center',
@@ -367,11 +368,12 @@ class TabBar extends Component
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     height: getSize.scale(30),
-                                    borderRadius: 20,
+                                    borderRadius: 10,
                                     overflow: 'hidden',
                                     width: '60%',
                                     borderWidth: 1,
                                     borderColor: 'rgba(255, 255, 255, 0.6)',
+                                    backgroundColor: "#FFFFFF",
                                     elevation: 2,
                                     shadowColor: '#000',
                                     shadowOffset: {
@@ -394,7 +396,7 @@ class TabBar extends Component
                                     style={{
                                         flex: 1,
                                         alignItems: 'center',
-                                        borderRadius: isGalleryMini ? 20 : 0,
+                                        borderRadius: isGalleryMini ? 10 : 0,
                                         overflow: 'hidden',
                                         margin: getSize.scale(3)
                                     }}>
@@ -402,7 +404,7 @@ class TabBar extends Component
                                         style={{
                                             flex: 1,
                                             backgroundColor: isGalleryMini
-                                                ? '#F44369'
+                                                ? '#2EDBDC'
                                                 : 'transparent',
                                             width: '100%',
                                             alignItems: 'center',
@@ -432,7 +434,7 @@ class TabBar extends Component
                                         style={{
                                             flex: 1,
                                             backgroundColor: isUpgradeMini
-                                                ? '#F44369'
+                                                ? '#2EDBDC'
                                                 : 'transparent',
                                             width: '100%',
                                             alignItems: 'center',

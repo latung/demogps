@@ -90,7 +90,7 @@ class WalletImport extends Component
             <SafeAreaView style={{ flex: 1 }}>
                 <KeyboardAvoidingView behavior='padding' style={{
                     width: "100%",
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "#000000",
                     flex: 1,
                 }} >
                     {isUpdate && <View style={{
@@ -104,7 +104,7 @@ class WalletImport extends Component
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <ActivityIndicator size="large" color="#F44369" />
+                        <ActivityIndicator size="large" color="#2EDBDC" />
                     </View>}
                     <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); this.SetIsHiddenBottom(false); }} style={{
 
@@ -122,7 +122,7 @@ class WalletImport extends Component
                                 style={{
                                     width: getSize.Width,
                                     height: getSize.scale(320),
-                                    backgroundColor: 'rgba(247, 245, 248, 1)',
+                                    backgroundColor: '#555774',
 
                                     borderBottomLeftRadius: getSize.scale(32),
                                     borderBottomRightRadius: getSize.scale(32),
@@ -274,6 +274,7 @@ class WalletImport extends Component
                                         <View style={{
                                             borderWidth: 1,
                                             borderRadius: 10,
+                                            borderColor: "#FFFFFF",
                                             height: 150,
                                             padding: 10
                                         }}>
@@ -316,7 +317,7 @@ class WalletImport extends Component
                                             height: getSize.scale(100)
                                         }}>
                                             <Text style={{
-                                                color: "#F44369",
+                                                color: "#2EDBDC",
                                                 fontStyle: "italic",
                                                 fontWeight: "bold",
                                                 marginBottom: 10,
@@ -360,7 +361,7 @@ class WalletImport extends Component
                                 borderWidth: 1,
                                 borderBottomWidth: 2,
                                 borderRightWidth: 2,
-                                backgroundColor: "#F44369",
+                                backgroundColor: "#2EDBDC",
                                 // opacity: this.state.disabledTouch ? 0.5 : 1,
                                 width: "60%"
 
