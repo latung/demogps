@@ -71,6 +71,7 @@ export const InitState = {
     submitChangePassword: { ...StateDefault },
 
     market: { ...StateDefault },
+    listBox: { ...StateDefault },
     filterBackup: [],
     getShoesId: { ...StateDefault },
     putShoesId: { ...StateDefault },

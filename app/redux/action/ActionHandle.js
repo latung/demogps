@@ -294,6 +294,15 @@ export const market = (data) => (dispatch) =>
 
 };
 
+export const getListBox = (data) => (dispatch) =>
+{
+    dispatch({
+        type: ACTION_CONST.GET_BOX_SUCCESS,
+        data: data
+    });
+
+};
+
 // getShoesId
 export const get_shoes_id_failure = (msgError = null) => ({
     type: ACTION_CONST.GET_SHOES_ID_FAILURE,

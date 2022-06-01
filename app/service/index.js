@@ -318,6 +318,23 @@ const market = async (Body) =>
 
 }
 
+const getShopBox = async (Body) =>
+{
+    const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+
+    const rawResponse = await fetch(`${API_CONST.API_GET_BOX}`, {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ${token_access}`
+        }
+    });
+    const content = await rawResponse.json();
+    console.log("content box", content);
+    return content;
+
+}
+
 const getUser = async (Body) =>
 {
 
@@ -533,5 +550,6 @@ export
     getRate,
     transfer,
     transferSpending,
-    swap
+    swap,
+    getShopBox
 };

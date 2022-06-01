@@ -23,7 +23,8 @@ export default function ItemShoeBoxes({ item, index })
     const dispatch = useDispatch();
     const [modalBuy, setmodalBuy] = useState(false);
     const [modalTransfer, setmodalTransfer] = useState(false);
-
+    let price = item.price;
+    price = price.toString().length < 5 ? price : (price.toString().substring(0, 4) + "...");
     const image =
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRogMFHOw0CKtwUvuJmhgcSi18GmfqlCxUI6g&usqp=CAU';
     const imageSneakers = 'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg';
@@ -195,7 +196,7 @@ export default function ItemShoeBoxes({ item, index })
                                             fontWeight: 'bold',
                                             fontSize: getSize.scale(12)
                                         }}>
-                                        11.67 BNB
+                                        {price} BUSD
                                     </Text>
                                 </View>
                                 <View style={{ flex: 4 }}>
