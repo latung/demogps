@@ -572,6 +572,12 @@ const initReducer = (state = _state.InitState, action) => {
       };
     case ACTION_CONST.CLEAN_ALL:
       return _state.InitState;
+    //my Box
+    case ACTION_CONST.GET_SHOEBOX:
+      return {
+        ...state,
+        myListBox: {...state.myListBox, ...upSuccess},
+      };
     default:
       return state;
   }

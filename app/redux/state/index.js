@@ -100,4 +100,5 @@ export const InitState = {
     passBackup: '',
     passCodeWallet: { ...StateDefault },
     Totalkm: { ...StateDefault },
+    shoeBox: { ...StateDefault },
 };
