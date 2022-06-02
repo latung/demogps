@@ -65,3 +65,6 @@ export const API_GET_TOTAL_KM = `${HOST + USER}/total-run`;
 
 //get my box
 export const API_GET_MY_BOX = `${HOST}/item`;
+
+//open Box
+export const API_OPEN_BOX = `${HOST}/item/box/open-shoes-box`;

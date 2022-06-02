@@ -1,32 +1,68 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useState, useEffect} from 'react';
 import {
-  View,
   Image,
-  TouchableOpacity,
   ImageBackground,
   StyleSheet,
   Text,
-  Modal,
-  Platform,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import {getSize, Colors} from '../../../common';
-import {useNavigation} from '@react-navigation/native';
+import Toast from 'react-native-simple-toast';
 import {useDispatch} from 'react-redux';
-import {stackNavigator} from '../../../navigation/nameNavigator';
-import * as _action from '../../../redux/action/ActionHandle';
-import {color} from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import {Colors, getSize} from '../../../common';
+import * as ApiServices from '../../../service';
+import {LoadingIndicator, NoData} from '../../../components';
+import {InfoItemModal} from '../../../components/InfoItemModal';
+import * as ACTION_CONST from '../../../redux/action/ActionType';
 
 export default function ItemShoeBoxes({item, index}) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [modalBuy, setmodalBuy] = useState(false);
-
-  const [modalTransfer, setmodalTransfer] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [modalInfo, setModalInfo] = useState(false);
+  const [sneaker, setSneaker] = useState(null);
 
   const image =
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRogMFHOw0CKtwUvuJmhgcSi18GmfqlCxUI6g&usqp=CAU';
   const imageSneakers =
     'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg';
+
+  const onOpenBox = async () => {
+    setLoading(true);
+    ApiServices.onOpenBox({item_type: item?.type})
+      .then(res => {
+        setLoading(false);
+        setSneaker(res?.data?.newShoes);
+        ApiServices.getMyBox().then(response => {
+          if (response.code === 200) {
+            dispatch({
+              type: ACTION_CONST.GET_SHOEBOX,
+              data: response.data,
+            });
+          }
+        });
+
+        ApiServices.shoes().then(response => {
+          if (response.code === 200) {
+            dispatch({
+              type: ACTION_CONST.SHOES_SUCCESS,
+              data: response.data,
+            });
+          }
+        });
+      })
+      .catch(err => {
+        setLoading(false);
+        Toast.showWithGravity(err, Toast.LONG, Toast.CENTER);
+      });
+  };
+
+  useEffect(() => {
+    if (sneaker) {
+      setModalInfo(true);
+    }
+  }, [sneaker]);
 
   return (
     <View
@@ -138,7 +174,7 @@ export default function ItemShoeBoxes({item, index}) {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    marginVertical: 20
+                    marginVertical: 20,
                   }}>
                   <View
                     style={{
@@ -170,16 +206,26 @@ export default function ItemShoeBoxes({item, index}) {
                     resizeMode: 'contain',
                   }}
                 />
-                <TouchableOpacity style={styles.open}>
-                  <Text style={styles.openText}>OPEN</Text>
+
+                <TouchableOpacity onPress={onOpenBox} style={styles.open}>
+                  {loading ? (
+                    <LoadingIndicator />
+                  ) : (
+                    <Text style={styles.openText}>OPEN</Text>
+                  )}
                 </TouchableOpacity>
               </TouchableOpacity>
             </View>
-
             <View style={{flex: 1}} />
           </View>
         </View>
       </ImageBackground>
+      <InfoItemModal
+        visible={modalInfo}
+        setVisible={values => setModalInfo(values)}
+        item={sneaker}
+        isSneakerItem
+      />
     </View>
   );
 }
@@ -214,8 +260,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
   },
-  openText:{
+  openText: {
     color: 'white',
     fontWeight: 'bold',
-  }
+  },
 });

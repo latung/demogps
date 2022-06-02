@@ -74,6 +74,20 @@ export default forwardRef(function ItemSneakers(
   const imageSneakers =
     'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg';
 
+  const icons = [];
+  for (let index = 0; index < item.energy; index++) {
+    icons.push(
+      <Image
+        source={{uri: 'ic_ray'}}
+        style={{
+          width: getSize.scale(12),
+          height: getSize.scale(12),
+          resizeMode: 'contain',
+        }}
+      />,
+    );
+  }
+
   return (
     <View
       key={index}
@@ -132,7 +146,7 @@ export default forwardRef(function ItemSneakers(
                       fontStyle: 'italic',
                       fontWeight: 'bold',
                       color: '#2C2C2C',
-                      textTransform: 'capitalize'
+                      textTransform: 'capitalize',
                     }}>
                     {item?.class ?? 'none'}
                   </Text>
@@ -141,30 +155,7 @@ export default forwardRef(function ItemSneakers(
                       marginLeft: getSize.scale(5),
                       flexDirection: 'row',
                     }}>
-                    <Image
-                      source={{uri: 'ic_ray'}}
-                      style={{
-                        width: getSize.scale(12),
-                        height: getSize.scale(12),
-                        resizeMode: 'contain',
-                      }}
-                    />
-                    <Image
-                      source={{uri: 'ic_ray'}}
-                      style={{
-                        width: getSize.scale(12),
-                        height: getSize.scale(12),
-                        resizeMode: 'contain',
-                      }}
-                    />
-                    <Image
-                      source={{uri: 'ic_ray'}}
-                      style={{
-                        width: getSize.scale(12),
-                        height: getSize.scale(12),
-                        resizeMode: 'contain',
-                      }}
-                    />
+                    {icons}
                   </View>
                 </View>
               </View>
