@@ -20,6 +20,7 @@ import ItemSneakers from './ItemSneakers';
 import ItemGems from './ItemGems';
 import ItemPromos from './ItemPromos';
 import ItemUpgrade from './ItemUpgrade';
+import ItemShoeBoxes from './ItemShoeboxes'
 import Head from "./../../components/head/index";
 import * as ApiServices from "./../../service/index";
 
@@ -118,6 +119,7 @@ class TabBag extends Component {
     }
 
     componentDidMount() {
+        this.LoadData();
         setTimeout(() => {
             this.setState({ loading: false })
         }, 1000)
@@ -141,7 +143,7 @@ class TabBag extends Component {
 
     _renderItem = ({ item, index }) => {
         const { screenState, getConstShoe } = this.props;
-        const { isSneakers, isGems, isPromos, isGalleryMini, isUpgradeMini } =
+        const { isSneakers, isGems, isPromos, isGalleryMini, isUpgradeMini, isShoeBoxes } =
             screenState;
         const constShoe = getConstShoe.data ? getConstShoe.data : [];
         if (isSneakers && isGalleryMini) {
@@ -165,6 +167,9 @@ class TabBag extends Component {
         }
         if (isPromos) {
             return <ItemPromos item={item} index={index} />;
+        }
+        if (isShoeBoxes) {
+            return <ItemShoeBoxes item={item} index={index} />;
         }
         return null;
     };
@@ -215,6 +220,15 @@ class TabBag extends Component {
         }).catch(err => {
             console.log('LoadData', err)
         })
+
+        ApiServices.getMyBox().then(res => {
+            if (res.code === 200) {
+                action.getMyListBox(res.data)
+            }
+        }).catch(err => {
+            console.log('LoadData', err)
+        })
+
     }
     shoesIdWear = (id) => {
 
@@ -265,7 +279,6 @@ class TabBag extends Component {
             }
         }, () => {
             ApiServices.putShoesId({ price: pr, isSelling: isSelling, _id: id }).then(res => {
-                console.log(res);
                 if (res.code === 200) {
                     action.putShoesId(res.data);
                     this.LoadData();
@@ -325,7 +338,7 @@ class TabBag extends Component {
     }
 
     render() {
-        const { navigation, screenState, shoes } = this.props;
+        const { navigation, screenState, shoes, myListBox } = this.props;
         const {
             isSneakers,
             isGems,
@@ -336,6 +349,10 @@ class TabBag extends Component {
         } = screenState;
         const { loading } = this.state
         const dataSneakers = shoes.data ? shoes.data : [];
+
+        const dataGem = myListBox?.data?.filter(e => e.category !== 'box') ?? []
+        const dataBox = myListBox?.data?.filter(e => e.category === 'box') ?? []
+
         const stylesContent = {
             flex:
                 isAndroid
@@ -381,9 +398,9 @@ class TabBag extends Component {
                                 isSneakers && isGalleryMini
                                     ? dataSneakers
                                     : isGems
-                                        ? dataSneakers
+                                        ? dataGem
                                         : isShoeBoxes
-                                            ? dataSneakers
+                                            ? dataBox
                                             : isPromos
                                                 ? dataPromos
                                                 : []
@@ -432,6 +449,7 @@ const mapStateToProps = (state) => ({
     shoesIdWear: state.initReducer.shoesIdWear,
     getConstShoe: state.initReducer.getConstShoe,
     userId: state.initReducer.userId,
+    myListBox: state.initReducer.myListBox,
 });
 const mapDispatchToProps = (dispatch) => ({
     action: bindActionCreators(_action, dispatch)

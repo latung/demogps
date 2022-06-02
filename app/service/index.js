@@ -330,7 +330,6 @@ const getShopBox = async (Body) =>
         }
     });
     const content = await rawResponse.json();
-    console.log("content box", content);
     return content;
 
 }
@@ -524,6 +523,23 @@ const swap = async (Body) =>
     return content;
 
 }
+
+const getMyBox = async () =>
+{
+    const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+
+    const rawResponse = await fetch(`${API_CONST.API_GET_MY_BOX}`, {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ${token_access}`
+        }
+    });
+    const content = await rawResponse.json();
+    return content;
+
+}
+
 export
 {
     createSession,
@@ -551,5 +567,6 @@ export
     transfer,
     transferSpending,
     swap,
-    getShopBox
+    getShopBox,
+    getMyBox
 };

@@ -828,3 +828,14 @@ export const putRunningSessionId = (Body) => (dispatch) =>
             return false;
         });
 };
+
+
+// list my box
+
+export const getMyListBox = (data) => (dispatch) =>
+{
+    dispatch({
+        type: ACTION_CONST.GET_SHOEBOX,
+        data: data
+    });
+};
