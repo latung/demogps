@@ -41,7 +41,9 @@ import
     LoginActiveCode,
     Recvice,
     Countdown,
-    passcodeBackup
+    passcodeBackup,
+    RunChecking,
+    RunCountdown
 } from '../container';
 
 const Stack = createNativeStackNavigator();
@@ -61,7 +63,6 @@ class MainNavigator extends PureComponent
                 screenOptions={{ headerShown: false }}
                 initialRouteName={stackNavigator.DRAWER}>
                 <Stack.Screen name={stackNavigator.DRAWER} component={DrawerNavigator} />
-
                 <Stack.Screen
                     name={stackNavigator.BOTTOM_TAB}
                     component={BottomTabNavigator}
@@ -121,6 +122,9 @@ class MainNavigator extends PureComponent
 
                 <Stack.Screen name={stackNavigator.COUNT_DOWN} component={Countdown} />
                 <Stack.Screen name={stackNavigator.BACKUP_PASS_WALLET} component={passcodeBackup} />
+
+                <Stack.Screen name={stackNavigator.RUN_CHECKING} component={RunChecking} />
+                <Stack.Screen name={stackNavigator.RUN_COUNT_DOWN} component={RunCountdown} />
             </Stack.Navigator>
         );
     }
