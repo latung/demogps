@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -14,12 +14,12 @@ import {
   ImageBackground,
 } from 'react-native';
 import Toast from 'react-native-simple-toast';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as _action from '../../redux/action/ActionHandle';
-import {stackNavigator, tabNavigator} from '../../navigation/nameNavigator';
-import {Popup, NoData, Header} from '../../components';
-import {getSize, Colors} from '../../common';
+import { stackNavigator, tabNavigator } from '../../navigation/nameNavigator';
+import { Popup, NoData, Header } from '../../components';
+import { getSize, Colors } from '../../common';
 import TabBar from './TabBar';
 import ItemSneakers from './ItemSneakers';
 import ItemGems from './ItemGems';
@@ -221,10 +221,10 @@ class TabStore extends Component {
   };
 
   // FlatList
-  _renderItem = ({item, index}) => {
-    const {screenState, getConstShoe} = this.props;
+  _renderItem = ({ item, index }) => {
+    const { screenState, getConstShoe } = this.props;
     const constShoe = getConstShoe.data ? getConstShoe.data : [];
-    const {isSneakers, isGems, isShoeBoxes, isPromos} = screenState;
+    const { isSneakers, isGems, isShoeBoxes, isPromos } = screenState;
     if (isSneakers) {
       return (
         <ItemSneakers
@@ -249,14 +249,14 @@ class TabStore extends Component {
   };
 
   renderFooter = () => {
-    const {isFetching} = this.props;
+    const { isFetching } = this.props;
     if (isFetching) {
       return (
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
           <ActivityIndicator
             color={Colors.BLUE}
             size="large"
-            style={{paddingVertical: 20}}
+            style={{ paddingVertical: 20 }}
           />
         </View>
       );
@@ -264,7 +264,7 @@ class TabStore extends Component {
   };
 
   renderEmptyList = () => {
-    const {isFetching, isFull} = this.props;
+    const { isFetching, isFull } = this.props;
     if (!isFetching && !isFull) {
       return <NoData />;
     }
@@ -274,8 +274,8 @@ class TabStore extends Component {
   }
 
   loadData = () => {
-    const {action} = this.props;
-    ApiServices.market({pageSize: 20, page: 1}).then(res => {
+    const { action } = this.props;
+    ApiServices.market({ pageSize: 20, page: 1 }).then(res => {
       if (res.code === 200) {
         action.market(res.data.shoes);
         this.setState(
@@ -290,15 +290,25 @@ class TabStore extends Component {
         );
       }
     });
-    ApiServices.getShopBox().then(res => {
+    ApiServices.getShopBox({ pageSize: 20, page: 1 }).then(res => {
       if (res.code === 200) {
-        action.getListBox(res.data);
+        const dataBox =
+          res?.data?.items?.filter(e => e.category === 'box') ?? [];
+        action.getListBox(dataBox);
+      }
+    });
+
+    ApiServices.getGemsShop({ pageSize: 20, page: 1 }).then(res => {
+      if (res.code === 200) {
+        const dataGems =
+          res?.data?.items?.filter(e => e.category === 'gem') ?? [];
+        action.getListGem(dataGems);
       }
     });
   };
   buyShoe = id => {
     console.log(id);
-    const {action} = this.props;
+    const { action } = this.props;
 
     this.setState(
       state => {
@@ -307,7 +317,7 @@ class TabStore extends Component {
         };
       },
       () => {
-        ApiServices.buy({shoesId: id})
+        ApiServices.buy({ shoesId: id })
           .then(res => {
             console.log(res);
             if (res.code === 200) {
@@ -334,7 +344,7 @@ class TabStore extends Component {
     );
   };
   onRefresh = () => {
-    const {screenState} = this.props;
+    const { screenState } = this.props;
     const {
       isSneakers,
       isGems,
@@ -353,8 +363,8 @@ class TabStore extends Component {
       },
       () => {
         if (isSneakers) {
-          const {action} = this.props;
-          ApiServices.market({pageSize: 20, page: 1})
+          const { action } = this.props;
+          ApiServices.market({ pageSize: 20, page: 1 })
             .then(res => {
               if (res.code === 200) {
                 action.market(res.data.shoes);
@@ -371,8 +381,9 @@ class TabStore extends Component {
     );
   };
   render() {
-    const {navigation, screenState, action, market, filterBackup, listBox} = this.props;
-    const {isSneakers, isGems, isBadges, isShoeBoxes, isPromos} = screenState;
+    const { navigation, screenState, action, market, filterBackup, listBox, listGem } =
+      this.props;
+    const { isSneakers, isGems, isBadges, isShoeBoxes, isPromos } = screenState;
 
     const image =
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRogMFHOw0CKtwUvuJmhgcSi18GmfqlCxUI6g&usqp=CAU';
@@ -380,9 +391,10 @@ class TabStore extends Component {
       'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg';
     const dataSneakers = market && market.data ? market.data : [];
     const dataBoxes = listBox && listBox.data ? listBox.data : [];
+    const dataGems = listGem && listGem.data ? listGem.data : [];
 
     return (
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{ flex: 1 }}>
         <ImageBackground
           style={{
             width: getSize.Width,
@@ -391,7 +403,7 @@ class TabStore extends Component {
             resizeMode: 'contain',
             zIndex: -2,
           }}
-          source={{uri: 'ic_background_shoping'}}
+          source={{ uri: 'ic_background_shoping' }}
         />
 
         <View
@@ -436,7 +448,7 @@ class TabStore extends Component {
               isSneakers
                 ? dataSneakers
                 : isGems
-                ? dataSneakers
+                ? dataGems
                 : isShoeBoxes
                 ? dataBoxes
                 : isPromos
@@ -515,6 +527,7 @@ const mapStateToProps = state => ({
   buy: state.initReducer.buy,
   getConstShoe: state.initReducer.getConstShoe,
   listBox: state.initReducer.listBox,
+  listGem: state.initReducer.listGem,
 });
 const mapDispatchToProps = dispatch => ({
   action: bindActionCreators(_action, dispatch),

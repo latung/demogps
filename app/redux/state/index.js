@@ -72,6 +72,7 @@ export const InitState = {
 
     market: { ...StateDefault },
     listBox: { ...StateDefault },
+    listGem: { ...StateDefault },
     filterBackup: [],
     getShoesId: { ...StateDefault },
     putShoesId: { ...StateDefault },
