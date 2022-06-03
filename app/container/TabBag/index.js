@@ -407,51 +407,53 @@ class TabBag extends Component {
               <UpgradeSneaker dataSneakers={dataSneakers} dataGem={dataGem} />
             )}
             {isSneakers && mintSneaker && <ItemUpgrade />}
-            <FlatList
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={styles.contentContainerFlatList}
-              keyExtractor={(item, index) => `${index}`}
-              data={
-                isSneakers && isGalleryMini
-                  ? dataSneakers
-                  : isGems
-                  ? dataGem
-                  : isShoeBoxes
-                  ? dataBox
-                  : isPromos
-                  ? dataPromos
-                  : []
-              }
-              renderItem={this._renderItem}
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh}
-              ListEmptyComponent={() => (
-                <View
-                  style={{
-                    width: getSize.Width,
-                    height: getSize.Width,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    source={{ uri: 'ic_shoe_das' }}
+            {isGalleryMini && (
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.contentContainerFlatList}
+                keyExtractor={(item, index) => `${index}`}
+                data={
+                  isSneakers && isGalleryMini
+                    ? dataSneakers
+                    : isGems
+                    ? dataGem
+                    : isShoeBoxes
+                    ? dataBox
+                    : isPromos
+                    ? dataPromos
+                    : []
+                }
+                renderItem={this._renderItem}
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+                ListEmptyComponent={() => (
+                  <View
                     style={{
-                      width: getSize.scale(142),
-                      height: getSize.scale(142),
-                    }}
-                  />
-                  <Text
-                    style={{
-                      color: 'rgba(167, 155, 191, 1)',
-                      fontStyle: 'italic',
-                      marginTop: getSize.scale(32),
+                      width: getSize.Width,
+                      height: getSize.Width,
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}>
-                    There is no item
-                  </Text>
-                </View>
-              )}
-            />
+                    <Image
+                      source={{ uri: 'ic_shoe_das' }}
+                      style={{
+                        width: getSize.scale(142),
+                        height: getSize.scale(142),
+                      }}
+                    />
+                    <Text
+                      style={{
+                        color: 'rgba(167, 155, 191, 1)',
+                        fontStyle: 'italic',
+                        marginTop: getSize.scale(32),
+                      }}>
+                      There is no item
+                    </Text>
+                  </View>
+                )}
+              />
+            )}
           </View>
         )}
       </SafeAreaView>
