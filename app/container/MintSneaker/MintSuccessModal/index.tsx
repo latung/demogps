@@ -11,7 +11,7 @@ interface Props {
   setVisible: () => void;
 }
 
-export const UpgradeSuccessModal: React.FC<Props> = ({
+export const MintSuccessModal: React.FC<Props> = ({
   visible,
   setVisible,
   selectedItem,
