@@ -87,7 +87,7 @@ export const ModalSelectShoe: React.FC<Props> = React.memo(
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(item, index) => index as any}
                     data={data}
                     renderItem={({ item, index }) => (
                       <View
@@ -104,7 +104,6 @@ export const ModalSelectShoe: React.FC<Props> = React.memo(
                             style={{
                               width: getSize.Width / 1.2,
                               height: getSize.scale(130),
-                              resizeMode: 'contain',
                               justifyContent: 'center',
                               alignItems: 'center',
                               flexDirection: 'row',
@@ -197,27 +196,21 @@ export const ModalSelectShoe: React.FC<Props> = React.memo(
                                       marginLeft: getSize.scale(5),
                                       flexDirection: 'row',
                                     }}>
-                                    <Image
-                                      source={{ uri: 'ic_ray' }}
-                                      style={{
-                                        width: getSize.scale(12),
-                                        height: getSize.scale(12),
-                                        resizeMode: 'contain',
-                                      }}
-                                    />
-                                    {new Array(item?.energy || 0).map(
-                                      (_, index) => {
-                                        <Image
-                                          key={index}
-                                          source={{ uri: 'ic_ray' }}
-                                          style={{
-                                            width: getSize.scale(12),
-                                            height: getSize.scale(12),
-                                            resizeMode: 'contain',
-                                          }}
-                                        />;
-                                      },
-                                    )}
+                                    <>
+                                      {new Array(item?.energy || 0).map(
+                                        (_, index) => {
+                                          <Image
+                                            key={index}
+                                            source={{ uri: 'ic_ray' }}
+                                            style={{
+                                              width: getSize.scale(12),
+                                              height: getSize.scale(12),
+                                              resizeMode: 'contain',
+                                            }}
+                                          />;
+                                        },
+                                      )}
+                                    </>
                                   </View>
                                 </View>
                               </View>
