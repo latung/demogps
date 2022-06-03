@@ -237,10 +237,10 @@ class TabStore extends Component {
       );
     }
     if (isGems) {
-      return <ItemGems item={item} index={index} />;
+      return <ItemGems buyItem={this.buyItem} item={item} index={index} />;
     }
     if (isShoeBoxes) {
-      return <ItemShoeBoxes item={item} index={index} />;
+      return <ItemShoeBoxes buyItem={this.buyItem} item={item} index={index} />;
     }
     if (isPromos) {
       return <ItemPromos item={item} index={index} />;
@@ -307,9 +307,7 @@ class TabStore extends Component {
     });
   };
   buyShoe = id => {
-    console.log(id);
     const { action } = this.props;
-
     this.setState(
       state => {
         return {
@@ -319,8 +317,16 @@ class TabStore extends Component {
       () => {
         ApiServices.buy({ shoesId: id })
           .then(res => {
-            console.log(res);
             if (res.code === 200) {
+              ApiServices.shoes()
+                .then(res => {
+                  if (res.code === 200) {
+                    action.shoes(res.data);
+                  }
+                })
+                .catch(err => {
+                  console.log('LoadData', err);
+                });
               alert(res.message);
               action.buy(res.data);
               this.loadData();
@@ -343,6 +349,29 @@ class TabStore extends Component {
       },
     );
   };
+
+  buyItem = id => {
+    const { action } = this.props;
+    ApiServices.buyItem({ sellingId: id }).then(res => {
+      if (res.code === 200) {
+        ApiServices.getMyBox()
+          .then(res => {
+            if (res.code === 200) {
+              action.getMyListBox(res.data);
+            }
+          })
+          .catch(err => {
+            console.log('LoadData', err);
+          });
+        alert(res.message);
+        this.loadData();
+      }
+      if (res.code !== 200) {
+        alert(res.message);
+      }
+    });
+  };
+
   onRefresh = () => {
     const { screenState } = this.props;
     const {
@@ -381,8 +410,15 @@ class TabStore extends Component {
     );
   };
   render() {
-    const { navigation, screenState, action, market, filterBackup, listBox, listGem } =
-      this.props;
+    const {
+      navigation,
+      screenState,
+      action,
+      market,
+      filterBackup,
+      listBox,
+      listGem,
+    } = this.props;
     const { isSneakers, isGems, isBadges, isShoeBoxes, isPromos } = screenState;
 
     const image =

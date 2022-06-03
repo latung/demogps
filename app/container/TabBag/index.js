@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   ImageBackground,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -253,23 +254,23 @@ class TabBag extends Component {
       () => {
         ApiServices.shoesIdWear({ _id: id })
           .then(res => {
+            this.setState(
+              state => {
+                return {
+                  isshoesIdWear: false,
+                };
+              },
+              () => {
+                // this.setmodalBuy(false);
+                // this.setmodalTransfer(false);
+              },
+            );
             if (res.code === 200) {
               alert(res.message);
               action.shoesIdWear(res.data);
               this.LoadData();
-              this.setState(
-                state => {
-                  return {
-                    isshoesIdWear: false,
-                  };
-                },
-                () => {
-                  // this.setmodalBuy(false);
-                  // this.setmodalTransfer(false);
-                },
-              );
             }
-            if (res.code === 404) {
+            if (res.code === 404 || res.code === 400) {
               alert(res.message);
             }
           })
@@ -297,22 +298,22 @@ class TabBag extends Component {
       () => {
         ApiServices.putShoesId({ price: pr, isSelling: isSelling, _id: id })
           .then(res => {
+            this.setState(
+              state => {
+                return {
+                  isPutShoe: false,
+                };
+              },
+              () => {
+                // this.setmodalBuy(false);
+                // this.setmodalTransfer(false);
+              },
+            );
             if (res.code === 200) {
               action.putShoesId(res.data);
               this.LoadData();
-              this.setState(
-                state => {
-                  return {
-                    isPutShoe: false,
-                  };
-                },
-                () => {
-                  // this.setmodalBuy(false);
-                  // this.setmodalTransfer(false);
-                },
-              );
             }
-            if (res.code === 404) {
+            if (res.code === 404 || res.code === 400) {
               alert(res.message);
             }
           })

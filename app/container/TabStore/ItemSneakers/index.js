@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Image,
@@ -10,12 +10,12 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
-import {getSize, Colors} from '../../../common';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {stackNavigator} from '../../../navigation/nameNavigator';
+import { getSize, Colors } from '../../../common';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { stackNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
-import {color} from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 export default function ItemSneakers({
   item,
@@ -72,7 +72,7 @@ export default function ItemSneakers({
         marginBottom: getSize.scale(32),
       }}>
       <ImageBackground
-        source={{uri: 'ic_frame_shoe1'}}
+        source={{ uri: 'ic_frame_shoe1' }}
         style={{
           width: '100%',
           height: getSize.scale(280),
@@ -95,7 +95,7 @@ export default function ItemSneakers({
               position: 'relative',
             }}>
             <ImageBackground
-              source={{uri: 'ic_head_frame_shoe'}}
+              source={{ uri: 'ic_head_frame_shoe' }}
               style={{
                 width: getSize.scale(100),
                 height: getSize.scale(28),
@@ -106,7 +106,7 @@ export default function ItemSneakers({
                 top: 0,
                 marginTop: getSize.scale(-10),
               }}>
-              <View style={{width: '100%'}}>
+              <View style={{ width: '100%' }}>
                 <View
                   style={{
                     flex: 1,
@@ -130,7 +130,7 @@ export default function ItemSneakers({
                       flexDirection: 'row',
                     }}>
                     <Image
-                      source={{uri: 'ic_ray'}}
+                      source={{ uri: 'ic_ray' }}
                       style={{
                         width: getSize.scale(12),
                         height: getSize.scale(12),
@@ -138,7 +138,7 @@ export default function ItemSneakers({
                       }}
                     />
                     <Image
-                      source={{uri: 'ic_ray'}}
+                      source={{ uri: 'ic_ray' }}
                       style={{
                         width: getSize.scale(12),
                         height: getSize.scale(12),
@@ -146,7 +146,7 @@ export default function ItemSneakers({
                       }}
                     />
                     <Image
-                      source={{uri: 'ic_ray'}}
+                      source={{ uri: 'ic_ray' }}
                       style={{
                         width: getSize.scale(12),
                         height: getSize.scale(12),
@@ -158,7 +158,7 @@ export default function ItemSneakers({
               </View>
             </ImageBackground>
 
-            <View style={{flex: 6}}>
+            <View style={{ flex: 6 }}>
               <TouchableOpacity
                 style={{
                   flex: 1,
@@ -222,7 +222,8 @@ export default function ItemSneakers({
                         fontSize: getSize.scale(10),
                         fontWeight: 'bold',
                       }}>
-                      {`${constShoe.LUCK[item.quality]}`}
+                      {/* {`${constShoe.LUCK[item.quality]}`} */}
+                      {item?.attributes?.luck}
                     </Text>
                   </View>
                 </View>
@@ -260,7 +261,7 @@ export default function ItemSneakers({
                 </View>
 
                 <Image
-                  source={{uri: item.img}}
+                  source={{ uri: item.img }}
                   style={{
                     flex: 7,
                     width: getSize.scale(136),
@@ -271,7 +272,7 @@ export default function ItemSneakers({
               </TouchableOpacity>
             </View>
 
-            <View style={{flex: 1.5, width: '100%'}}>
+            <View style={{ flex: 1.5, width: '100%' }}>
               <View
                 style={{
                   flex: 1,
@@ -289,10 +290,10 @@ export default function ItemSneakers({
                       fontWeight: 'bold',
                       fontSize: getSize.scale(12),
                     }}>
-                    {price} BUSD
+                    {price} BFI
                   </Text>
                 </View>
-                <View style={{flex: 4}}>
+                <View style={{ flex: 4 }}>
                   <Modal
                     animationType="fade"
                     transparent={true}
@@ -336,7 +337,7 @@ export default function ItemSneakers({
                             borderRadius: 50,
                             resizeMode: 'cover',
                           }}
-                          source={{uri: 'ic_congrats_sneakers'}}
+                          source={{ uri: 'ic_congrats_sneakers' }}
                         />
                       </TouchableOpacity>
                     </View>
@@ -401,7 +402,7 @@ export default function ItemSneakers({
                                 width: getSize.scale(150),
                                 resizeMode: 'contain',
                               }}
-                              source={{uri: item.img}}
+                              source={{ uri: item.img }}
                             />
                             <View
                               style={{
@@ -425,7 +426,7 @@ export default function ItemSneakers({
                                   ID
                                 </Text>
                                 <ImageBackground
-                                  source={{uri: 'ic_btn_id'}}
+                                  source={{ uri: 'ic_btn_id' }}
                                   style={{
                                     width: '100%',
                                     height: getSize.scale(35),
@@ -525,11 +526,11 @@ export default function ItemSneakers({
                                   fontWeight: 'bold',
                                   marginHorizontal: getSize.scale(8),
                                 }}>
-                                {`${
+                                {/* {`${
                                   constShoe.SPEED_RANGE[item.quality].min
                                 } - ${
                                   constShoe.SPEED_RANGE[item.quality].max
-                                } km/h`}
+                                } km/h`} */}
                               </Text>
                             </View>
                             <Text
@@ -543,7 +544,7 @@ export default function ItemSneakers({
                                   fontWeight: '500',
                                   color: '#F44369',
                                 }}>
-                                {`${constShoe.KM_PER_ENERGY[item.class]}`}
+                                {/* {`${constShoe.KM_PER_ENERGY[item.class]}`} */}
                               </Text>
                             </Text>
                           </View>
@@ -633,11 +634,7 @@ export default function ItemSneakers({
                                     fontWeight: '600',
                                     fontStyle: 'italic',
                                   }}>
-                                  {`${
-                                    constShoe.SPEED_RANGE[item.quality].min
-                                  } - ${
-                                    constShoe.SPEED_RANGE[item.quality].max
-                                  } km/h`}
+                                   {item?.class === 'runner' ? '6-20km' : '1-6km'}
                                 </Text>
                               </View>
                             </View>
@@ -664,7 +661,7 @@ export default function ItemSneakers({
                                     fontWeight: '600',
                                     fontStyle: 'italic',
                                   }}>
-                                  {`${constShoe.LUCK[item.quality]}`}
+                                  {item?.attributes?.luck}
                                 </Text>
                               </View>
                             </View>
@@ -674,7 +671,7 @@ export default function ItemSneakers({
                                 height: 10,
                               }}>
                               <Image
-                                source={{uri: 'ic_line'}}
+                                source={{ uri: 'ic_line' }}
                                 style={{
                                   width: '100%',
                                   height: getSize.scale(5),
@@ -738,7 +735,7 @@ export default function ItemSneakers({
                                   color: '#F44369',
                                   fontSize: getSize.scale(20),
                                 }}>
-                                {`${price} BUSD`}
+                                {`${price} BFI`}
                               </Text>
                             </View>
                           </View>
@@ -822,7 +819,7 @@ export default function ItemSneakers({
                           height: getSize.scale(24),
                           resizeMode: 'contain',
                         }}
-                        source={{uri: 'ic_btn_buy'}}
+                        source={{ uri: 'ic_btn_buy' }}
                       />
                     </TouchableOpacity>
                   </View>
@@ -905,7 +902,7 @@ export default function ItemSneakers({
                     flexDirection: 'row',
                     width: '100%',
                   }}>
-                  <View style={{flex: 1}}>
+                  <View style={{ flex: 1 }}>
                     <Text
                       style={{
                         color: '#767676',
@@ -945,7 +942,7 @@ export default function ItemSneakers({
                     </View>
                   </View>
 
-                  <View style={{flex: 1}}>
+                  <View style={{ flex: 1 }}>
                     <Text
                       style={{
                         color: '#767676',
@@ -988,7 +985,7 @@ export default function ItemSneakers({
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                   }}>
-                  <View style={{flex: 1}}>
+                  <View style={{ flex: 1 }}>
                     <Text
                       style={{
                         color: '#767676',
@@ -1020,7 +1017,7 @@ export default function ItemSneakers({
                     </View>
                   </View>
 
-                  <View style={{flex: 1}}>
+                  <View style={{ flex: 1 }}>
                     <Text
                       style={{
                         color: '#767676',
@@ -1047,14 +1044,12 @@ export default function ItemSneakers({
                           fontWeight: 'bold',
                           fontSize: getSize.scale(13),
                         }}>
-                        {`${constShoe.SPEED_RANGE[item.quality].min} - ${
-                          constShoe.SPEED_RANGE[item.quality].max
-                        } km/h`}
+                        {item?.class === 'runner' ? '6-20km' : '1-6km'}
                       </Text>
                     </View>
                   </View>
 
-                  <View style={{flex: 1}}>
+                  <View style={{ flex: 1 }}>
                     <Text
                       style={{
                         color: '#767676',
@@ -1081,7 +1076,7 @@ export default function ItemSneakers({
                           fontWeight: 'bold',
                           fontSize: getSize.scale(14),
                         }}>
-                        {`${constShoe.LUCK[item.quality]}`}
+                        {item?.attributes?.luck}
                       </Text>
                     </View>
                   </View>
@@ -1109,7 +1104,7 @@ export default function ItemSneakers({
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                   }}>
-                  <View style={{flex: 1}} />
+                  <View style={{ flex: 1 }} />
                   <View
                     style={{
                       flex: 2,
@@ -1199,9 +1194,7 @@ export default function ItemSneakers({
                           fontWeight: 'bold',
                           color: 'rgba(44, 44, 44, 1)',
                         }}>
-                        {`${constShoe.SPEED_RANGE[item.quality].min} - ${
-                          constShoe.SPEED_RANGE[item.quality].max
-                        } km/h`}
+                         {item?.class === 'runner' ? '6-20km' : '1-6km'}
                       </Text>
                     </View>
                   </View>
@@ -1281,7 +1274,7 @@ export default function ItemSneakers({
                           fontWeight: 'bold',
                           color: 'rgba(44, 44, 44, 1)',
                         }}>
-                        {`${constShoe.LUCK[item.quality]}`}
+                        {item?.attributes?.luck}
                       </Text>
                     </View>
                   </View>
@@ -1315,7 +1308,7 @@ export default function ItemSneakers({
                   width: '100%',
                   paddingVertical: getSize.scale(5),
                 }}>
-                <View style={{justifyContent: 'center'}}>
+                <View style={{ justifyContent: 'center' }}>
                   <Text
                     style={{
                       color: Colors.GREY_DARK,
@@ -1330,11 +1323,11 @@ export default function ItemSneakers({
                       color: '#FFFFFF',
                       fontSize: getSize.scale(20),
                     }}>
-                    {`${price} BUSD`}
+                    {`${price} BFI`}
                   </Text>
                 </View>
 
-                <View style={{justifyContent: 'center'}}>
+                <View style={{ justifyContent: 'center' }}>
                   <TouchableOpacity onPress={() => buyShoe(item._id)}>
                     <Image
                       style={{

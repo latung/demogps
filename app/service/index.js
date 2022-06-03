@@ -533,6 +533,24 @@ const onOpenBox = async body => {
   return content;
 };
 
+const buyItem = async Body => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const body = {
+    sellingId: Body.sellingId,
+    quantity: 1,
+  };
+  const rawResponse = await fetch(API_CONST.API_POST_BUY_ITEM, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+    body: JSON.stringify(body),
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
 export {
   createSession,
   getSession,
@@ -562,5 +580,6 @@ export {
   getShopBox,
   getMyBox,
   onOpenBox,
-  getGemsShop
+  getGemsShop,
+  buyItem
 };
