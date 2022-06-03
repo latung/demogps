@@ -7,7 +7,6 @@ import { Container } from './Container';
 import { ModalSelectShoe } from './ModalSelectShoe';
 import * as _action from '../../redux/action/ActionHandle';
 import { ModalSelectGem } from './ModalSelectGem';
-import { InfoItemModal } from '../../components/InfoItemModal';
 
 const upgradeButton = require('../../assets/images/upgradeButton.png');
 const gem = require('../../assets/images/gem1.png');
@@ -52,38 +51,40 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
         justifyContent: 'space-between',
         marginBottom: 80,
       }}>
-      <Container
-        buttonLeft={
-          <AddButtonSmall
-            image={!!selectedGems?.gem1 && gem}
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Container
+          buttonLeft={
+            <AddButtonSmall
+              image={!!selectedGems?.gem1 && gem}
+              onPress={() => {
+                setShowGemNumberModal(1);
+              }}
+            />
+          }
+          buttonRight={
+            <AddButtonSmall
+              image={!!selectedGems?.gem2 && gem}
+              onPress={() => {
+                setShowGemNumberModal(2);
+              }}
+            />
+          }
+          buttonTop={
+            <AddButtonSmall
+              image={!!selectedGems?.gem3 && gem}
+              onPress={() => {
+                setShowGemNumberModal(3);
+              }}
+            />
+          }>
+          <AddButtonBig
+            image={!!selectedShoe ? 'ic_shoe_jogging' : ''}
             onPress={() => {
-              setShowGemNumberModal(1);
+              setShowShoeModal(!showShoeModal);
             }}
           />
-        }
-        buttonRight={
-          <AddButtonSmall
-            image={!!selectedGems?.gem2 && gem}
-            onPress={() => {
-              setShowGemNumberModal(2);
-            }}
-          />
-        }
-        buttonTop={
-          <AddButtonSmall
-            image={!!selectedGems?.gem3 && gem}
-            onPress={() => {
-              setShowGemNumberModal(3);
-            }}
-          />
-        }>
-        <AddButtonBig
-          image={!!selectedShoe ? 'ic_shoe_jogging' : ''}
-          onPress={() => {
-            setShowShoeModal(!showShoeModal);
-          }}
-        />
-      </Container>
+        </Container>
+      </View>
       <View
         style={{
           justifyContent: 'center',

@@ -468,7 +468,7 @@ export const InfoItemModal = React.memo<Props>(
                             textTransform: 'capitalize',
                           }}>
                           {/* {`${constShoe?.LUCK[item?.quality]}`} */}
-                          {item?.type.replaceAll('_', ' ')}
+                          {item?.type?.replaceAll('_', ' ')}
                         </Text>
                       </View>
                     </View>
