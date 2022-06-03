@@ -39,6 +39,8 @@ import Countdown from './Countdown';
 import ProfileCongrats from './ProfileCongrats';
 import ProfileShare from './ProfileShare';
 import passcodeBackup from './WalletSettings/passcode';
+import RunCountdown from './RunCountdown';
+import RunChecking from './RunChecking'
 
 export
 {
@@ -82,5 +84,7 @@ export
     Recvice,
     Countdown,
     LoginNewpass,
-    passcodeBackup
+    passcodeBackup,
+    RunCountdown,
+    RunChecking
 };

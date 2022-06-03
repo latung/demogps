@@ -46,7 +46,9 @@ const stackNavigator = {
     // Maps
     STEP_MAPS: 'StepMaps',
 
-    COUNT_DOWN: 'Countdown'
+    COUNT_DOWN: 'Countdown',
+    RUN_COUNT_DOWN: 'RunCountdown',
+    RUN_CHECKING: 'RunChecking',
 };
 
 const tabNavigator = {

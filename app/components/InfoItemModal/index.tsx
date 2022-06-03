@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {getSize} from '../../common';
+import { getSize } from '../../common';
 
 type Props = {
   visible: boolean;
@@ -17,7 +17,7 @@ type Props = {
   isSneakerItem?: boolean;
 };
 export const InfoItemModal = React.memo<Props>(
-  ({visible, setVisible, item, isGemItem, isSneakerItem}) => {
+  ({ visible, setVisible, item, isGemItem, isSneakerItem }) => {
     return (
       <Modal
         animationType="fade"
@@ -120,7 +120,7 @@ export const InfoItemModal = React.memo<Props>(
                     alignItems: 'center',
                     marginTop: getSize.scale(8),
                   }}>
-                  <View style={{flex: 1}}>
+                  <View style={{ flex: 1 }}>
                     <Text
                       style={{
                         color: '#000000',
@@ -151,7 +151,7 @@ export const InfoItemModal = React.memo<Props>(
                     </View>
                   </View>
 
-                  <View style={{flex: 1}}>
+                  <View style={{ flex: 1 }}>
                     <Text
                       style={{
                         color: '#000000',
@@ -181,7 +181,7 @@ export const InfoItemModal = React.memo<Props>(
                     </View>
                   </View>
 
-                  <View style={{flex: 1}}>
+                  <View style={{ flex: 1 }}>
                     <Text
                       style={{
                         color: '#000000',
@@ -230,7 +230,7 @@ export const InfoItemModal = React.memo<Props>(
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                   }}>
-                  <View style={{flex: 1}} />
+                  <View style={{ flex: 1 }} />
                   <View
                     style={{
                       flex: 2,
@@ -465,10 +465,10 @@ export const InfoItemModal = React.memo<Props>(
                             fontSize: getSize.scale(12),
                             fontWeight: 'bold',
                             color: '#000000',
-                            textTransform: 'capitalize'
+                            textTransform: 'capitalize',
                           }}>
                           {/* {`${constShoe?.LUCK[item?.quality]}`} */}
-                          {item?.type.replaceAll("_", " ")}
+                          {item?.type.replaceAll('_', ' ')}
                         </Text>
                       </View>
                     </View>

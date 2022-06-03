@@ -23,6 +23,7 @@ import ItemUpgrade from './ItemUpgrade';
 import ItemShoeBoxes from './ItemShoeboxes'
 import Head from "./../../components/head/index";
 import * as ApiServices from "./../../service/index";
+import {UpgradeSneaker} from '../UpgradeSneaker';
 
 const dataPromos = [
     {
@@ -345,6 +346,7 @@ class TabBag extends Component {
             isShoeBoxes,
             isPromos,
             isUpgradeMini,
+            mintSneaker,
             isGalleryMini
         } = screenState;
         const { loading } = this.state
@@ -386,9 +388,11 @@ class TabBag extends Component {
                     <TabBar navigation={navigation} />
                 </View>
                 {loading ? <LoadingIndicator /> : <View style={{ flex: 8, paddingHorizontal: getSize.scale(8) }}>
-                    {isSneakers && isUpgradeMini ? (
+                {(isSneakers && isUpgradeMini) &&  <UpgradeSneaker dataSneakers={dataSneakers} dataGem={dataGem} />}
+                    {isSneakers && mintSneaker && (
                         <ItemUpgrade />
-                    ) : (
+                    )}
+                     {isSneakers && isGalleryMini &&(
                         <FlatList
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}
