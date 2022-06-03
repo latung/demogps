@@ -1,6 +1,6 @@
 const domain = 'http://178.128.112.53:3000';
-import {CONST_STORAGE, storage} from '../common';
-import {API_CONST, API_FETCH} from './../api';
+import { CONST_STORAGE, storage } from '../common';
+import { API_CONST, API_FETCH } from './../api';
 import Config from 'react-native-config';
 const createSession = async id => {
   const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
@@ -11,7 +11,7 @@ const createSession = async id => {
       'Content-type': 'application/json',
       Authorization: `Bearer ${token_access}`,
     },
-    body: JSON.stringify({shoesId: id}),
+    body: JSON.stringify({ shoesId: id }),
   });
   const content = await rawResponse.json();
 
@@ -69,9 +69,9 @@ const set_pass = async (a, b) => {
   );
   try {
     const content = await rawResponse.json();
-    return {code: 200, message: 'error', data: content};
+    return { code: 200, message: 'error', data: content };
   } catch (error) {
-    return {code: 409, message: 'error', data: {}};
+    return { code: 409, message: 'error', data: {} };
   }
 
   // console.log(content);
@@ -93,9 +93,9 @@ const check_pass = async (a, b) => {
   );
   try {
     const content = await rawResponse.json();
-    return {code: 200, message: 'error', data: content};
+    return { code: 200, message: 'error', data: content };
   } catch (error) {
-    return {code: 409, message: 'error', data: {}};
+    return { code: 409, message: 'error', data: {} };
   }
 
   // console.log(content);
@@ -117,9 +117,9 @@ const BackupCode = async (a, b) => {
   );
   try {
     const content = await rawResponse.json();
-    return {code: 200, message: 'error', data: content};
+    return { code: 200, message: 'error', data: content };
   } catch (error) {
-    return {code: 409, message: 'error', data: {}};
+    return { code: 409, message: 'error', data: {} };
   }
 
   // console.log(content);
@@ -140,9 +140,9 @@ const updateWallets = async (a, b) => {
   );
   try {
     const content = await rawResponse.json();
-    return {code: 200, message: 'error', data: content};
+    return { code: 200, message: 'error', data: content };
   } catch (error) {
-    return {code: 409, message: 'error', data: {}};
+    return { code: 409, message: 'error', data: {} };
   }
 
   // console.log(content);
@@ -191,7 +191,7 @@ const postLogin = async Body => {
 };
 
 const resendRegisterCode = async Body => {
-  const body = {email: Body.email};
+  const body = { email: Body.email };
   // const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
 
   const rawResponse = await fetch(API_CONST.API_POST_RESEND_REGISTER_CODE, {
@@ -307,9 +307,33 @@ const market = async Body => {
 };
 
 const getShopBox = async Body => {
+  const params = API_FETCH.getQueryString({
+    pageSize: Body?.pageSize ?? 20,
+    page: Body?.page ?? 1,
+  });
+
   const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
 
-  const rawResponse = await fetch(`${API_CONST.API_GET_BOX}`, {
+  const rawResponse = await fetch(`${API_CONST.API_GET_BOX}?${params}`, {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
+const getGemsShop = async Body => {
+  const params = API_FETCH.getQueryString({
+    pageSize: Body?.pageSize ?? 20,
+    page: Body?.page ?? 1,
+  });
+
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+
+  const rawResponse = await fetch(`${API_CONST.API_GET_BOX}?${params}`, {
     method: 'GET',
     headers: {
       'Content-type': 'application/json',
@@ -495,7 +519,7 @@ const getMyBox = async () => {
   return content;
 };
 
-const onOpenBox = async (body) => {
+const onOpenBox = async body => {
   const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
   const rawResponse = await fetch(`${API_CONST.API_OPEN_BOX}`, {
     method: 'POST',
@@ -537,5 +561,6 @@ export {
   swap,
   getShopBox,
   getMyBox,
-  onOpenBox
+  onOpenBox,
+  getGemsShop
 };

@@ -294,10 +294,23 @@ export const market = (data) => (dispatch) =>
 
 };
 
+// get list box
+
 export const getListBox = (data) => (dispatch) =>
 {
     dispatch({
         type: ACTION_CONST.GET_BOX_SUCCESS,
+        data: data
+    });
+
+};
+
+// get list box
+
+export const getListGem = (data) => (dispatch) =>
+{
+    dispatch({
+        type: ACTION_CONST.GET_BOX_GEM,
         data: data
     });
 
