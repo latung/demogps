@@ -7,6 +7,7 @@ import { Container } from './Container';
 import { ModalSelectShoe } from './ModalSelectShoe';
 import * as _action from '../../redux/action/ActionHandle';
 import { ModalSelectGem } from './ModalSelectGem';
+import { UpgradeSuccessModal } from '../MintSneaker/MintSuccessModal';
 
 const upgradeButton = require('../../assets/images/upgradeButton.png');
 const gem = require('../../assets/images/gem1.png');
@@ -14,6 +15,7 @@ const gem = require('../../assets/images/gem1.png');
 export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
   const [showShoeModal, setShowShoeModal] = useState(false);
   const [showGemNumberModal, setShowGemNumberModal] = useState(null);
+  const [upgradedShoe, setUpgradedShoe] = useState(null);
   const [selectedGems, setSelectedGems] = useState({
     gem1: null,
     gem2: null,
@@ -42,12 +44,17 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
     });
   };
 
+  const onUpgradeShoe = () => {
+    setUpgradedShoe(selectedShoe);
+    setSelectedGems({ gem1: null, gem2: null, gem3: null });
+    setSelectedShoe(null);
+  };
+
   return (
     <View
       style={{
         flex: 1,
         alignItems: 'center',
-        marginTop: 40,
         justifyContent: 'space-between',
         marginBottom: 80,
       }}>
@@ -94,8 +101,8 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
           style={{
             width: getSize.scale(276),
             height: getSize.scale(58),
-            resizeMode: 'contain',
-          }}>
+          }}
+          onPress={onUpgradeShoe}>
           <Image source={upgradeButton} />
         </TouchableOpacity>
       </View>
@@ -110,6 +117,13 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
         modalTransfer={!!showGemNumberModal}
         toggleModalTransfer={onToggleSelectGemModal}
         onSelectedGem={onSelectedGem}
+      />
+      <UpgradeSuccessModal
+        selectedItem={upgradedShoe}
+        setVisible={() => {
+          setUpgradedShoe(null);
+        }}
+        visible={!!upgradedShoe}
       />
     </View>
   );

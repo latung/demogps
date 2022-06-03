@@ -533,6 +533,20 @@ const onOpenBox = async body => {
   return content;
 };
 
+const onMintShoes = async (body) => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(`${API_CONST.API_MINT_SHOE}`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+    body: JSON.stringify(body),
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
 export {
   createSession,
   getSession,
@@ -562,5 +576,6 @@ export {
   getShopBox,
   getMyBox,
   onOpenBox,
-  getGemsShop
+  getGemsShop,
+  onMintShoes
 };

@@ -24,6 +24,7 @@ import ItemShoeBoxes from './ItemShoeboxes';
 import Head from './../../components/head/index';
 import * as ApiServices from './../../service/index';
 import { UpgradeSneaker } from '../UpgradeSneaker';
+import { MintSneaker } from '../MintSneaker';
 
 const dataPromos = [
   {
@@ -406,7 +407,7 @@ class TabBag extends Component {
             {isSneakers && isUpgradeMini && (
               <UpgradeSneaker dataSneakers={dataSneakers} dataGem={dataGem} />
             )}
-            {isSneakers && mintSneaker && <ItemUpgrade />}
+            {isSneakers && mintSneaker &&  (<MintSneaker dataSneakers={dataSneakers} />)}
             {isGalleryMini && (
               <FlatList
                 showsHorizontalScrollIndicator={false}
