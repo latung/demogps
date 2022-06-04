@@ -87,7 +87,7 @@ export const ModalSelectGem: React.FC<Props> = React.memo(
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(item, index) => index as any}
                     data={data}
                     renderItem={({ item, index }) => (
                       <View
@@ -104,7 +104,6 @@ export const ModalSelectGem: React.FC<Props> = React.memo(
                             style={{
                               width: getSize.Width / 1.2,
                               height: getSize.scale(130),
-                              resizeMode: 'contain',
                               justifyContent: 'center',
                               alignItems: 'center',
                               flexDirection: 'row',
@@ -153,6 +152,7 @@ export const ModalSelectGem: React.FC<Props> = React.memo(
                                     paddingVertical: getSize.scale(2),
                                   }}>
                                   <Text
+                                    numberOfLines={1}
                                     style={{
                                       color: '#fff',
                                       fontWeight: 'bold',
