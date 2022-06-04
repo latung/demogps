@@ -25,6 +25,7 @@ import ItemShoeBoxes from './ItemShoeboxes';
 import Head from './../../components/head/index';
 import * as ApiServices from './../../service/index';
 import { UpgradeSneaker } from '../UpgradeSneaker';
+import { MintSneaker } from '../MintSneaker';
 
 const dataPromos = [
   {
@@ -117,7 +118,7 @@ class TabBag extends Component {
       isshoesIdWear: false,
       refreshing: false,
       loading: true,
-      modalPrice: false
+      modalPrice: false,
     };
   }
 
@@ -331,8 +332,20 @@ class TabBag extends Component {
     );
   };
 
-  sellShoe = (id) => {
-   console.log(id);
+  sellShoe = (id, price) => {
+    ApiServices.onSellShoe(id, { isSelling: true, price })
+      .then(res => {
+        console.log('res', res);
+        if (res.code === 200) {
+          this.LoadData();
+        }
+        if (res.code === 404 || res.code === 400) {
+          alert(res.message);
+        }
+      })
+      .catch(err => {
+        alert(err.message);
+      });
   };
 
   setShoeCurrentWear = (shoes, action) => {
@@ -412,7 +425,9 @@ class TabBag extends Component {
             {isSneakers && isUpgradeMini && (
               <UpgradeSneaker dataSneakers={dataSneakers} dataGem={dataGem} />
             )}
-            {isSneakers && mintSneaker && <ItemUpgrade />}
+            {isSneakers && mintSneaker && (
+              <MintSneaker dataSneakers={dataSneakers} />
+            )}
             {isGalleryMini && (
               <FlatList
                 showsHorizontalScrollIndicator={false}

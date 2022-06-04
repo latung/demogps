@@ -666,6 +666,11 @@ export default forwardRef(function ItemSneakers(
                     borderRadius: 20,
                     width: 100,
                   }}
+                  onPress={() => {
+                    sellShoe(item?._id, priceTxt);
+                    setModalPrice(!modalPrice);
+                    setmodalBuy(false);
+                  }}
                   disabled={priceTxt.length ? false : true}
                   title="Confirm"
                   titleStyle={{
@@ -1256,7 +1261,6 @@ export default forwardRef(function ItemSneakers(
                   onPress={() => {
                     // setmodalBuy(!modalBuy);
                     setModalPrice(true);
-                    sellShoe(item?._id);
                   }}
                   style={{
                     width: getSize.Width * 0.3,

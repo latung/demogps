@@ -26,6 +26,7 @@ export const API_POST_SUBMIT_CHANGE_PASSWORD = `${HOST + USER}/submit-change-pas
 // shoes
 export const API_GET_MARKET = `${HOST + SHOES}/market`;
 export const API_GET_BOX = `${HOST}/item/market`;
+export const API_SELL_SHOE = `${HOST}/shoes/`;
 // export const API_GET_SHOES_ID = `${HOST + SHOES}/shoesId`;
 export const API_GET_SHOES_ID = `${HOST + SHOES}`;
 // export const API_PUT_SHOES_ID = `${HOST + SHOES}/shoesId`;
@@ -69,3 +70,5 @@ export const API_GET_MY_BOX = `${HOST}/item`;
 
 //open Box
 export const API_OPEN_BOX = `${HOST}/item/box/open-shoes-box`;
+export const API_MINT_SHOE = `${HOST}/shoes/mint`;
+export const API_UNLOCK_GEM = `${HOST}/shoes/:shoesId/open-gem-slot`;

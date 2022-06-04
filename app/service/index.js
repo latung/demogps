@@ -551,6 +551,48 @@ const buyItem = async Body => {
   return content;
 };
 
+const onMintShoes = async (body) => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(`${API_CONST.API_MINT_SHOE}`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+    body: JSON.stringify(body),
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
+
+const onUnlockGemSlot = async (shoeId) => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(`${API_CONST.API_UNLOCK_GEM.replace(':shoesId', shoeId)}`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
+const onSellShoe = async (id, body) => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(`${API_CONST.API_SELL_SHOE}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+    body: JSON.stringify(body),
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
 export {
   createSession,
   getSession,
@@ -581,5 +623,8 @@ export {
   getMyBox,
   onOpenBox,
   getGemsShop,
-  buyItem
+  buyItem,
+  onMintShoes,
+  onUnlockGemSlot,
+  onSellShoe
 };
