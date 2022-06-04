@@ -46,6 +46,7 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
     setSelectedGems(oldGem => {
       return { ...oldGem, [`gem${showGemNumberModal}`]: item };
     });
+    handleAddGem();
   };
 
   const onUpgradeShoe = () => {
@@ -74,6 +75,8 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
         Toast.showWithGravity(err, Toast.LONG, Toast.CENTER);
       });
   };
+
+  const handleAddGem = () => {};
 
   return (
     <View
@@ -172,10 +175,10 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
       />
       <UpgradeSuccessModal
         selectedItem={upgradedShoe}
+        visible={!!upgradedShoe}
         setVisible={() => {
           setUpgradedShoe(null);
         }}
-        visible={!!upgradedShoe}
       />
     </View>
   );
