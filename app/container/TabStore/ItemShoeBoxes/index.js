@@ -363,7 +363,7 @@ export default function ItemShoeBoxes({ item, index, buyItem }) {
                                     </Text>
                                   </View>
                                   <Text
-                                  numberOfLines={1}
+                                    numberOfLines={1}
                                     style={{
                                       color: '#fff',
                                       fontWeight: 'bold',
@@ -405,6 +405,7 @@ export default function ItemShoeBoxes({ item, index, buyItem }) {
                                     marginTop: getSize.scale(8),
                                   }}>
                                   <Text
+                                    numberOfLines={1}
                                     style={{
                                       color: '#2C2C2C',
                                       fontWeight: 'bold',
@@ -460,7 +461,7 @@ export default function ItemShoeBoxes({ item, index, buyItem }) {
                                     marginHorizontal: getSize.scale(4),
                                     textTransform: 'capitalize',
                                   }}>
-                                  {item?.type?.replaceAll('_', ' ')}
+                                  {item?.type?.split('_').join(' ')}
                                 </Text>
                               </View>
                             </View>

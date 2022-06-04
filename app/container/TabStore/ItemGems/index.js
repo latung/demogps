@@ -142,12 +142,21 @@ export default function ItemGems({ item, index, buyItem }) {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Image
+                {/* <Image
                   source={{ uri: 'ic_git' }}
                   style={{
                     flex: 8,
                     width: getSize.scale(98),
                     height: getSize.scale(109),
+                    resizeMode: 'contain',
+                  }}
+                /> */}
+                <Image
+                  source={require('../../../assets/images/gem1.png')}
+                  style={{
+                    flex: 7,
+                    width: getSize.scale(60),
+                    // height: getSize.scale(90),
                     resizeMode: 'contain',
                   }}
                 />
@@ -296,7 +305,7 @@ export default function ItemGems({ item, index, buyItem }) {
                               justifyContent: 'center',
                               alignItems: 'center',
                             }}>
-                            <Image
+                            {/* <Image
                               style={{
                                 height: getSize.scale(150),
                                 width: getSize.scale(150),
@@ -304,6 +313,15 @@ export default function ItemGems({ item, index, buyItem }) {
                               }}
                               source={{
                                 uri: 'ic_git', // item.img
+                              }}
+                            /> */}
+                            <Image
+                              source={require('../../../assets/images/gem1.png')}
+                              style={{
+                                width: getSize.scale(60),
+                                height: getSize.scale(90),
+                                resizeMode: 'contain',
+                                marginVertical: 20,
                               }}
                             />
                             <View
@@ -363,7 +381,7 @@ export default function ItemGems({ item, index, buyItem }) {
                                     </Text>
                                   </View>
                                   <Text
-                                  numberOfLines={1}
+                                    numberOfLines={1}
                                     style={{
                                       color: '#fff',
                                       fontWeight: 'bold',
@@ -405,6 +423,7 @@ export default function ItemGems({ item, index, buyItem }) {
                                     marginTop: getSize.scale(8),
                                   }}>
                                   <Text
+                                    numberOfLines={1}
                                     style={{
                                       color: '#2C2C2C',
                                       fontWeight: 'bold',
@@ -460,7 +479,7 @@ export default function ItemGems({ item, index, buyItem }) {
                                     marginHorizontal: getSize.scale(4),
                                     textTransform: 'capitalize',
                                   }}>
-                                  {item?.type?.replaceAll('_', ' ')}
+                                  {item?.type?.split('_').join(' ')}
                                 </Text>
                               </View>
                             </View>
