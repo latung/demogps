@@ -117,6 +117,7 @@ class TabBag extends Component {
       isshoesIdWear: false,
       refreshing: false,
       loading: true,
+      modalPrice: false
     };
   }
 
@@ -167,6 +168,7 @@ class TabBag extends Component {
           isshoesIdWear={this.state.isshoesIdWear}
           constShoe={constShoe}
           ref={this.ModalInfoRef}
+          sellShoe={this.sellShoe}
         />
       );
     }
@@ -329,6 +331,10 @@ class TabBag extends Component {
     );
   };
 
+  sellShoe = (id) => {
+   console.log(id);
+  };
+
   setShoeCurrentWear = (shoes, action) => {
     let data = shoes.data;
     for (let i = 0; i < data.length; i++) {
@@ -359,7 +365,6 @@ class TabBag extends Component {
 
   render() {
     const { navigation, screenState, shoes, myListBox } = this.props;
-    console.log(this.props);
     const {
       isSneakers,
       isGems,
