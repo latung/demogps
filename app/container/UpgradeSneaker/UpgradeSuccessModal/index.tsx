@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, View, TouchableOpacity, Image, Text } from 'react-native';
 import { getSize } from '../../../common';
-import { ImageContainer } from '../ImageContainer';
+import { ImageContainer } from '../../MintSneaker/ImageContainer';
 
 const confirmLongButton = require('../../../assets/images/confirmLongButton.png');
 
@@ -11,7 +11,7 @@ interface Props {
   setVisible: () => void;
 }
 
-export const MintSuccessModal: React.FC<Props> = ({
+export const UpgradeSuccessModal: React.FC<Props> = ({
   visible,
   setVisible,
   selectedItem,

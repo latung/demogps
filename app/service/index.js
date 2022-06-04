@@ -547,6 +547,19 @@ const onMintShoes = async (body) => {
   return content;
 };
 
+const onUnlockGemSlot = async (shoeId) => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(`${API_CONST.API_UNLOCK_GEM.replace(':shoesId', shoeId)}`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
 export {
   createSession,
   getSession,
@@ -577,5 +590,6 @@ export {
   getMyBox,
   onOpenBox,
   getGemsShop,
-  onMintShoes
+  onMintShoes,
+  onUnlockGemSlot
 };

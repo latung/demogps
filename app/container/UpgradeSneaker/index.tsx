@@ -1,13 +1,16 @@
 import React, { useCallback, useState } from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
-import { getSize } from '../../common';
+import { View, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { Colors, getSize } from '../../common';
 import { AddButtonBig } from './AddButtonBig';
 import { AddButtonSmall } from './AddButtonSmall';
 import { Container } from './Container';
 import { ModalSelectShoe } from './ModalSelectShoe';
 import * as _action from '../../redux/action/ActionHandle';
 import { ModalSelectGem } from './ModalSelectGem';
-import { UpgradeSuccessModal } from '../MintSneaker/MintSuccessModal';
+import { UpgradeSuccessModal } from './UpgradeSuccessModal/index';
+import * as ApiServices from '../../service';
+import * as ACTION_CONST from '../../redux/action/ActionType';
+import Toast from 'react-native-simple-toast';
 
 const upgradeButton = require('../../assets/images/upgradeButton.png');
 const gem = require('../../assets/images/gem1.png');
@@ -22,6 +25,7 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
     gem3: null,
   });
   const [selectedShoe, setSelectedShoe] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const onToggleSelectModal = useCallback(() => {
     setShowShoeModal(!showShoeModal);
@@ -50,6 +54,27 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
     setSelectedShoe(null);
   };
 
+  const handleUnlockGem = () => {
+    setLoading(true);
+    ApiServices.onUnlockGemSlot(selectedShoe?._id)
+      .then(res1 => {
+        if (res1.code === 200) {
+          setSelectedShoe({
+            ...selectedShoe,
+            currentGemSlot: selectedShoe?.currentGemSlot + 1,
+          });
+        }
+        setLoading(false);
+        if (res1?.message) {
+          Toast.showWithGravity(res1.message, Toast.LONG, Toast.CENTER);
+        }
+      })
+      .catch(err => {
+        setLoading(false);
+        Toast.showWithGravity(err, Toast.LONG, Toast.CENTER);
+      });
+  };
+
   return (
     <View
       style={{
@@ -58,30 +83,57 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
         justifyContent: 'space-between',
         marginBottom: 80,
       }}>
+      {loading && (
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 4,
+          }}>
+          <ActivityIndicator color={Colors.WHITE} size={getSize.scale(32)} />
+        </View>
+      )}
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Container
           buttonLeft={
             <AddButtonSmall
+              minLevel={10}
+              currentSlot={3}
+              selectedShoe={selectedShoe}
               image={!!selectedGems?.gem1 && gem}
-              onPress={() => {
+              onAddGem={() => {
                 setShowGemNumberModal(1);
               }}
+              onUnlockGem={handleUnlockGem}
             />
           }
           buttonRight={
             <AddButtonSmall
+              minLevel={15}
+              currentSlot={2}
+              selectedShoe={selectedShoe}
               image={!!selectedGems?.gem2 && gem}
-              onPress={() => {
+              onAddGem={() => {
                 setShowGemNumberModal(2);
               }}
+              onUnlockGem={handleUnlockGem}
             />
           }
           buttonTop={
             <AddButtonSmall
+              minLevel={20}
+              currentSlot={1}
+              selectedShoe={selectedShoe}
               image={!!selectedGems?.gem3 && gem}
-              onPress={() => {
+              onAddGem={() => {
                 setShowGemNumberModal(3);
               }}
+              onUnlockGem={handleUnlockGem}
             />
           }>
           <AddButtonBig
@@ -107,7 +159,7 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
         </TouchableOpacity>
       </View>
       <ModalSelectShoe
-        data={dataSneakers}
+        data={dataSneakers?.filter(i => i.level > 5)}
         modalTransfer={showShoeModal}
         toggleModalTransfer={onToggleSelectModal}
         onSelectedShoe={onSelectedShoe}

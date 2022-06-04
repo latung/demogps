@@ -71,8 +71,9 @@ export const MintSuccessModal: React.FC<Props> = ({
                   fontStyle: 'normal',
                   fontWeight: '700',
                   fontSize: 18,
+                  marginBottom: getSize.scale(14),
                 }}>
-                upgrade completed
+                CONGRATULATIONS
               </Text>
               <ImageContainer>
                 <Image

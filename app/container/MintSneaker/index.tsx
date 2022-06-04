@@ -5,8 +5,8 @@ import { Container } from './Container';
 import { MatchingShoeModal } from './MatchingShoeModal';
 import { SelectShoeButton } from './SelectShoeButton';
 import * as ApiServices from '../../service';
-import { useDispatch } from 'react-redux';
 import * as ACTION_CONST from '../../redux/action/ActionType';
+import { useDispatch } from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import { MintSuccessModal } from './MintSuccessModal';
 import { ModalSelectShoe } from './ModalSelectShoe';
@@ -41,7 +41,10 @@ export const MintSneaker: React.FC = ({ dataSneakers }: any) => {
         return item?._id !== selectedShoes.shoe2?._id;
       }
 
-      return item?._id !== selectedShoes.shoe1?._id;
+      return (
+        item?._id !== selectedShoes.shoe1?._id &&
+        item?.quality === selectedShoes?.shoe1?.quality
+      );
     });
   };
 
@@ -50,20 +53,49 @@ export const MintSneaker: React.FC = ({ dataSneakers }: any) => {
     ApiServices.onMintShoes({
       shoesIds: [selectedShoes?.shoe1, selectedShoes?.shoe2],
     })
-      .then(res => {
-        setLoading(false);
-        if (res.code === 200) {
-          ApiServices.shoes().then(response => {
-            if (response.code === 200) {
-              dispatch({
-                type: ACTION_CONST.SHOES_SUCCESS,
-                data: response.data,
-              });
-            }
-          });
+      .then(res1 => {
+        if (res1.code === 200) {
+          ApiServices.onOpenBox({ item_type: res1?.data?.updatedItem?.type })
+            .then(res2 => {
+              if (res2.code === 200) {
+                setLoading(false);
+                setMintedShoe(res2?.data?.newShoes);
+                setSelectedShoes({
+                  shoe1: null,
+                  shoe2: null,
+                });
+                ApiServices.getMyBox().then(response => {
+                  if (response.code === 200) {
+                    dispatch({
+                      type: ACTION_CONST.GET_SHOEBOX,
+                      data: response.data,
+                    });
+                  }
+                });
+
+                ApiServices.shoes().then(response => {
+                  if (response.code === 200) {
+                    dispatch({
+                      type: ACTION_CONST.SHOES_SUCCESS,
+                      data: response.data,
+                    });
+                  }
+                });
+              } else {
+                setLoading(false);
+                if (res2?.message) {
+                  Toast.showWithGravity(res2.message, Toast.LONG, Toast.CENTER);
+                }
+              }
+            })
+            .catch(err => {
+              setLoading(false);
+              Toast.showWithGravity(err, Toast.LONG, Toast.CENTER);
+            });
         } else {
-          if (res?.message) {
-            Toast.showWithGravity(res.message, Toast.LONG, Toast.CENTER);
+          setLoading(false);
+          if (res1?.message) {
+            Toast.showWithGravity(res1.message, Toast.LONG, Toast.CENTER);
           }
         }
       })
