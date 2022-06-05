@@ -45,8 +45,6 @@ function ItemCongrats() {
       : `${getMinutes}:${getSeconds}`;
   };
 
-  console.log(selector.screenState);
-
   return (
     <View style={{ flex: 1, width: getSize.Width }}>
       <ImageBackground
@@ -388,10 +386,8 @@ function ItemCongrats() {
                 }}>
                 {+selector.screenState.totalDistance > 0
                   ? (
-                      (+selector.screenState.totalDistance /
-                        1000 /
-                        selector.screenStater.totalSecond) *
-                      3.6
+                      +selector.screenState.totalDistance /
+                      (selector.screenState.totalSecond / 3600)
                     ).toFixed(2)
                   : '0.00'}
               </Text>
