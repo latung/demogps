@@ -126,10 +126,6 @@ function Item() {
     const timeChangeSeconds = (timestamp - refLocations.current?.time) / 1000;
     const speed = (newDistance / timeChangeSeconds) * 3.6;
 
-    console.log('debug-timeChangeSeconds', timeChangeSeconds.toFixed(2));
-    console.log('debug-newDistance', newDistance.toFixed(2));
-    console.log('debug-divide', newDistance / timeChangeSeconds);
-
     refLocations.current.time = timestamp;
     refLocations.current.latitude = latitude;
     refLocations.current.longitude = longitude;
@@ -202,7 +198,7 @@ function Item() {
   useEffect(() => startRunning(), [id]);
   useEffect(() => {
     if (energy === 0) {
-      updateRunningSession({ status: 'ended' });
+     handleStepStop()
     }
   }, [energy]);
 
@@ -216,14 +212,15 @@ function Item() {
   const mainFuncThread = () => {
     refTimeInterval.current = setInterval(() => {
       setTimeRun(preSta => preSta + 1);
+      // handleLocationsFunc();
     }, 1000);
   };
 
   useEffect(() => {
     RNLocation.configure({
       distanceFilter: 2,
-      interval: 5000,
-      fastestInterval: 10000,
+      interval: 1000,
+      fastestInterval: 5000,
       desiredAccuracy: {
         ios: 'best',
         android: 'highAccuracy',
@@ -469,6 +466,11 @@ function Item() {
         isStepPause: false,
         isStepStart: false,
         isScreenCongrats: true,
+        totalDistance: totalKm.toFixed(2),
+        moneyEarned,
+        energy,
+        timeFinish: new Date(),
+        totalTime: formatTime(timeRun),
       }),
     );
     // navigation.navigate(tabNavigator.TAB_HOME);
@@ -569,7 +571,7 @@ function Item() {
           <AnimatedCircularProgress
             size={getSize.scale(294)}
             width={18}
-            fill={(kmhState * 100) / 20} // {selector.screenState.speed} speedMin:8 - fillMin:0 : speedMax:20 - fillMax:100
+            fill={(currentSpeed * 100) / 20} // {selector.screenState.speed} speedMin:8 - fillMin:0 : speedMax:20 - fillMax:100
             tintColor="#2EDBDC" // "#00e0ff"
             arcSweepAngle={280}
             rotation={220}

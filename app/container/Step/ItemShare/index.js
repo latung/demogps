@@ -8,6 +8,7 @@ import { getSize, location } from '../../../common';
 import Geolocation from 'react-native-geolocation-service';
 import { stackNavigator, tabNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
+import moment from 'moment';
 
 function ItemShare()
 {
@@ -130,7 +131,7 @@ function ItemShare()
                                         color: 'rgba(44, 44, 44, 1)',
                                         fontWeight: 'bold'
                                     }}>
-                                    Michael Blue
+                                   {selector.initReducer.user?.username}
                                 </Text>
                                 <Text
                                     style={{
@@ -138,7 +139,7 @@ function ItemShare()
                                         color: 'rgba(118, 118, 118, 1)',
                                         fontStyle: 'italic'
                                     }}>
-                                    15/4/2022 15:32
+                                    {moment(selector.screenState?.timeFinish).format('DD/MM/YYYY HH:MM')}
                                 </Text>
                             </View>
                         </View>
@@ -183,7 +184,7 @@ function ItemShare()
                                         fontWeight: 'bold',
                                         fontStyle: 'italic'
                                     }}>
-                                    {`1.42`}
+                                    {selector.screenState?.totalDistance}
                                 </Text>
                                 <Text
                                     style={{
@@ -208,7 +209,7 @@ function ItemShare()
                                         fontWeight: 'bold',
                                         fontStyle: 'italic'
                                     }}>
-                                    {`0:25:12`}
+                                    {selector.screenState?.totalTime}
                                 </Text>
                                 <Text
                                     style={{
@@ -233,7 +234,7 @@ function ItemShare()
                                         fontWeight: 'bold',
                                         fontStyle: 'italic'
                                     }}>
-                                    {`0.42`}
+                                    {selector.screenState?.moneyEarned}
                                 </Text>
                                 <Text
                                     style={{
@@ -241,7 +242,7 @@ function ItemShare()
                                         color: '#000',
                                         fontStyle: 'italic'
                                     }}>
-                                    {`MOV`}
+                                    {`BFI`}
                                 </Text>
                             </View>
                         </View>
