@@ -154,6 +154,7 @@ export const ModalSelectShoe: React.FC<Props> = React.memo(
                                     paddingVertical: getSize.scale(2),
                                   }}>
                                   <Text
+                                    numberOfLines={1}
                                     style={{
                                       color: '#fff',
                                       fontWeight: 'bold',

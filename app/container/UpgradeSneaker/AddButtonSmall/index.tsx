@@ -5,10 +5,11 @@ import { getSize } from '../../../common';
 const addIcon = require('../../../assets/images/add.png');
 const closeIcon = require('../../../assets/images/close.png');
 const lockIcon = require('../../../assets/images/lock.png');
+const gem = require('../../../assets/images/gem1.png');
 
 interface Props {
   selectedShoe: any;
-  image: string;
+  selectedGem: any;
   currentSlot: number;
   minLevel: number;
   onAddGem: () => void;
@@ -17,7 +18,7 @@ interface Props {
 
 export const AddButtonSmall: React.FC<Props> = ({
   selectedShoe,
-  image,
+  selectedGem,
   minLevel,
   currentSlot,
   onAddGem,
@@ -45,6 +46,19 @@ export const AddButtonSmall: React.FC<Props> = ({
       );
     }
 
+    if (!!selectedGem?.type) {
+      return (
+        <Image
+          source={gem}
+          style={{
+            width: getSize.scale(50),
+            height: getSize.scale(50),
+            resizeMode: 'contain',
+          }}
+        />
+      );
+    }
+
     return (
       <Image
         style={{ width: getSize.scale(24), height: getSize.scale(24) }}
@@ -55,7 +69,7 @@ export const AddButtonSmall: React.FC<Props> = ({
 
   return (
     <TouchableOpacity
-      disabled={disabled}
+      disabled={disabled || !!selectedGem}
       style={{
         height: getSize.scale(64),
         width: getSize.scale(64),
@@ -73,18 +87,6 @@ export const AddButtonSmall: React.FC<Props> = ({
           onAddGem();
         }
       }}>
-      {/* {!!!image && <Image source={addIcon} />}
-      {!!image && (
-        <Image
-          style={{
-            width: getSize.scale(50),
-            height: getSize.scale(50),
-            resizeMode: 'contain',
-          }}
-          source={image as any}
-        />
-      )} */}
-
       {renderIcon()}
     </TouchableOpacity>
   );
