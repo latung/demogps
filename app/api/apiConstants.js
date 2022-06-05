@@ -75,3 +75,5 @@ export const API_GET_MY_BOX = `${HOST}/item`;
 export const API_OPEN_BOX = `${HOST}/item/box/open-shoes-box`;
 export const API_MINT_SHOE = `${HOST}/shoes/mint`;
 export const API_UNLOCK_GEM = `${HOST}/shoes/:shoesId/open-gem-slot`;
+export const API_ADD_GEM = `${HOST}/shoes/:shoesId/add-gem`;
+export const API_UPGRADE_SHOE_LEVEL = `${HOST}/shoes/:shoesId/level-up`

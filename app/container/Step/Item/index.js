@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
-import { getPreciseDistance } from 'geolib';
+import { getDistance } from 'geolib';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { getSize } from '../../../common';
 import Geolocation from 'react-native-geolocation-service';
@@ -21,7 +21,6 @@ import {
 import * as _action from '../../../redux/action/ActionHandle';
 import { putSession } from '../../../service';
 import { cloneDeep } from 'lodash';
-import moment from 'moment';
 import RNLocation from 'react-native-location';
 import * as ApiServices from '../../../service';
 
@@ -95,30 +94,66 @@ function Item() {
   const [moneyEarned, setMoneyEarned] = useState(0);
   const [runId, setRunId] = useState();
 
+  const calculateDistanceAndSpeed = (location) => {
+    if (!location) {
+      return { speed: 0, distance: 0 };
+    }
+
+    let { longitude, latitude, timestamp } = location;
+    if (!refLocations.current?.latitude || !refLocations.current?.longitude || !refLocations.current?.time) {
+      refLocations.current.time = timestamp;
+      refLocations.current.latitude = latitude;
+      refLocations.current.longitude = longitude;
+      return { speed: 0, distance: 0 };
+    }
+
+    const newDistance = getDistance(
+      {
+        latitude: Number(refLocations.current.latitude),
+        longitude: Number(refLocations.current.longitude),
+      },
+      {
+        latitude: Number(latitude),
+        longitude: Number(longitude),
+      },
+      1
+    );
+
+    const timeChangeSeconds = (timestamp - refLocations.current?.time) / 1000;
+    const speed = (newDistance / timeChangeSeconds) * 3.6;
+
+    console.log('debug-timeChangeSeconds', timeChangeSeconds.toFixed(2))
+    console.log('debug-newDistance', newDistance.toFixed(2))
+    console.log('debug-divide', newDistance / timeChangeSeconds)
+
+    refLocations.current.time = timestamp;
+    refLocations.current.latitude = latitude;
+    refLocations.current.longitude = longitude;
+
+    return { speed: speed < 1 ? 0 : speed, distance: newDistance <= 1 ? 0 : newDistance / 1000 };
+  }
+
   const _startUpdatingLocation = () => {
     RNLocation.subscribeToLocationUpdates(locations => {
-      const locationCurrent = locations[0];
+      const { speed, distance } = calculateDistanceAndSpeed(locations[0]);
+      setCurrentSpeed(speed.toFixed(2));
+      setTotalKm((distanceOld) => distanceOld + distance)
+
       if (classShoe === 'walker') {
         if (
           locationCurrent?.speed * 3.6 > 1 &&
           locationCurrent?.speed * 3.6 <= 6
         ) {
-          setCurrentSpeed(locationCurrent?.speed * 3.6);
           setSecondValid(e => e + 1);
-        } else {
-          setCurrentSpeed(0);
-        }
+        } 
       } else if (classShoe === 'running') {
         if (
           locationCurrent?.speed * 3.6 > 6 &&
           locationCurrent?.speed * 3.6 <= 20
         ) {
-          setCurrentSpeed(locationCurrent?.speed * 3.6);
           setSecondValid(e => e + 1);
           setEnergy(e => e - 1);
-        } else {
-          setCurrentSpeed(0);
-        }
+        } 
       }
       if (runId && secondValid % 300 === 0) {
         getRunningSession(runId);
@@ -179,14 +214,14 @@ function Item() {
   const mainFuncThread = () => {
     refTimeInterval.current = setInterval(() => {
       setTimeRun(preSta => preSta + 1);
-      _startUpdatingLocation();
     }, 1000);
   };
 
   useEffect(() => {
     RNLocation.configure({
       distanceFilter: 2,
-      interval: 1000,
+      interval: 5000,
+      fastestInterval: 10000,
       desiredAccuracy: {
         ios: 'best',
         android: 'highAccuracy',
@@ -208,7 +243,7 @@ function Item() {
         _startUpdatingLocation();
       }
     });
-    mainFuncThread();
+    // mainFuncThread();
     return () => {
       clearInterval(refTimeInterval.current);
     };
@@ -396,6 +431,7 @@ function Item() {
   };
   const handleResume = () => {
     mainFuncThread();
+    _startUpdatingLocation();
     setisPress(false);
     dispatch(
       _action.changeScreenState({
@@ -573,7 +609,7 @@ function Item() {
                       fontWeight: 'bold',
                       fontStyle: 'italic',
                     }}>
-                    {totalKm.toFixed(4) || 0}
+                    {totalKm.toFixed(2) || 0}
                   </Text>
                   <Text
                     style={{
@@ -684,7 +720,7 @@ function Item() {
                 marginTop: getSize.scale(11),
                 color: '#ffffff',
               }}>
-              {currentSpeed.toFixed(2) || '0.00'}
+              {currentSpeed || '0.00'}
             </Text>
             <Text
               style={{
