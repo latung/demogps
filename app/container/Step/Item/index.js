@@ -94,12 +94,12 @@ function Item() {
   const [moneyEarned, setMoneyEarned] = useState(0);
   const [runId, setRunId] = useState();
 
-  const calculateDistanceAndSpeed = location => {
+  const calculateDistanceAndSpeed = (location, timestamp) => {
     if (!location) {
       return { speed: 0, distance: 0 };
     }
 
-    let { longitude, latitude, timestamp } = location;
+    let { longitude, latitude } = location;
     if (
       !refLocations.current?.latitude ||
       !refLocations.current?.longitude ||
@@ -120,11 +120,11 @@ function Item() {
         latitude: Number(latitude),
         longitude: Number(longitude),
       },
-      1,
+      0.1,
     );
 
     const timeChangeSeconds = (timestamp - refLocations.current?.time) / 1000;
-    const speed = (newDistance / timeChangeSeconds) * 3.6;
+    const speed = newDistance > 1 ? (newDistance / timeChangeSeconds) * 3.6 : 0;
 
     refLocations.current.time = timestamp;
     refLocations.current.latitude = latitude;
@@ -132,32 +132,74 @@ function Item() {
 
     return {
       speed: speed < 1 ? 0 : speed,
-      distance: newDistance <= 1 ? 0 : newDistance / 1000,
+      distance: newDistance > 1 ? newDistance / 1000 : 0,
     };
   };
 
   const _startUpdatingLocation = () => {
-    RNLocation.subscribeToLocationUpdates(locations => {
-      const { speed, distance } = calculateDistanceAndSpeed(locations[0]);
-      setCurrentSpeed(speed.toFixed(2));
-      setTotalKm(distanceOld => distanceOld + distance);
-      if (classShoe === 'walker') {
-        if (speed > 1 && speed <= 6) {
-          setSecondValid(e => e + 1);
-          updateRunningSession({ runtime: 1000 });
+    Geolocation.watchPosition(
+      position => {
+        const { speed, distance } = calculateDistanceAndSpeed(
+          position.coords,
+          position.timestamp,
+        );
+        setCurrentSpeed(speed.toFixed(2));
+        setTotalKm(distanceOld => distanceOld + distance);
+        if (classShoe === 'walker') {
+          if (speed * 3.6 > 1 && speed * 3.6 <= 6) {
+            setSecondValid(e => e + 1);
+            updateRunningSession({ runtime: 1000 });
+          }
+        } else if (classShoe === 'running') {
+          if (speed * 3.6 > 6 && speed * 3.6 <= 20) {
+            setSecondValid(e => e + 1);
+            updateRunningSession({ runtime: 1000 });
+          }
         }
-      } else if (classShoe === 'running') {
-        if (speed > 6 && speed <= 20) {
-          setSecondValid(e => e + 1);
+        if (runId && secondValid % 300 === 0) {
+          getRunningSession(runId);
           setEnergy(e => e - 1);
-          updateRunningSession({ runtime: 1000 });
         }
-      }
-      if (runId && secondValid % 300 === 0) {
-        getRunningSession(runId);
-        setEnergy(e => e - 1);
-      }
-    });
+      },
+      err => {
+        console.log('err', err.code, err.message);
+        reject(err.code);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: Platform.OS === 'android' ? 1000 : 15000,
+        maximumAge: Platform.OS ? 0 : 10000,
+        interval: 1000,
+        distanceFilter: 1,
+      },
+    );
+    // RNLocation.subscribeToLocationUpdates(locations => {
+    //   console.log('debug-locations', locations.length)
+    //   const { speed, distance } = calculateDistanceAndSpeed(locations[0]);
+    //   setCurrentSpeed(speed.toFixed(2));
+    //   setTotalKm((distanceOld) => distanceOld + distance)
+
+    //   if (classShoe === 'walker') {
+    //     if (
+    //       locationCurrent?.speed * 3.6 > 1 &&
+    //       locationCurrent?.speed * 3.6 <= 6
+    //     ) {
+    //       setSecondValid(e => e + 1);
+    //     }
+    //   } else if (classShoe === 'running') {
+    //     if (
+    //       locationCurrent?.speed * 3.6 > 6 &&
+    //       locationCurrent?.speed * 3.6 <= 20
+    //     ) {
+    //       setSecondValid(e => e + 1);
+    //       setEnergy(e => e - 1);
+    //     }
+    //   }
+    //   if (runId && secondValid % 300 === 0) {
+    //     getRunningSession(runId);
+    //     setEnergy(e => e - 1);
+    //   }
+    // });
   };
 
   const startRunning = () => {
@@ -198,7 +240,7 @@ function Item() {
   useEffect(() => startRunning(), [id]);
   useEffect(() => {
     if (energy === 0) {
-     handleStepStop()
+      handleStepStop();
     }
   }, [energy]);
 
@@ -471,6 +513,7 @@ function Item() {
         energy,
         timeFinish: new Date(),
         totalTime: formatTime(timeRun),
+        totalSecond: selector.initReducer.isStepTimer,
       }),
     );
     // navigation.navigate(tabNavigator.TAB_HOME);

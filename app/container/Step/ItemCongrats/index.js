@@ -45,11 +45,8 @@ function ItemCongrats() {
       : `${getMinutes}:${getSeconds}`;
   };
 
-//   console.log(
-//     ((+selector.screenState.totalDistance * 1000) /
-//       selector.initReducer.isStepTimer) *
-//       3.6,
-//   );
+  console.log(selector.screenState);
+
   return (
     <View style={{ flex: 1, width: getSize.Width }}>
       <ImageBackground
@@ -389,9 +386,14 @@ function ItemCongrats() {
                   fontStyle: 'italic',
                   marginLeft: getSize.scale(8),
                 }}>
-                { +selector.screenState.totalDistance > 0 ? ((+selector.screenState.totalDistance * 1000) /
-                  selector.initReducer.isStepTimer) *
-                  3.6 : '0.00'}
+                {+selector.screenState.totalDistance > 0
+                  ? (
+                      (+selector.screenState.totalDistance /
+                        1000 /
+                        selector.screenStater.totalSecond) *
+                      3.6
+                    ).toFixed(2)
+                  : '0.00'}
               </Text>
             </View>
           </View>
