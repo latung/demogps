@@ -122,10 +122,6 @@ function Item() {
     const timeChangeSeconds = (timestamp - refLocations.current?.time) / 1000;
     const speed = (newDistance / timeChangeSeconds) * 3.6;
 
-    console.log('debug-timeChangeSeconds', timeChangeSeconds.toFixed(2))
-    console.log('debug-newDistance', newDistance.toFixed(2))
-    console.log('debug-divide', newDistance / timeChangeSeconds)
-
     refLocations.current.time = timestamp;
     refLocations.current.latitude = latitude;
     refLocations.current.longitude = longitude;
@@ -220,8 +216,8 @@ function Item() {
   useEffect(() => {
     RNLocation.configure({
       distanceFilter: 2,
-      interval: 5000,
-      fastestInterval: 10000,
+      interval: 1000,
+      fastestInterval: 5000,
       desiredAccuracy: {
         ios: 'best',
         android: 'highAccuracy',
