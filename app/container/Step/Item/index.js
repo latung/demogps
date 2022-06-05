@@ -104,7 +104,7 @@ function Item() {
           locationCurrent?.speed * 3.6 <= 6
         ) {
           setCurrentSpeed(locationCurrent?.speed * 3.6);
-          setSecondValid(secondValid + 1);
+          setSecondValid(e => e + 1);
         } else {
           setCurrentSpeed(0);
         }
@@ -114,7 +114,8 @@ function Item() {
           locationCurrent?.speed * 3.6 <= 20
         ) {
           setCurrentSpeed(locationCurrent?.speed * 3.6);
-          setSecondValid(secondValid + 1);
+          setSecondValid(e => e + 1);
+          setEnergy(e => e - 1);
         } else {
           setCurrentSpeed(0);
         }
