@@ -105,6 +105,7 @@ function Item() {
         ) {
           setCurrentSpeed(locationCurrent?.speed * 3.6);
           setSecondValid(e => e + 1);
+          updateRunningSession({ runtime: 1000 });
         } else {
           setCurrentSpeed(0);
         }
@@ -116,6 +117,7 @@ function Item() {
           setCurrentSpeed(locationCurrent?.speed * 3.6);
           setSecondValid(e => e + 1);
           setEnergy(e => e - 1);
+          updateRunningSession({ runtime: 1000 });
         } else {
           setCurrentSpeed(0);
         }
@@ -152,8 +154,8 @@ function Item() {
       });
   };
 
-  const updateRunningSession = () => {
-    ApiServices.updateRunningSession(runId, { status: 'ended' })
+  const updateRunningSession = body => {
+    ApiServices.updateRunningSession(runId, body)
       .then(res => {
         console.log(res);
       })
@@ -165,7 +167,7 @@ function Item() {
   useEffect(() => startRunning(), [id]);
   useEffect(() => {
     if (energy === 0) {
-      updateRunningSession();
+      updateRunningSession({ status: 'ended' });
     }
   }, [energy]);
 
@@ -413,7 +415,7 @@ function Item() {
   };
 
   const handleStepStop = () => {
-    updateRunningSession();
+    updateRunningSession({ status: 'ended' });
     setmodalVisible(false);
     if (countRef.current) {
       clearTimeout(countRef.current);
