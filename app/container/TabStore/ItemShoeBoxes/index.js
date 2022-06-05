@@ -16,7 +16,7 @@ import { stackNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
 import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
-export default function ItemShoeBoxes({ item, index }) {
+export default function ItemShoeBoxes({ item, index, buyItem }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [modalBuy, setmodalBuy] = useState(false);
@@ -363,7 +363,7 @@ export default function ItemShoeBoxes({ item, index }) {
                                     </Text>
                                   </View>
                                   <Text
-                                  numberOfLines={1}
+                                    numberOfLines={1}
                                     style={{
                                       color: '#fff',
                                       fontWeight: 'bold',
@@ -405,6 +405,7 @@ export default function ItemShoeBoxes({ item, index }) {
                                     marginTop: getSize.scale(8),
                                   }}>
                                   <Text
+                                    numberOfLines={1}
                                     style={{
                                       color: '#2C2C2C',
                                       fontWeight: 'bold',
@@ -460,11 +461,42 @@ export default function ItemShoeBoxes({ item, index }) {
                                     marginHorizontal: getSize.scale(4),
                                     textTransform: 'capitalize',
                                   }}>
-                                  {item?.type?.replaceAll('_', ' ')}
+                                  {item?.type?.split('_').join(' ')}
                                 </Text>
                               </View>
                             </View>
-
+                            <View
+                              style={{
+                                // flex: 1,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                // backgroundColor: "red",
+                                width: '100%',
+                                // paddingHorizontal: getSize.scale(32)
+                              }}>
+                              <Text
+                                style={{
+                                  color: Colors.GREY_DARK,
+                                  fontStyle: 'italic',
+                                }}>
+                                Quanity
+                              </Text>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                }}>
+                                <Text
+                                  style={{
+                                    fontWeight: '600',
+                                    fontStyle: 'italic',
+                                    marginHorizontal: getSize.scale(4),
+                                    textTransform: 'capitalize',
+                                  }}>
+                                  {item?.quantity}
+                                </Text>
+                              </View>
+                            </View>
                             <View
                               style={{
                                 width: '100%',
@@ -542,7 +574,7 @@ export default function ItemShoeBoxes({ item, index }) {
                                   color: '#F44369',
                                   fontSize: getSize.scale(20),
                                 }}>
-                                {`${item.sol} BFI`}
+                                {`${item.price} BFI`}
                               </Text>
                             </View>
                           </View>
@@ -592,8 +624,8 @@ export default function ItemShoeBoxes({ item, index }) {
                               }}>
                               <TouchableOpacity
                                 onPress={() => {
-                                  setmodalTransfer(!modalTransfer);
-                                  return setmodalBuy(!modalBuy);
+                                  buyItem(item?._id);
+                                  setmodalBuy(!modalBuy);
                                 }}
                                 style={{
                                   width: getSize.Width / 3,

@@ -26,12 +26,17 @@ export const API_POST_SUBMIT_CHANGE_PASSWORD = `${HOST + USER}/submit-change-pas
 // shoes
 export const API_GET_MARKET = `${HOST + SHOES}/market`;
 export const API_GET_BOX = `${HOST}/item/market`;
+export const API_SELL_SHOE = `${HOST}/shoes/`;
+//running
+export const API_START_RUNNING= `${HOST}/run`;
+export const API_GET_RUNNING_SESSION= `${HOST}/run`;
 // export const API_GET_SHOES_ID = `${HOST + SHOES}/shoesId`;
 export const API_GET_SHOES_ID = `${HOST + SHOES}`;
 // export const API_PUT_SHOES_ID = `${HOST + SHOES}/shoesId`;
 export const API_PUT_SHOES_ID = `${HOST + SHOES}`;
 export const API_GET_SHOES = `${HOST + SHOES}`;
 export const API_POST_BUY = `${HOST + SHOES}/buy`;
+export const API_POST_BUY_ITEM = `${HOST}/item/buy-p2p`;
 export const API_POST_PRIVATE_ASSIGN_SHOES = `${HOST + SHOES}/private-assign-shoes`;
 // export const API_GET_SHOES_ID_WEAR = `${HOST + SHOES}/shoesId`;
 export const API_GET_SHOES_ID_WEAR = `${HOST + SHOES}`;

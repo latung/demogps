@@ -533,6 +533,24 @@ const onOpenBox = async body => {
   return content;
 };
 
+const buyItem = async Body => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const body = {
+    sellingId: Body.sellingId,
+    quantity: 1,
+  };
+  const rawResponse = await fetch(API_CONST.API_POST_BUY_ITEM, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+    body: JSON.stringify(body),
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
 const onMintShoes = async (body) => {
   const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
   const rawResponse = await fetch(`${API_CONST.API_MINT_SHOE}`, {
@@ -547,6 +565,7 @@ const onMintShoes = async (body) => {
   return content;
 };
 
+
 const onUnlockGemSlot = async (shoeId) => {
   const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
   const rawResponse = await fetch(`${API_CONST.API_UNLOCK_GEM.replace(':shoesId', shoeId)}`, {
@@ -555,6 +574,61 @@ const onUnlockGemSlot = async (shoeId) => {
       'Content-type': 'application/json',
       Authorization: `Bearer ${token_access}`,
     },
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
+const onSellShoe = async (id, body) => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(`${API_CONST.API_SELL_SHOE}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+    body: JSON.stringify(body),
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
+const startRunning = async (body) => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(`${API_CONST.API_START_RUNNING}`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+    body: JSON.stringify(body),
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
+const getRunningSession = async (id) => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(`${API_CONST.API_GET_RUNNING_SESSION}/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
+const updateRunningSession = async (id, body) => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(`${API_CONST.API_GET_RUNNING_SESSION}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+    body: JSON.stringify(body),
   });
   const content = await rawResponse.json();
   return content;
@@ -590,6 +664,11 @@ export {
   getMyBox,
   onOpenBox,
   getGemsShop,
+  buyItem,
   onMintShoes,
-  onUnlockGemSlot
+  onUnlockGemSlot,
+  onSellShoe,
+  startRunning,
+  getRunningSession,
+  updateRunningSession
 };

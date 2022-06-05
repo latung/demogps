@@ -16,7 +16,7 @@ import { stackNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
 import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
-export default function ItemGems({ item, index }) {
+export default function ItemGems({ item, index, buyItem }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [modalBuy, setmodalBuy] = useState(false);
@@ -142,12 +142,21 @@ export default function ItemGems({ item, index }) {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Image
+                {/* <Image
                   source={{ uri: 'ic_git' }}
                   style={{
                     flex: 8,
                     width: getSize.scale(98),
                     height: getSize.scale(109),
+                    resizeMode: 'contain',
+                  }}
+                /> */}
+                <Image
+                  source={require('../../../assets/images/gem1.png')}
+                  style={{
+                    flex: 7,
+                    width: getSize.scale(60),
+                    // height: getSize.scale(90),
                     resizeMode: 'contain',
                   }}
                 />
@@ -296,7 +305,7 @@ export default function ItemGems({ item, index }) {
                               justifyContent: 'center',
                               alignItems: 'center',
                             }}>
-                            <Image
+                            {/* <Image
                               style={{
                                 height: getSize.scale(150),
                                 width: getSize.scale(150),
@@ -304,6 +313,15 @@ export default function ItemGems({ item, index }) {
                               }}
                               source={{
                                 uri: 'ic_git', // item.img
+                              }}
+                            /> */}
+                            <Image
+                              source={require('../../../assets/images/gem1.png')}
+                              style={{
+                                width: getSize.scale(60),
+                                height: getSize.scale(90),
+                                resizeMode: 'contain',
+                                marginVertical: 20,
                               }}
                             />
                             <View
@@ -363,7 +381,7 @@ export default function ItemGems({ item, index }) {
                                     </Text>
                                   </View>
                                   <Text
-                                  numberOfLines={1}
+                                    numberOfLines={1}
                                     style={{
                                       color: '#fff',
                                       fontWeight: 'bold',
@@ -405,6 +423,7 @@ export default function ItemGems({ item, index }) {
                                     marginTop: getSize.scale(8),
                                   }}>
                                   <Text
+                                    numberOfLines={1}
                                     style={{
                                       color: '#2C2C2C',
                                       fontWeight: 'bold',
@@ -460,11 +479,42 @@ export default function ItemGems({ item, index }) {
                                     marginHorizontal: getSize.scale(4),
                                     textTransform: 'capitalize',
                                   }}>
-                                  {item?.type?.replaceAll('_', ' ')}
+                                  {item?.type?.split('_').join(' ')}
                                 </Text>
                               </View>
                             </View>
-
+                            <View
+                              style={{
+                                // flex: 1,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                // backgroundColor: "red",
+                                width: '100%',
+                                // paddingHorizontal: getSize.scale(32)
+                              }}>
+                              <Text
+                                style={{
+                                  color: Colors.GREY_DARK,
+                                  fontStyle: 'italic',
+                                }}>
+                                Quanity
+                              </Text>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                }}>
+                                <Text
+                                  style={{
+                                    fontWeight: '600',
+                                    fontStyle: 'italic',
+                                    marginHorizontal: getSize.scale(4),
+                                    textTransform: 'capitalize',
+                                  }}>
+                                  {item?.quantity}
+                                </Text>
+                              </View>
+                            </View>
                             <View
                               style={{
                                 width: '100%',
@@ -542,7 +592,7 @@ export default function ItemGems({ item, index }) {
                                   color: '#F44369',
                                   fontSize: getSize.scale(20),
                                 }}>
-                                {`${item.sol} BFI`}
+                                {`${item.price} BFI`}
                               </Text>
                             </View>
                           </View>
@@ -592,8 +642,9 @@ export default function ItemGems({ item, index }) {
                               }}>
                               <TouchableOpacity
                                 onPress={() => {
-                                  setmodalTransfer(!modalTransfer);
-                                  return setmodalBuy(!modalBuy);
+                                  // setmodalTransfer(!modalTransfer);
+                                  buyItem(item?._id);
+                                  setmodalBuy(!modalBuy);
                                 }}
                                 style={{
                                   width: getSize.Width / 3,

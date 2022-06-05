@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   ImageBackground,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -117,6 +118,7 @@ class TabBag extends Component {
       isshoesIdWear: false,
       refreshing: false,
       loading: true,
+      modalPrice: false,
     };
   }
 
@@ -167,6 +169,7 @@ class TabBag extends Component {
           isshoesIdWear={this.state.isshoesIdWear}
           constShoe={constShoe}
           ref={this.ModalInfoRef}
+          sellShoe={this.sellShoe}
         />
       );
     }
@@ -254,23 +257,23 @@ class TabBag extends Component {
       () => {
         ApiServices.shoesIdWear({ _id: id })
           .then(res => {
+            this.setState(
+              state => {
+                return {
+                  isshoesIdWear: false,
+                };
+              },
+              () => {
+                // this.setmodalBuy(false);
+                // this.setmodalTransfer(false);
+              },
+            );
             if (res.code === 200) {
               alert(res.message);
               action.shoesIdWear(res.data);
               this.LoadData();
-              this.setState(
-                state => {
-                  return {
-                    isshoesIdWear: false,
-                  };
-                },
-                () => {
-                  // this.setmodalBuy(false);
-                  // this.setmodalTransfer(false);
-                },
-              );
             }
-            if (res.code === 404) {
+            if (res.code === 404 || res.code === 400) {
               alert(res.message);
             }
           })
@@ -298,22 +301,22 @@ class TabBag extends Component {
       () => {
         ApiServices.putShoesId({ price: pr, isSelling: isSelling, _id: id })
           .then(res => {
+            this.setState(
+              state => {
+                return {
+                  isPutShoe: false,
+                };
+              },
+              () => {
+                // this.setmodalBuy(false);
+                // this.setmodalTransfer(false);
+              },
+            );
             if (res.code === 200) {
               action.putShoesId(res.data);
               this.LoadData();
-              this.setState(
-                state => {
-                  return {
-                    isPutShoe: false,
-                  };
-                },
-                () => {
-                  // this.setmodalBuy(false);
-                  // this.setmodalTransfer(false);
-                },
-              );
             }
-            if (res.code === 404) {
+            if (res.code === 404 || res.code === 400) {
               alert(res.message);
             }
           })
@@ -327,6 +330,21 @@ class TabBag extends Component {
           });
       },
     );
+  };
+
+  sellShoe = (id, price) => {
+    ApiServices.onSellShoe(id, { isSelling: true, price })
+      .then(res => {
+        if (res.code === 200) {
+          this.LoadData();
+          Alert.alert('', 'Successfully')
+        } else {
+          alert(res?.message ?? 'Somethings went wrong. Please try again');
+        }
+      })
+      .catch(err => {
+        alert(err.message);
+      });
   };
 
   setShoeCurrentWear = (shoes, action) => {
@@ -359,7 +377,6 @@ class TabBag extends Component {
 
   render() {
     const { navigation, screenState, shoes, myListBox } = this.props;
-    console.log(this.props);
     const {
       isSneakers,
       isGems,
@@ -407,7 +424,9 @@ class TabBag extends Component {
             {isSneakers && isUpgradeMini && (
               <UpgradeSneaker dataSneakers={dataSneakers} dataGem={dataGem} />
             )}
-            {isSneakers && mintSneaker &&  (<MintSneaker dataSneakers={dataSneakers} />)}
+            {isSneakers && mintSneaker && (
+              <MintSneaker dataSneakers={dataSneakers} />
+            )}
             {isGalleryMini && (
               <FlatList
                 showsHorizontalScrollIndicator={false}

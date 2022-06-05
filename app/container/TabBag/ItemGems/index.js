@@ -129,11 +129,11 @@ export default function ItemGems({item, index}) {
                     alignItems: 'center',
                   }}>
                   <Image
-                    source={{uri: 'ic_tree_coin'}}
+                    source={require("../../../assets/images/gem1.png")}
                     style={{
                       flex: 7,
-                      width: getSize.scale(105),
-                      height: getSize.scale(101),
+                      width: getSize.scale(60),
+                      // height: getSize.scale(90),
                       resizeMode: 'contain',
                     }}
                   />

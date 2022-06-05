@@ -16,11 +16,12 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import {getSize, Colors} from '../../../common';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {stackNavigator} from '../../../navigation/nameNavigator';
+import { getSize, Colors } from '../../../common';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { stackNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
+import { Button } from '@rneui/base';
 
 export default forwardRef(function ItemSneakers(
   {
@@ -33,6 +34,7 @@ export default forwardRef(function ItemSneakers(
     shoesIdWear,
     isshoesIdWear,
     constShoe,
+    sellShoe,
   },
   ref,
 ) {
@@ -43,8 +45,10 @@ export default forwardRef(function ItemSneakers(
 
   const dispatch = useDispatch();
   const [modalBuy, setmodalBuy] = useState(false);
+  const [priceTxt, setPriceTxt] = useState('');
 
   const [modalTransfer, setmodalTransfer] = useState(false);
+  const [modalPrice, setModalPrice] = useState(false);
   useImperativeHandle(ref, () => ({
     // methods connected to `ref`
     ClosemodalTransfer: () => {
@@ -78,7 +82,7 @@ export default forwardRef(function ItemSneakers(
   for (let index = 0; index < item.energy; index++) {
     icons.push(
       <Image
-        source={{uri: 'ic_ray'}}
+        source={{ uri: 'ic_ray' }}
         style={{
           width: getSize.scale(12),
           height: getSize.scale(12),
@@ -97,7 +101,7 @@ export default forwardRef(function ItemSneakers(
         marginVertical: getSize.scale(32),
       }}>
       <ImageBackground
-        source={{uri: 'ic_item_list_bag'}}
+        source={{ uri: 'ic_item_list_bag' }}
         style={{
           width: '100%',
           height: getSize.scale(300),
@@ -120,7 +124,7 @@ export default forwardRef(function ItemSneakers(
               position: 'relative',
             }}>
             <ImageBackground
-              source={{uri: 'ic_head_frame_shoe'}}
+              source={{ uri: 'ic_head_frame_shoe' }}
               style={{
                 width: '100%',
                 height: getSize.scale(30),
@@ -161,7 +165,7 @@ export default forwardRef(function ItemSneakers(
               </View>
             </ImageBackground>
 
-            <View style={{flex: 6}}>
+            <View style={{ flex: 6 }}>
               <TouchableOpacity
                 onPress={() => setmodalTransfer(!modalTransfer)}
                 style={{
@@ -366,7 +370,7 @@ export default forwardRef(function ItemSneakers(
               </TouchableOpacity>
             </View>
 
-            <View style={{flex: 0.3}} />
+            <View style={{ flex: 0.3 }} />
           </View>
         </View>
       </ImageBackground>
@@ -516,8 +520,8 @@ export default forwardRef(function ItemSneakers(
                       justifyContent: 'center',
                     }}>
                     <Image
-                      style={{width: '100%', height: 46}}
-                      source={{uri: 'ic_wallet_btn_confirm'}}
+                      style={{ width: '100%', height: 46 }}
+                      source={{ uri: 'ic_wallet_btn_confirm' }}
                     />
                   </TouchableOpacity>
                 </View>
@@ -573,7 +577,7 @@ export default forwardRef(function ItemSneakers(
                           height: 30,
                           resizeMode: 'contain',
                         }}
-                        source={{uri: 'ic_close_red'}}
+                        source={{ uri: 'ic_close_red' }}
                       />
                     </TouchableOpacity>
                   </View>
@@ -596,6 +600,89 @@ export default forwardRef(function ItemSneakers(
             position: 'absolute',
             backgroundColor: '#000000bf',
           }}></View>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalPrice}
+          onRequestClose={() => setModalPrice(!modalPrice)}>
+          <View
+            style={{
+              height: '100%',
+              width: '100%',
+              top: 0,
+              position: 'absolute',
+              backgroundColor: '#000000bf',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <View
+              style={{
+                backgroundColor: 'white',
+                width: '80%',
+                height: 150,
+                borderRadius: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <TextInput
+                placeholder="Price"
+                keyboardType="numeric"
+                onChangeText={text => setPriceTxt(text)}
+                value={priceTxt}
+                style={{
+                  padding: 5,
+                  height: 40,
+                  borderRadius: 8,
+                  borderColor: '#565874',
+                  borderWidth: 1,
+                  width: '90%',
+                }}
+              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  width: '90%',
+                  marginTop: 15,
+                }}>
+                <Button
+                  onPress={() => setModalPrice(!modalPrice)}
+                  buttonStyle={{
+                    backgroundColor: 'white',
+                    borderWidth: 1,
+                    borderRadius: 20,
+                    width: 100,
+                  }}
+                  title="Cancel"
+                  titleStyle={{
+                    color: 'black',
+                    fontWeight: 'bold',
+                    fontSize: 15,
+                  }}
+                />
+                <Button
+                  buttonStyle={{
+                    backgroundColor: '#3EF1F2',
+                    borderRadius: 20,
+                    width: 100,
+                  }}
+                  onPress={() => {
+                    sellShoe(item?._id, priceTxt);
+                    setModalPrice(!modalPrice);
+                    setmodalBuy(false);
+                  }}
+                  disabled={priceTxt.length ? false : true}
+                  title="Confirm"
+                  titleStyle={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    fontSize: 15,
+                  }}
+                />
+              </View>
+            </View>
+          </View>
+        </Modal>
         <TouchableOpacity
           // onPress={() => setmodalTransfer(!modalTransfer)}
           activeOpacity={1}
@@ -716,7 +803,7 @@ export default forwardRef(function ItemSneakers(
                   alignItems: 'center',
                   marginTop: getSize.scale(8),
                 }}>
-                <View style={{flex: 1}}>
+                <View style={{ flex: 1 }}>
                   <Text
                     style={{
                       color: '#000000',
@@ -747,7 +834,7 @@ export default forwardRef(function ItemSneakers(
                   </View>
                 </View>
 
-                <View style={{flex: 1}}>
+                <View style={{ flex: 1 }}>
                   <Text
                     style={{
                       color: '#000000',
@@ -777,7 +864,7 @@ export default forwardRef(function ItemSneakers(
                   </View>
                 </View>
 
-                <View style={{flex: 1}}>
+                <View style={{ flex: 1 }}>
                   <Text
                     style={{
                       color: '#000000',
@@ -932,7 +1019,7 @@ export default forwardRef(function ItemSneakers(
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                   }}>
-                  <View style={{flex: 1}} />
+                  <View style={{ flex: 1 }} />
                   <View
                     style={{
                       flex: 2,
@@ -1172,7 +1259,8 @@ export default forwardRef(function ItemSneakers(
                 <TouchableOpacity
                   disabled={item?.isSelling ? true : false}
                   onPress={() => {
-                    setmodalBuy(!modalBuy);
+                    // setmodalBuy(!modalBuy);
+                    setModalPrice(true);
                   }}
                   style={{
                     width: getSize.Width * 0.3,
