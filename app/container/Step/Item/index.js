@@ -93,6 +93,7 @@ function Item() {
   const [secondValid, setSecondValid] = useState(0);
   const [moneyEarned, setMoneyEarned] = useState(0);
   const [runId, setRunId] = useState();
+  const isPause = selector.screenState.isStepPause;
 
   const calculateDistanceAndSpeed = (location, timestamp) => {
     if (!location) {
@@ -137,42 +138,44 @@ function Item() {
   };
 
   const _startUpdatingLocation = () => {
-    Geolocation.watchPosition(
-      position => {
-        const { speed, distance } = calculateDistanceAndSpeed(
-          position.coords,
-          position.timestamp,
-        );
-        setCurrentSpeed(speed.toFixed(2));
-        setTotalKm(distanceOld => distanceOld + distance);
-        if (classShoe === 'walker') {
-          if (speed * 3.6 > 1 && speed * 3.6 <= 6) {
-            setSecondValid(e => e + 1);
-            updateRunningSession({ runtime: 1000 });
+    if (!isPause) {
+      Geolocation.watchPosition(
+        position => {
+          const { speed, distance } = calculateDistanceAndSpeed(
+            position.coords,
+            position.timestamp,
+          );
+          setCurrentSpeed(speed.toFixed(2));
+          setTotalKm(distanceOld => distanceOld + distance);
+          if (classShoe === 'walker') {
+            if (speed * 3.6 > 1 && speed * 3.6 <= 6) {
+              setSecondValid(e => e + 1);
+              updateRunningSession({ runtime: 1000 });
+            }
+          } else if (classShoe === 'running') {
+            if (speed * 3.6 > 6 && speed * 3.6 <= 20) {
+              setSecondValid(e => e + 1);
+              updateRunningSession({ runtime: 1000 });
+            }
           }
-        } else if (classShoe === 'running') {
-          if (speed * 3.6 > 6 && speed * 3.6 <= 20) {
-            setSecondValid(e => e + 1);
-            updateRunningSession({ runtime: 1000 });
+          if (runId && secondValid % 300 === 0) {
+            getRunningSession(runId);
+            setEnergy(e => e - 1);
           }
-        }
-        if (runId && secondValid % 300 === 0) {
-          getRunningSession(runId);
-          setEnergy(e => e - 1);
-        }
-      },
-      err => {
-        console.log('err', err.code, err.message);
-        reject(err.code);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: Platform.OS === 'android' ? 1000 : 15000,
-        maximumAge: Platform.OS ? 0 : 10000,
-        interval: 1000,
-        distanceFilter: 1,
-      },
-    );
+        },
+        err => {
+          console.log('err', err.code, err.message);
+          reject(err.code);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: Platform.OS === 'android' ? 1000 : 15000,
+          maximumAge: Platform.OS ? 0 : 10000,
+          interval: 1000,
+          distanceFilter: 1,
+        },
+      );
+    }
     // RNLocation.subscribeToLocationUpdates(locations => {
     //   console.log('debug-locations', locations.length)
     //   const { speed, distance } = calculateDistanceAndSpeed(locations[0]);
@@ -492,10 +495,6 @@ function Item() {
   const handleStepStop = () => {
     updateRunningSession({ status: 'ended' });
     setmodalVisible(false);
-    if (countRef.current) {
-      clearTimeout(countRef.current);
-    }
-    clearInterval(countRef.current);
     // Geolocation.clearWatch(watchId.current);
     setisPress(false);
     dispatch(_action.isStepTimer(0));
@@ -516,6 +515,10 @@ function Item() {
         totalSecond: selector.initReducer.isStepTimer,
       }),
     );
+    if (countRef.current) {
+      clearTimeout(countRef.current);
+    }
+    clearInterval(countRef.current);
     // navigation.navigate(tabNavigator.TAB_HOME);
   };
 

@@ -58,7 +58,13 @@ export const InitState = {
         // screen run
         isScreenCongrats: false,
         isScreenShare: false,
-        isStateCountDown: false
+        isStateCountDown: false,
+        totalDistance: '',
+        moneyEarned: 0,
+        energy: 0,
+        timeFinish: '',
+        totalTime: '',
+        totalSecond: 0,
     },
     resendRegisterCode: { ...StateDefault },
     submitCode: { ...StateDefault },
