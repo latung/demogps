@@ -59,6 +59,7 @@ export default function MyTabBar({ state, descriptors, navigation })
 
                 const onPress = () =>
                 {
+                    console.log('debug-press')
                     const event = navigation.emit({
                         type: 'tabPress',
                         target: route.key
@@ -71,6 +72,8 @@ export default function MyTabBar({ state, descriptors, navigation })
 
                 const onLongPress = () =>
                 {
+                                        console.log('debug-press')
+
                     navigation.emit({
                         type: 'tabLongPress',
                         target: route.key

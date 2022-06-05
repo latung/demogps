@@ -43,8 +43,6 @@ export const CircularProgress: React.FC = () => {
     return fill;
   };
 
-  console.log('debug-render-CircularProgress');
-
   const displayCountdown = countDown < 4;
 
   return (

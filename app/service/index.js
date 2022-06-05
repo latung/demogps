@@ -634,6 +634,34 @@ const updateRunningSession = async (id, body) => {
   return content;
 };
 
+const onAddGem = async (body, shoeId) => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(`${API_CONST.API_ADD_GEM.replace(':shoesId', shoeId)}`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+    body: JSON.stringify(body),
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
+const onUpgradeShoeLevel = async (shoeId) => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(`${API_CONST.API_UPGRADE_SHOE_LEVEL.replace(':shoesId', shoeId)}`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+    body: JSON.stringify(body),
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
 export {
   createSession,
   getSession,
@@ -670,5 +698,7 @@ export {
   onSellShoe,
   startRunning,
   getRunningSession,
-  updateRunningSession
+  updateRunningSession,
+  onAddGem,
+  onUpgradeShoeLevel
 };

@@ -189,7 +189,7 @@ export const ModalSelectGem: React.FC<Props> = React.memo(
                                       fontWeight: 'bold',
                                       color: '#000',
                                     }}>
-                                    {item?.type}
+                                    {item?.type?.split('_').join(' ')}
                                   </Text>
                                 </View>
                               </View>
@@ -419,7 +419,7 @@ export const ModalSelectGem: React.FC<Props> = React.memo(
                             textTransform: 'capitalize',
                           }}>
                           {/* {`${constShoe?.LUCK[item?.quality]}`} */}
-                          {displayDetailItem?.type}
+                          {displayDetailItem?.type?.split('_').join(' ')}
                         </Text>
                       </View>
                     </View>
