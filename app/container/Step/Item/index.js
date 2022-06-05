@@ -100,7 +100,11 @@ function Item() {
     }
 
     let { longitude, latitude } = location;
-    if (!refLocations.current?.latitude || !refLocations.current?.longitude || !refLocations.current?.time) {
+    if (
+      !refLocations.current?.latitude ||
+      !refLocations.current?.longitude ||
+      !refLocations.current?.time
+    ) {
       refLocations.current.time = timestamp;
       refLocations.current.latitude = latitude;
       refLocations.current.longitude = longitude;
@@ -116,7 +120,7 @@ function Item() {
         latitude: Number(latitude),
         longitude: Number(longitude),
       },
-      0.1
+      0.1,
     );
 
     const timeChangeSeconds = (timestamp - refLocations.current?.time) / 1000;
@@ -126,48 +130,49 @@ function Item() {
     refLocations.current.latitude = latitude;
     refLocations.current.longitude = longitude;
 
-    return { speed: speed < 1 ? 0 : speed, distance: newDistance > 1 ? newDistance / 1000: 0  };
-  }
+    return {
+      speed: speed < 1 ? 0 : speed,
+      distance: newDistance > 1 ? newDistance / 1000 : 0,
+    };
+  };
 
   const _startUpdatingLocation = () => {
-    Geolocation.watchPosition( (position) =>
-      {
-        const { speed, distance } = calculateDistanceAndSpeed(position.coords, position.timestamp);
+    Geolocation.watchPosition(
+      position => {
+        const { speed, distance } = calculateDistanceAndSpeed(
+          position.coords,
+          position.timestamp,
+        );
         setCurrentSpeed(speed.toFixed(2));
-        setTotalKm((distanceOld) => distanceOld + distance);
+        setTotalKm(distanceOld => distanceOld + distance);
         if (classShoe === 'walker') {
-          if (
-            locationCurrent?.speed * 3.6 > 1 &&
-            locationCurrent?.speed * 3.6 <= 6
-          ) {
+          if (speed * 3.6 > 1 && speed * 3.6 <= 6) {
             setSecondValid(e => e + 1);
-          } 
+            updateRunningSession({ runtime: 1000 });
+          }
         } else if (classShoe === 'running') {
-          if (
-            locationCurrent?.speed * 3.6 > 6 &&
-            locationCurrent?.speed * 3.6 <= 20
-          ) {
+          if (speed * 3.6 > 6 && speed * 3.6 <= 20) {
             setSecondValid(e => e + 1);
-            setEnergy(e => e - 1);
-          } 
+            updateRunningSession({ runtime: 1000 });
+          }
         }
         if (runId && secondValid % 300 === 0) {
           getRunningSession(runId);
           setEnergy(e => e - 1);
         }
       },
-      (err) =>
-      {
-          console.log('err', err.code, err.message);
-          reject(err.code);
+      err => {
+        console.log('err', err.code, err.message);
+        reject(err.code);
       },
       {
-          enableHighAccuracy: true,
-          timeout: Platform.OS === 'android' ? 1000 : 15000,
-          maximumAge: Platform.OS ? 0 : 10000,
-          interval: 1000,
-          distanceFilter: 1
-      })
+        enableHighAccuracy: true,
+        timeout: Platform.OS === 'android' ? 1000 : 15000,
+        maximumAge: Platform.OS ? 0 : 10000,
+        interval: 1000,
+        distanceFilter: 1,
+      },
+    );
     // RNLocation.subscribeToLocationUpdates(locations => {
     //   console.log('debug-locations', locations.length)
     //   const { speed, distance } = calculateDistanceAndSpeed(locations[0]);
@@ -180,7 +185,7 @@ function Item() {
     //       locationCurrent?.speed * 3.6 <= 6
     //     ) {
     //       setSecondValid(e => e + 1);
-    //     } 
+    //     }
     //   } else if (classShoe === 'running') {
     //     if (
     //       locationCurrent?.speed * 3.6 > 6 &&
@@ -188,7 +193,7 @@ function Item() {
     //     ) {
     //       setSecondValid(e => e + 1);
     //       setEnergy(e => e - 1);
-    //     } 
+    //     }
     //   }
     //   if (runId && secondValid % 300 === 0) {
     //     getRunningSession(runId);
@@ -222,8 +227,8 @@ function Item() {
       });
   };
 
-  const updateRunningSession = () => {
-    ApiServices.updateRunningSession(runId, { status: 'ended' })
+  const updateRunningSession = body => {
+    ApiServices.updateRunningSession(runId, body)
       .then(res => {
         console.log(res);
       })
@@ -235,7 +240,7 @@ function Item() {
   useEffect(() => startRunning(), [id]);
   useEffect(() => {
     if (energy === 0) {
-      updateRunningSession();
+      handleStepStop();
     }
   }, [energy]);
 
@@ -249,6 +254,7 @@ function Item() {
   const mainFuncThread = () => {
     refTimeInterval.current = setInterval(() => {
       setTimeRun(preSta => preSta + 1);
+      // handleLocationsFunc();
     }, 1000);
   };
 
@@ -278,7 +284,7 @@ function Item() {
         _startUpdatingLocation();
       }
     });
-    // mainFuncThread();
+    mainFuncThread();
     return () => {
       clearInterval(refTimeInterval.current);
     };
@@ -484,7 +490,7 @@ function Item() {
   };
 
   const handleStepStop = () => {
-    updateRunningSession();
+    updateRunningSession({ status: 'ended' });
     setmodalVisible(false);
     if (countRef.current) {
       clearTimeout(countRef.current);
@@ -502,6 +508,12 @@ function Item() {
         isStepPause: false,
         isStepStart: false,
         isScreenCongrats: true,
+        totalDistance: totalKm.toFixed(2),
+        moneyEarned,
+        energy,
+        timeFinish: new Date(),
+        totalTime: formatTime(timeRun),
+        totalSecond: selector.initReducer.isStepTimer,
       }),
     );
     // navigation.navigate(tabNavigator.TAB_HOME);
@@ -602,7 +614,7 @@ function Item() {
           <AnimatedCircularProgress
             size={getSize.scale(294)}
             width={18}
-            fill={(kmhState * 100) / 20} // {selector.screenState.speed} speedMin:8 - fillMin:0 : speedMax:20 - fillMax:100
+            fill={(currentSpeed * 100) / 20} // {selector.screenState.speed} speedMin:8 - fillMin:0 : speedMax:20 - fillMax:100
             tintColor="#2EDBDC" // "#00e0ff"
             arcSweepAngle={280}
             rotation={220}
@@ -681,7 +693,7 @@ function Item() {
                       fontStyle: 'italic',
                       color: '#ffffff',
                     }}>
-                    {`${Number(reciveUsdt).toFixed(2)}`}
+                    {`${Number(moneyEarned).toFixed(2)}`}
                   </Text>
                 </View>
               </View>
