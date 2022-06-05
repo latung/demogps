@@ -56,12 +56,17 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
 
   const onUpgradeShoe = () => {
     setLoading(true);
+    console.log(selectedShoe);
+    
     ApiServices.onUpgradeShoeLevel(selectedShoe?._id)
       .then(res1 => {
+        console.log('res1', res1);
         if (res1.code === 200) {
           setSelectedShoe(res1?.data?.updatedShoes);
           setUpgradedShoe(res1?.data?.updatedShoes);
           ApiServices.shoes().then(response => {
+            console.log('response', response);
+            
             if (response.code === 200) {
               dispatch({
                 type: ACTION_CONST.SHOES_SUCCESS,
@@ -76,8 +81,9 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
         }
       })
       .catch(err => {
+        console.log('err', err);
         setLoading(false);
-        Toast.showWithGravity(err, Toast.LONG, Toast.CENTER);
+        Toast.showWithGravity(err?.message, Toast.LONG, Toast.CENTER);
       });
   };
 
