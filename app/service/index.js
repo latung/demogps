@@ -656,7 +656,6 @@ const onUpgradeShoeLevel = async (shoeId) => {
       'Content-type': 'application/json',
       Authorization: `Bearer ${token_access}`,
     },
-    body: JSON.stringify(body),
   });
   const content = await rawResponse.json();
   return content;

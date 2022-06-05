@@ -54,7 +54,7 @@ export default function ItemShoeBoxes({item, index}) {
       })
       .catch(err => {
         setLoading(false);
-        Toast.showWithGravity(err, Toast.LONG, Toast.CENTER);
+        Toast.showWithGravity(err.message, Toast.LONG, Toast.CENTER);
       });
   };
 
