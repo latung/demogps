@@ -1187,7 +1187,7 @@ export default function ItemShoeBoxes({ item, index, buyItem }) {
                       color: '#F44369',
                       fontSize: getSize.scale(20),
                     }}>
-                    {`${item.sol} MOV`}
+                    {`${item.sol} BFI`}
                   </Text>
                 </View>
 

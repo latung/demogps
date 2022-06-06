@@ -155,6 +155,7 @@ export default function ItemGems({item, index}) {
                         paddingVertical: getSize.scale(2),
                       }}>
                       <Text
+                      numberOfLines={1}
                         style={{
                           color: '#fff',
                           fontWeight: 'bold',

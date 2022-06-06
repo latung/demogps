@@ -22,7 +22,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { stackNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
 import { Button } from '@rneui/base';
+import { Dimensions } from 'react-native';
 
+const { width, height } = Dimensions.get('window');
 export default forwardRef(function ItemSneakers(
   {
     item,
@@ -93,21 +95,21 @@ export default forwardRef(function ItemSneakers(
   }
 
   return (
-    <View
-      key={index}
-      style={{
-        width: getSize.Width / 2.09,
-        marginTop: index === 0 || index === 1 ? getSize.scale(16) : 0,
-        marginVertical: getSize.scale(32),
-      }}>
-      <ImageBackground
-        source={{ uri: 'ic_item_list_bag' }}
-        style={{
-          width: '100%',
-          height: getSize.scale(300),
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
+    <>
+      <View
+        style={[
+          {
+            width: (getSize.Width - 32) / 2,
+            height: getSize.scale(300),
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            borderRadius: 10,
+            marginTop: index === 0 || index === 1 ? getSize.scale(16) : 0,
+            marginVertical: getSize.scale(32),
+          },
+          index % 2 === 0 ? { marginRight: 8 } : { marginLeft: 8 },
+        ]}>
         <View
           style={{
             flex: 1,
@@ -373,7 +375,7 @@ export default forwardRef(function ItemSneakers(
             <View style={{ flex: 0.3 }} />
           </View>
         </View>
-      </ImageBackground>
+      </View>
       {/* Switch popup details */}
       <Modal
         animationType="fade"
@@ -754,13 +756,13 @@ export default forwardRef(function ItemSneakers(
                 }}>
                 <Image
                   style={{
-                    height: getSize.Width / 1.8,
-                    width: getSize.Width - getSize.Width * 0.1,
+                    width: 250,
+                    height: 150,
                     resizeMode: 'contain',
                     marginVertical: getSize.scale(8),
                   }}
                   source={{
-                    uri: item?.img, // item?.img
+                    uri: item?.img,
                   }}
                 />
                 <View
@@ -1012,7 +1014,7 @@ export default forwardRef(function ItemSneakers(
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
-                  marginTop: getSize.scale(16),
+                  // marginTop: getSize.scale(16),
                 }}>
                 <View
                   style={{
@@ -1057,7 +1059,7 @@ export default forwardRef(function ItemSneakers(
                   style={{
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    height: getSize.scale(96),
+                    height: getSize.scale(135),
                     padding: getSize.scale(16),
                     borderRadius: getSize.scale(16),
                     marginVertical: getSize.scale(8),
@@ -1156,7 +1158,86 @@ export default forwardRef(function ItemSneakers(
                       </Text>
                     </View>
                   </View>
-
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontStyle: 'italic',
+                          color: '#000000',
+                        }}>
+                        Efficiency
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-end',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontWeight: 'bold',
+                          color: '#000000',
+                        }}>
+                        {/* {`${constShoe?.LUCK[item?.quality]}`} */}
+                        {item?.attributes?.efficiency}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontStyle: 'italic',
+                          color: '#000000',
+                        }}>
+                        Resilience
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-end',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontWeight: 'bold',
+                          color: '#000000',
+                        }}>
+                        {/* {`${constShoe?.LUCK[item?.quality]}`} */}
+                        {item?.attributes?.resilience}
+                      </Text>
+                    </View>
+                  </View>
                   <View
                     style={{
                       flex: 1,
@@ -1194,6 +1275,86 @@ export default forwardRef(function ItemSneakers(
                         }}>
                         {/* {`${constShoe?.LUCK[item?.quality]}`} */}
                         {item?.attributes?.luck}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontStyle: 'italic',
+                          color: '#000000',
+                        }}>
+                        Level
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-end',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontWeight: 'bold',
+                          color: '#000000',
+                        }}>
+                        {/* {`${constShoe?.LUCK[item?.quality]}`} */}
+                        {item?.level}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontStyle: 'italic',
+                          color: '#000000',
+                        }}>
+                        Quality
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-end',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontWeight: 'bold',
+                          color: '#000000',
+                        }}>
+                        {/* {`${constShoe?.LUCK[item?.quality]}`} */}
+                        {item?.quality}
                       </Text>
                     </View>
                   </View>
@@ -1361,7 +1522,7 @@ export default forwardRef(function ItemSneakers(
           </View>
         </TouchableOpacity>
       </Modal>
-    </View>
+    </>
   );
 });
 

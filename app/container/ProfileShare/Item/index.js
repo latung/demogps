@@ -231,7 +231,7 @@ function ItemShare()
                                         color: '#000',
                                         fontStyle: 'italic'
                                     }}>
-                                    {`MOV`}
+                                    {`BFI`}
                                 </Text>
                             </View>
                         </View>

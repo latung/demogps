@@ -204,7 +204,7 @@ class index extends Component
                                             textAlign: 'center',
                                             fontSize: getSize.scale(14)
                                         }}>
-                                        Deposit MOV to Wallet in order to fund your
+                                        Deposit BFI to Wallet in order to fund your
                                         Spending account
                                     </Text>
                                     <Text
@@ -336,9 +336,9 @@ class index extends Component
                                         fontSize: getSize.scale(12),
                                         color: "#FFFFFF"
                                     }}>
-                                    {balanceUserId && balanceUserId.mer ? Number(balanceUserId.mer).toFixed(2) : "0"}
+                                    {balanceUserId && balanceUserId.bfi ? Number(balanceUserId.bfi).toFixed(2) : "0"}
                                 </Text>
-                                {/* <Image
+                                <Image
                                     style={{
                                         width: getSize.scale(25),
                                         height: getSize.scale(25),
@@ -352,9 +352,9 @@ class index extends Component
                                         fontSize: getSize.scale(12),
                                         color: "#FFFFFF"
                                     }}>
-                                    {balanceUserId && balanceUserId.usdt ? Number(balanceUserId.usdt).toFixed(2) : "0"}
+                                    {balanceUserId && balanceUserId.pay ? Number(balanceUserId.pay).toFixed(2) : "0"}
                                 </Text>
-                                <Image
+                                {/* <Image
                                     style={{
                                         width: getSize.scale(25),
                                         height: getSize.scale(25),
@@ -371,7 +371,7 @@ class index extends Component
                                     {balanceUserId && balanceUserId.busd ? Number(balanceUserId.busd).toFixed(2) : "0"}
                                 </Text> */}
                             </View>
-                            <TouchableOpacity
+                            {/* <TouchableOpacity
                                 style={{
                                     position: "relative",
                                     justifyContent: "center",
@@ -393,7 +393,7 @@ class index extends Component
                                     source={{ uri: 'ic_plus' }}
                                 />
 
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                             <TouchableOpacity
                                 style={{
                                     position: "relative"

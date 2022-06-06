@@ -360,16 +360,17 @@ const getUser = async Body => {
 };
 
 const userId = async Body => {
-  const rawResponse = await fetch(`${API_CONST.API_GET_USER_ID}/${Body._id}`, {
-    method: 'GET',
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(`${API_CONST.API_GET_USER_ID}`, {
+  method: 'GET',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: Config.SECRET_KEY,
+      Authorization:  `Bearer ${token_access}`,
     },
   });
   const content = await rawResponse.json();
-  console.log('content maket', content);
+  console.log('contentmaket', content);
   return content;
 };
 

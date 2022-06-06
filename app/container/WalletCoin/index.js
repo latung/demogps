@@ -14,7 +14,7 @@ class WalletCoin extends Component
             isWallet: false,
             modalVisibles: false,
             data: [
-                { id: 2, Name: "BUSD", amount: 0 }, { id: 1, Name: "MOV", amount: 0 }, { id: 2, Name: "MOV", amount: 0 }, { id: 2, Name: "USDT", amount: 0 }
+                { id: 2, Name: "PAY", amount: 0 }, { id: 1, Name: "BFI", amount: 0 }, { id: 2, Name: "BFI", amount: 0 }, { id: 2, Name: "PAY", amount: 0 }
             ],
             data1: [
                 { id: 1, Name: "Sneakers", amount: 0 }, { id: 2, Name: "Shoeboxes", amount: 0 }, { id: 2, Name: "Gems", amount: 0 }
