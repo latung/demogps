@@ -9,7 +9,8 @@
     "start": "react-native start",
     "android-release": "cd android && ./gradlew clean && ./gradlew assembleRelease && cd ..",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "android:build": "react-native run-android --variant=release"
   },
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "^2.2.2",

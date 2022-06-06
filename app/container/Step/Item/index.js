@@ -148,12 +148,12 @@ function Item() {
           setCurrentSpeed(speed.toFixed(2));
           setTotalKm(distanceOld => distanceOld + distance);
           if (classShoe === 'walker') {
-            if (speed * 3.6 > 1 && speed * 3.6 <= 6) {
+            if (speed > 1 && speed <= 6) {
               setSecondValid(e => e + 1);
               updateRunningSession({ runtime: 1000 });
             }
           } else if (classShoe === 'running') {
-            if (speed * 3.6 > 6 && speed * 3.6 <= 20) {
+            if (speed > 6 && speed <= 20) {
               setSecondValid(e => e + 1);
               updateRunningSession({ runtime: 1000 });
             }
