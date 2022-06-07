@@ -153,15 +153,12 @@ function Item() {
               setSecondValid(e => e + 1);
               updateRunningSession({ runtime: 1000 });
             }
-          } else if (classShoe === 'running') {
+          }
+          if (classShoe === 'running') {
             if (speed > 6 && speed <= 20) {
               setSecondValid(e => e + 1);
               updateRunningSession({ runtime: 1000 });
             }
-          }
-          if (runId && secondValid % 300 === 0) {
-            getRunningSession(runId);
-            setEnergy(e => e - 1);
           }
 
           if (speed > 0) {
@@ -286,6 +283,13 @@ function Item() {
       // handleLocationsFunc();
     }, 1000);
   };
+
+  useEffect(() => {
+    if (runId && secondValid > 0 && secondValid % 300 === 0) {
+      setEnergy(e => e - 1);
+      getRunningSession(runId);
+    }
+  }, [secondValid]);
 
   useEffect(() => {
     RNLocation.configure({
@@ -547,8 +551,6 @@ function Item() {
     clearInterval(countRef.current);
     // navigation.navigate(tabNavigator.TAB_HOME);
   };
-
-  // console.log('kmhState', kmhState);
 
   return (
     <View style={{ flex: 1, width: getSize.Width }}>

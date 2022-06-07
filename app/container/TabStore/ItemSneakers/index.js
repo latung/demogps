@@ -634,7 +634,9 @@ export default function ItemSneakers({
                                     fontWeight: '600',
                                     fontStyle: 'italic',
                                   }}>
-                                   {item?.class === 'runner' ? '6-20km' : '1-6km'}
+                                  {item?.class === 'runner'
+                                    ? '6-20km'
+                                    : '1-6km'}
                                 </Text>
                               </View>
                             </View>
@@ -1142,7 +1144,7 @@ export default function ItemSneakers({
                   style={{
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    height: getSize.scale(96),
+                    height: getSize.scale(150),
                     padding: getSize.scale(16),
                     borderRadius: getSize.scale(16),
                     marginVertical: getSize.scale(8),
@@ -1194,11 +1196,129 @@ export default function ItemSneakers({
                           fontWeight: 'bold',
                           color: 'rgba(44, 44, 44, 1)',
                         }}>
-                         {item?.class === 'runner' ? '6-20km' : '1-6km'}
+                        {item?.class === 'runner' ? '6-20km' : '1-6km'}
                       </Text>
                     </View>
                   </View>
-
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontStyle: 'italic',
+                          color: '#000000',
+                        }}>
+                        Durability
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-end',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontWeight: 'bold',
+                          color: '#000000',
+                        }}>
+                        {`${item?.energy}`}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontStyle: 'italic',
+                          color: '#000000',
+                        }}>
+                        Efficiency
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-end',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontWeight: 'bold',
+                          color: '#000000',
+                        }}>
+                        {/* {`${constShoe?.LUCK[item?.quality]}`} */}
+                        {item?.attributes?.efficiency}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontStyle: 'italic',
+                          color: '#000000',
+                        }}>
+                        Resilience
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-end',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontWeight: 'bold',
+                          color: '#000000',
+                        }}>
+                        {/* {`${constShoe?.LUCK[item?.quality]}`} */}
+                        {item?.attributes?.resilience}
+                      </Text>
+                    </View>
+                  </View>
                   <View
                     style={{
                       flex: 1,
@@ -1275,6 +1395,86 @@ export default function ItemSneakers({
                           color: 'rgba(44, 44, 44, 1)',
                         }}>
                         {item?.attributes?.luck}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontStyle: 'italic',
+                          color: '#000000',
+                        }}>
+                        Level
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-end',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontWeight: 'bold',
+                          color: '#000000',
+                        }}>
+                        {/* {`${constShoe?.LUCK[item?.quality]}`} */}
+                        {item?.level}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontStyle: 'italic',
+                          color: '#000000',
+                        }}>
+                        Quality
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'flex-end',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: getSize.scale(12),
+                          fontWeight: 'bold',
+                          color: '#000000',
+                        }}>
+                        {/* {`${constShoe?.LUCK[item?.quality]}`} */}
+                        {item?.quality}
                       </Text>
                     </View>
                   </View>
