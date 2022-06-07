@@ -684,7 +684,7 @@ export default function ItemSneakers({ item, index })
                                                                     color: '#F44369',
                                                                     fontSize: getSize.scale(20)
                                                                 }}>
-                                                                {`${item.sol} MOV`}
+                                                                {`${item.sol} BFI`}
                                                             </Text>
                                                         </View>
                                                     </View>
@@ -1252,7 +1252,7 @@ export default function ItemSneakers({ item, index })
                                             color: '#F44369',
                                             fontSize: getSize.scale(20)
                                         }}>
-                                        {`${item.sol} MOV`}
+                                        {`${item.sol} BFI`}
                                     </Text>
                                 </View>
 

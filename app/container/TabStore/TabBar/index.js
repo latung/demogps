@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -11,13 +11,16 @@ import {
   ImageBackground,
 } from 'react-native';
 import Toast from 'react-native-simple-toast';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as _action from '../../../redux/action/ActionHandle';
-import {stackNavigator, tabNavigator} from '../../../navigation/nameNavigator';
-import {Popup} from '../../../components';
-import {DrawerActions} from '@react-navigation/native';
-import {getSize} from '../../../common';
+import {
+  stackNavigator,
+  tabNavigator,
+} from '../../../navigation/nameNavigator';
+import { Popup } from '../../../components';
+import { DrawerActions } from '@react-navigation/native';
+import { getSize } from '../../../common';
 import ItemFilter from './../ItemFilter/index';
 class TabBar extends Component {
   constructor(props) {
@@ -30,14 +33,14 @@ class TabBar extends Component {
       // isUpgradeMini: false,
       // modalVisibles: false,
       visibles: false,
-      isLowestPrice: true,
+      isLowestPrice: false,
       isHighestPrice: false,
-      isLatestPrice: false,
-      titlePrice: 'Lowest Price',
+      isLatestPrice: true,
+      titlePrice: 'Lasted',
       modalFilter: false,
       filters: {
-        class: {Jogging: false, runner: false, Training: false},
-        grade: {Common: false, rare: false, Legendary: false},
+        class: { Jogging: false, runner: false, Training: false },
+        grade: { Common: false, rare: false, Legendary: false },
       },
     };
   }
@@ -48,7 +51,7 @@ class TabBar extends Component {
         return {
           filters: {
             ...state.filters,
-            [fil]: {...state.filters[fil], [type]: !state.filters[fil][type]},
+            [fil]: { ...state.filters[fil], [type]: !state.filters[fil][type] },
           },
         };
       },
@@ -58,8 +61,8 @@ class TabBar extends Component {
     return;
   };
   Filter = () => {
-    const {filters} = this.state;
-    const {market, marketBackup, action} = this.props;
+    const { filters } = this.state;
+    const { market, marketBackup, action } = this.props;
     // console.log(filters);
     // console.log(market);
     // console.log(marketBackup);
@@ -73,14 +76,11 @@ class TabBar extends Component {
     // console.log(martkettmp);
   };
   OderBy = () => {
-    const {isLowestPrice, isHighestPrice, isLatestPrice} = this.state;
-    const {market, marketBackup, action} = this.props;
-    // console.log(filters);
-    // console.log(market);
-    // console.log(marketBackup);
-    let martkettmp = market;
+    const { isLowestPrice, isHighestPrice, isLatestPrice } = this.state;
+    const { market, listBox, action, listGem } = this.props;
+    let listBoxTemp = [...listBox.data];
     let result = [];
-    result = market.data.sort((a, b) => {
+    result = listBoxTemp.sort((a, b) => {
       if (isLowestPrice) {
         return a.price - b.price;
       }
@@ -88,25 +88,23 @@ class TabBar extends Component {
         return b.price - a.price;
       }
       if (isLatestPrice) {
-        return b.price - a.price;
+        return b.created - a.created;
       }
     });
-    martkettmp.data = result;
-    action.filterMarket(martkettmp.data);
-    console.log(martkettmp);
+    action.getListBox(result);
   };
   ClearFilters = () => {
     this.setState(
       state => {
         return {
           filters: {
-            class: {Jogging: false, Running: false, Training: false},
-            grade: {Common: false, Rare: false, Legendary: false},
+            class: { Jogging: false, Running: false, Training: false },
+            grade: { Common: false, Rare: false, Legendary: false },
           },
         };
       },
       () => {
-        const {marketBackup, action} = this.props;
+        const { marketBackup, action } = this.props;
         console.log(marketBackup);
         action.filterMarket(marketBackup);
 
@@ -144,7 +142,7 @@ class TabBar extends Component {
   };
 
   _handleTabbar = key => {
-    const {action, screenState} = this.props;
+    const { action, screenState } = this.props;
     if (key === 'Sneakers') {
       action.changeScreenState({
         ...screenState,
@@ -208,11 +206,11 @@ class TabBar extends Component {
       isLatestPrice,
       modalFilter,
     } = this.state;
-    const {action, screenState} = this.props;
-    const {isSneakers, isGems, isBadges, isShoeBoxes, isPromos} = screenState;
+    const { action, screenState } = this.props;
+    const { isSneakers, isGems, isBadges, isShoeBoxes, isPromos } = screenState;
 
     return (
-      <View style={{flex: 1, marginTop: getSize.scale(8)}}>
+      <View style={{ flex: 1, marginTop: getSize.scale(8) }}>
         <View
           style={{
             flex: Platform.OS === 'android' ? 0 : 5,
@@ -454,7 +452,7 @@ class TabBar extends Component {
                       flexDirection: 'row',
                     }}>
                     <Text
-                      style={{fontSize: getSize.scale(12), color: '#ffffff'}}>
+                      style={{ fontSize: getSize.scale(12), color: '#ffffff' }}>
                       Filter
                     </Text>
                     <View
@@ -484,7 +482,7 @@ class TabBar extends Component {
                         height: getSize.scale(20),
                         resizeMode: 'contain',
                       }}
-                      source={{uri: 'ic_filter'}}
+                      source={{ uri: 'ic_filter' }}
                     />
                   </View>
                 </TouchableOpacity>
@@ -599,7 +597,7 @@ class TabBar extends Component {
                   borderRadius: 10,
                   overflow: 'hidden',
                 }}>
-                {this.state.py ? (
+                {/* {this.state.py ? (
                   <Modal
                     animationType="none"
                     transparent={true}
@@ -749,7 +747,7 @@ class TabBar extends Component {
                       </View>
                     </View>
                   </Modal>
-                ) : null}
+                ) : null} */}
                 <TouchableOpacity
                   ref={refs => {
                     this.LowestPrice = refs;
@@ -776,7 +774,10 @@ class TabBar extends Component {
                         justifyContent: 'center',
                       }}>
                       <Text
-                        style={{fontSize: getSize.scale(12), color: '#ffffff'}}>
+                        style={{
+                          fontSize: getSize.scale(12),
+                          color: '#ffffff',
+                        }}>
                         {this.state.titlePrice}
                       </Text>
                     </View>
@@ -793,7 +794,7 @@ class TabBar extends Component {
                           height: getSize.scale(13),
                           resizeMode: 'contain',
                         }}
-                        source={{uri: 'ic_arrow_grey'}}
+                        source={{ uri: 'ic_arrow_grey' }}
                       />
                     </View>
                   </View>
@@ -853,7 +854,7 @@ class TabBar extends Component {
                           elevation: 5,
                         }}>
                         <TouchableOpacity
-                          onPress={() =>
+                          onPress={() => {
                             this.setState({
                               ...this.state,
                               visible: false,
@@ -861,8 +862,11 @@ class TabBar extends Component {
                               isLowestPrice: true,
                               isHighestPrice: false,
                               isLatestPrice: false,
-                            })
-                          }
+                            });
+                            setTimeout(() => {
+                              this.OderBy();
+                            }, 500);
+                          }}
                           style={{
                             flex: 1,
                             marginVertical: getSize.scale(4),
@@ -886,7 +890,7 @@ class TabBar extends Component {
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                          onPress={() =>
+                          onPress={() => {
                             this.setState({
                               ...this.state,
                               visible: false,
@@ -894,8 +898,11 @@ class TabBar extends Component {
                               isLowestPrice: false,
                               isHighestPrice: true,
                               isLatestPrice: false,
-                            })
-                          }
+                            });
+                            setTimeout(() => {
+                              this.OderBy();
+                            }, 500);
+                          }}
                           style={{
                             flex: 1,
                             marginVertical: getSize.scale(4),
@@ -919,7 +926,7 @@ class TabBar extends Component {
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                          onPress={() =>
+                          onPress={() => {
                             this.setState({
                               ...this.state,
                               visible: false,
@@ -927,8 +934,11 @@ class TabBar extends Component {
                               isLowestPrice: false,
                               isHighestPrice: false,
                               isLatestPrice: true,
-                            })
-                          }
+                            });
+                            setTimeout(() => {
+                              this.OderBy();
+                            }, 500);
+                          }}
                           style={{
                             flex: 1,
                             marginVertical: getSize.scale(4),
@@ -979,7 +989,8 @@ class TabBar extends Component {
                         flex: 9,
                         justifyContent: 'center',
                       }}>
-                      <Text style={{fontSize: getSize.scale(12)}}>
+                      <Text
+                        style={{ fontSize: getSize.scale(12), color: 'white' }}>
                         {this.state.titlePrice}
                       </Text>
                     </View>
@@ -996,14 +1007,14 @@ class TabBar extends Component {
                           height: getSize.scale(13),
                           resizeMode: 'contain',
                         }}
-                        source={{uri: 'ic_arrow'}}
+                        source={{ uri: 'ic_arrow' }}
                       />
                     </View>
                   </View>
                 </TouchableOpacity>
               </View>
 
-              <View style={{flex: 1.83}} />
+              <View style={{ flex: 1.83 }} />
 
               <View
                 style={{
@@ -1028,7 +1039,7 @@ class TabBar extends Component {
                     justifyContent: 'center',
                     overflow: 'hidden',
                   }}>
-                  <View
+                  {/* <View
                     style={{
                       flex: 1,
                       width: '100%',
@@ -1036,7 +1047,7 @@ class TabBar extends Component {
                       justifyContent: 'flex-end',
                       flexDirection: 'row',
                     }}>
-                    <Text style={{fontSize: getSize.scale(12)}}>Filter</Text>
+                    <Text style={{fontSize: getSize.scale(12), color: 'white'}}>Filter</Text>
                     <View
                       style={{
                         fontSize: getSize.scale(12),
@@ -1066,7 +1077,7 @@ class TabBar extends Component {
                       }}
                       source={{uri: 'ic_filter'}}
                     />
-                  </View>
+                  </View> */}
                 </TouchableOpacity>
               </View>
             </View>
@@ -1090,6 +1101,8 @@ const mapStateToProps = state => ({
   screenState: state.initReducer.screenState,
   market: state.initReducer.market,
   filterbackup: state.initReducer.filterbackup,
+  listBox: state.initReducer.listBox,
+  listGem: state.initReducer.listGem,
 });
 const mapDispatchToProps = dispatch => ({
   action: bindActionCreators(_action, dispatch),

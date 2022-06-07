@@ -174,7 +174,7 @@ export default function ItemShoeBoxes({item, index}) {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    marginVertical: 20,
+                    marginVertical: 15,
                   }}>
                   <View
                     style={{
@@ -185,8 +185,10 @@ export default function ItemShoeBoxes({item, index}) {
                       backgroundColor: '#565874',
                       paddingHorizontal: getSize.scale(8),
                       paddingVertical: getSize.scale(2),
+                      height: 20
                     }}>
                     <Text
+                    numberOfLines={1}
                       style={{
                         color: '#fff',
                         fontWeight: 'bold',

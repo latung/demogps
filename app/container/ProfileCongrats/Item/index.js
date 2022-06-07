@@ -236,7 +236,7 @@ function ItemCongrats()
                                     fontWeight: 'bold',
                                     fontStyle: 'italic'
                                 }}>
-                                {`BUSD`}
+                                {`PAY`}
                             </Text>
                         </View>
                     </View>

@@ -358,7 +358,7 @@ class TabHome extends Component
                                                     textAlign: 'center',
                                                     fontSize: getSize.scale(14)
                                                 }}>
-                                                Deposit MOV to Wallet in order to fund your
+                                                Deposit BFI to Wallet in order to fund your
                                                 Spending account
                                             </Text>
                                             <Text
@@ -1036,7 +1036,7 @@ class TabHome extends Component
                                                 fontSize: getSize.scale(10),
                                                 color: '#fff'
                                             }}>
-                                            18 MOV
+                                            18 BFI
                                         </Text>
                                     </View>
                                 </View>

@@ -35,9 +35,9 @@ class Swap extends Component
             modalVisible: false,
             isHiddenBottom: false,
             data: [
-                { id: 2, Name: 'BUSD', amount: 0 },
-                { id: 1, Name: 'MOV', amount: 0 },
-                { id: 0, Name: 'USDT', amount: 0 }
+                { id: 2, Name: 'PAY', amount: 0 },
+                { id: 1, Name: 'BFI', amount: 0 },
+                { id: 0, Name: 'PAY', amount: 0 }
             ],
             data1: [
                 { id: 1, Name: 'Sneakers', amount: 0 },
@@ -45,17 +45,17 @@ class Swap extends Component
                 { id: 2, Name: 'Gems', amount: 0 }
             ],
             data2: [
-                { name: 'BUSD', icon: '#000000' },
-                { name: 'MOV', icon: '#d2c402' },
-                { name: 'USDT', icon: 'blue' }
+                { name: 'PAY', icon: '#000000' },
+                { name: 'BFI', icon: '#d2c402' },
+                { name: 'PAY', icon: 'blue' }
             ],
             data3: [
-                { name: 'BUSD', icon: '#000000' },
-                { name: 'MOV', icon: '#777777' },
-                { name: 'USDT', icon: 'blue' }
+                { name: 'PAY', icon: '#000000' },
+                { name: 'BFI', icon: '#777777' },
+                { name: 'PAY', icon: 'blue' }
             ],
-            from: { icon: 'blue', name: 'USDT', value: '0.00' },
-            to: { icon: '#777777', name: 'MOV', value: '42.5' },
+            from: { icon: 'blue', name: 'PAY', value: '0.00' },
+            to: { icon: '#777777', name: 'BFI', value: '42.5' },
             istop: true,
             disabledTouch: true,
             isCreateToken: false,
@@ -69,8 +69,8 @@ class Swap extends Component
         this.setState(state =>
         {
             return {
-                from: { icon: 'blue', name: 'USDT', value: '0.00' },
-                to: { icon: '#777777', name: 'MOV', value: '42.5' },
+                from: { icon: 'blue', name: 'PAY', value: '0.00' },
+                to: { icon: '#777777', name: 'BFI', value: '42.5' },
             }
         })
     }
@@ -616,7 +616,7 @@ class Swap extends Component
                                         fontSize: getSize.scale(12),
                                         fontStyle: 'italic'
                                     }}>
-                                    1 USDT = {oneChange} MOV
+                                    1 PAY = {oneChange} BFI
                                 </Text>
                             </View>
                         </View>

@@ -8,8 +8,8 @@ class Transfer extends Component
     {
         super(props);
         this.state = {
-            data: [{ name: "SQL", icon: "ic_location", next: false }, { name: "BUST", icon: "ic_coin_t", next: false }, { name: "MOV", icon: "ic_location", next: false }, { name: "Sneaker", icon: "ic_coin", next: true }, { name: "Gems", icon: "ic_coin_t", next: true }, { name: "Shoeboxes", icon: "ic_coin_t", next: true }],
-            from: { icon: "ic_btn_wallet", name: "MOV", value: "1" },
+            data: [{ name: "SQL", icon: "ic_location", next: false }, { name: "BUST", icon: "ic_coin_t", next: false }, { name: "BFI", icon: "ic_location", next: false }, { name: "Sneaker", icon: "ic_coin", next: true }, { name: "Gems", icon: "ic_coin_t", next: true }, { name: "Shoeboxes", icon: "ic_coin_t", next: true }],
+            from: { icon: "ic_btn_wallet", name: "BFI", value: "1" },
             to: { icon: "ic_btn_spending", name: "Wallet", value: "1" },
             isSpending: true,
             isWallet: false,
@@ -672,7 +672,7 @@ class Transfer extends Component
                                                     fontSize: 15,
                                                     fontWeight: "bold",
                                                     color: "#000000",
-                                                }}>MOV</Text>
+                                                }}>BFI</Text>
 
                                                 <Text style={{
                                                     fontSize: 12,

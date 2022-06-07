@@ -388,7 +388,7 @@ class Profile extends Component
                                                 marginLeft: getSize.scale(4),
                                                 color: 'rgba(44, 44, 44, 1)'
                                             }}>
-                                            MOV
+                                            BFI
                                         </Text>
                                     </View>
                                     <Image

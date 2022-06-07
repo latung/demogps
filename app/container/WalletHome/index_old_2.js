@@ -28,8 +28,8 @@ class WalletHome extends Component
             data1: [
                 { id: 1, Name: "Sneakers", amount: 15 }, { id: 2, Name: "Shoeboxes", amount: 52 }, { id: 2, Name: "Gems", amount: 16 }
             ],
-            data2: [{ name: "SOL", icon: "#000000" }, { name: "BUSD", icon: "#d2c402" }, { name: "BUSD", icon: "#d2c402" }, { name: "USDT", icon: "blue" }],
-            data3: [{ name: "SOL", icon: "#000000" }, { name: "BUSD", icon: "#777777" }, { name: "USDT", icon: "blue" }],
+            data2: [{ name: "SOL", icon: "#000000" }, { name: "PAY", icon: "#d2c402" }, { name: "PAY", icon: "#d2c402" }, { name: "PAY", icon: "blue" }],
+            data3: [{ name: "SOL", icon: "#000000" }, { name: "PAY", icon: "#777777" }, { name: "PAY", icon: "blue" }],
             istop: true,
             viewState: true,
             animationValue: new Animated.Value(60),
@@ -619,7 +619,7 @@ class WalletHome extends Component
                                         fontStyle: "italic",
                                         color: "#2C2C2C",
                                         marginRight: 10
-                                    }}>MOV: 158.5</Text>
+                                    }}>BFI: 158.5</Text>
 
                                 </View>
                                 <View style={{

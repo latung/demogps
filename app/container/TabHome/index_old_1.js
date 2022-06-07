@@ -334,7 +334,7 @@ class TabHome extends Component
                                                 fontSize: getSize.scale(10),
                                                 color: '#fff'
                                             }}>
-                                            18 MOV
+                                            18 BFI
                                         </Text>
                                     </View>
                                 </View>

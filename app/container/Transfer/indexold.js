@@ -8,7 +8,7 @@ class Transfer extends Component
     {
         super(props);
         this.state = {
-            data: [{ name: "SQL", icon: false }, { name: "MOV", icon: false }, { name: "MOV", icon: false }, { name: "Sneaker", icon: true }, { name: "Gems", icon: true }, { name: "Shoeboxes", icon: true }, { name: "Shoeboxes", icon: true }],
+            data: [{ name: "SQL", icon: false }, { name: "BFI", icon: false }, { name: "BFI", icon: false }, { name: "Sneaker", icon: true }, { name: "Gems", icon: true }, { name: "Shoeboxes", icon: true }, { name: "Shoeboxes", icon: true }],
             from: { icon: "", name: "Spending" },
             to: { icon: "", name: "Wallet" }
         };

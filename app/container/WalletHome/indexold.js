@@ -23,13 +23,13 @@ class WalletHome extends Component
             isWallet: true,
             modalVisibles: false,
             data: [
-                { id: 2, Name: "BUSD", amount: 0 }, { id: 1, Name: "MOV", amount: 0 }, { id: 2, Name: "MOV", amount: 0 }, { id: 2, Name: "USDT", amount: 0 }
+                { id: 2, Name: "PAY", amount: 0 }, { id: 1, Name: "BFI", amount: 0 }, { id: 2, Name: "BFI", amount: 0 }, { id: 2, Name: "PAY", amount: 0 }
             ],
             data1: [
                 { id: 1, Name: "Sneakers", amount: 0 }, { id: 2, Name: "Shoeboxes", amount: 0 }, { id: 2, Name: "Gems", amount: 0 }
             ],
-            data2: [{ name: "BUSD", icon: "#000000" }, { name: "MOV", icon: "#d2c402" }, { name: "MOV", icon: "#d2c402" }, { name: "USDT", icon: "blue" }],
-            data3: [{ name: "BUSD", icon: "#000000" }, { name: "MOV", icon: "#777777" }, { name: "USDT", icon: "blue" }],
+            data2: [{ name: "PAY", icon: "#000000" }, { name: "BFI", icon: "#d2c402" }, { name: "BFI", icon: "#d2c402" }, { name: "PAY", icon: "blue" }],
+            data3: [{ name: "PAY", icon: "#000000" }, { name: "BFI", icon: "#777777" }, { name: "PAY", icon: "blue" }],
             istop: true,
             viewState: true,
             animationValue: new Animated.Value(63),

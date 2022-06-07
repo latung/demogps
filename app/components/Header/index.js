@@ -167,7 +167,7 @@ class Index extends Component
                                             textAlign: 'center',
                                             fontSize: getSize.scale(14)
                                         }}>
-                                        Deposit MOV to Wallet in order to fund your
+                                        Deposit BFI to Wallet in order to fund your
                                         Spending account
                                     </Text>
                                     <Text
@@ -298,7 +298,7 @@ class Index extends Component
                                         marginHorizontal: getSize.scale(4),
                                         fontSize: getSize.scale(12)
                                     }}>
-                                    {balanceUserId && balanceUserId.mer ? Number(balanceUserId.mer).toFixed(2) : "0"}
+                                    {balanceUserId && balanceUserId.bfi ? Number(balanceUserId.bfi).toFixed(2) : "0"}
                                 </Text>
                                 <Image
                                     style={{

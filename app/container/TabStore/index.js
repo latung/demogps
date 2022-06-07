@@ -282,6 +282,7 @@ class TabStore extends Component {
           state => {
             return {
               marketBackup: res.data.shoes,
+              refreshing: false,
             };
           },
           () => {
@@ -292,6 +293,11 @@ class TabStore extends Component {
     });
     ApiServices.getShopBox({ pageSize: 20, page: 1 }).then(res => {
       if (res.code === 200) {
+        this.setState(state => {
+          return {
+            refreshing: false,
+          };
+        });
         const dataBox =
           res?.data?.items?.filter(e => e.category === 'box') ?? [];
         action.getListBox(dataBox);
@@ -299,6 +305,11 @@ class TabStore extends Component {
     });
 
     ApiServices.getGemsShop({ pageSize: 20, page: 1 }).then(res => {
+      this.setState(state => {
+        return {
+          refreshing: false,
+        };
+      });
       if (res.code === 200) {
         const dataGems =
           res?.data?.items?.filter(e => e.category === 'gem') ?? [];
@@ -391,21 +402,7 @@ class TabStore extends Component {
         };
       },
       () => {
-        if (isSneakers) {
-          const { action } = this.props;
-          ApiServices.market({ pageSize: 20, page: 1 })
-            .then(res => {
-              if (res.code === 200) {
-                action.market(res.data.shoes);
-                this.setState(state => {
-                  return {
-                    refreshing: false,
-                  };
-                });
-              }
-            })
-            .catch(err => {});
-        }
+        this.loadData();
       },
     );
   };
