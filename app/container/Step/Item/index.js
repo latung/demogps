@@ -155,7 +155,7 @@ function Item() {
               updateRunningSession({ runtime: 1000 });
             }
           }
-          if (classShoe === 'running') {
+          if (classShoe === 'runner') {
             if (speed > 6 && speed <= 20) {
               setSecondValid(e => e + 1);
               updateRunningSession({ runtime: 1000 });
@@ -208,7 +208,7 @@ function Item() {
     //     ) {
     //       setSecondValid(e => e + 1);
     //     }
-    //   } else if (classShoe === 'running') {
+    //   } else if (classShoe === 'runner') {
     //     if (
     //       locationCurrent?.speed * 3.6 > 6 &&
     //       locationCurrent?.speed * 3.6 <= 20
@@ -286,7 +286,7 @@ function Item() {
   };
 
   useEffect(() => {
-    if (runId && secondValid > 0 && secondValid % 300 === 0) {
+    if (runId && secondValid > 0 && secondValid % 30 === 0) {
       setEnergy(e => e - 1);
       getRunningSession(runId);
     }
