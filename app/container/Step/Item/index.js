@@ -90,7 +90,7 @@ function Item() {
 
   const classShoe = selector.shoeCurrentWear.class;
   const id = selector.shoeCurrentWear._id;
-  const [secondValid, setSecondValid] = useState(0);
+  const [secondValid, setSecondValid] = useState(1);
   const [moneyEarned, setMoneyEarned] = useState(0);
   const [runId, setRunId] = useState();
   const isPause = selector.screenState.isStepPause;
@@ -135,6 +135,7 @@ function Item() {
     return {
       speed: speed < 1 ? 0 : speed,
       distance: newDistance / 1000,
+      timeChangeSeconds: Math.round(timeChangeSeconds),
     };
   };
 
@@ -142,10 +143,8 @@ function Item() {
     if (!isPause) {
       checkingLocationInterval.current = Geolocation.watchPosition(
         position => {
-          const { speed, distance } = calculateDistanceAndSpeed(
-            position.coords,
-            position.timestamp,
-          );
+          const { speed, distance, timeChangeSeconds } =
+            calculateDistanceAndSpeed(position.coords, position.timestamp);
           const { longitude, latitude } = position.coords || {};
           setCurrentSpeed(speed.toFixed(2));
           setTotalKm(distanceOld => distanceOld + distance);
@@ -189,7 +188,7 @@ function Item() {
         {
           enableHighAccuracy: true,
           timeout: Platform.OS === 'android' ? 1000 : 15000,
-          maximumAge: Platform.OS ? 0 : 10000,
+          maximumAge: 10000,
           interval: 1000,
           distanceFilter: 1,
         },
@@ -242,6 +241,32 @@ function Item() {
       .then(res => {
         if (res?.data) {
           setMoneyEarned(res?.data?.earned);
+          if (res?.data?.status === 'ended') {
+            setModalVisible(false);
+            setisPress(false);
+            dispatch(_action.isStepTimer(0));
+            dispatch(
+              _action.changeScreenState({
+                ...selector.screenState,
+                dataLocation: [],
+                distance: '0,00',
+                speed: 0,
+                isStepPause: false,
+                isStepStart: false,
+                isScreenCongrats: true,
+                totalDistance: totalKm.toFixed(2),
+                moneyEarned: res?.data?.earned,
+                energy,
+                timeFinish: new Date(),
+                totalTime: formatTime(timeRun),
+                totalSecond: selector.initReducer.isStepTimer,
+              }),
+            );
+            if (countRef.current) {
+              clearTimeout(countRef.current);
+            }
+            clearInterval(countRef.current);
+          }
         }
       })
       .catch(err => {
@@ -249,10 +274,12 @@ function Item() {
       });
   };
 
-  const updateRunningSession = body => {
+  const updateRunningSession = async body => {
     ApiServices.updateRunningSession(runId, body)
       .then(res => {
-        console.log(res);
+        if (res?.data?.status === 'ended') {
+          getRunningSession(runId);
+        }
       })
       .catch(err => {
         alert(err.message);
@@ -265,13 +292,6 @@ function Item() {
       handleStepStop();
     }
   }, [energy]);
-
-  // useEffect(() => {
-  //   if (runId && secondValid % 300 === 0) {
-  //     getRunningSession(runId);
-  //     setEnergy(energy - 1);
-  //   }
-  // }, [secondValid]);
 
   const mainFuncThread = () => {
     refTimeInterval.current = setInterval(() => {
@@ -286,9 +306,8 @@ function Item() {
   };
 
   useEffect(() => {
-    if (runId && secondValid > 0 && secondValid % 30 === 0) {
+    if (runId && secondValid > 0 && secondValid % 300 === 0) {
       setEnergy(e => e - 1);
-      getRunningSession(runId);
     }
   }, [secondValid]);
 
@@ -527,31 +546,7 @@ function Item() {
 
   const handleStepStop = () => {
     updateRunningSession({ status: 'ended' });
-    setModalVisible(false);
-    // Geolocation.clearWatch(watchId.current);
-    setisPress(false);
-    dispatch(_action.isStepTimer(0));
-    dispatch(
-      _action.changeScreenState({
-        ...selector.screenState,
-        dataLocation: [],
-        distance: '0,00',
-        speed: 0,
-        isStepPause: false,
-        isStepStart: false,
-        isScreenCongrats: true,
-        totalDistance: totalKm.toFixed(2),
-        moneyEarned,
-        energy,
-        timeFinish: new Date(),
-        totalTime: formatTime(timeRun),
-        totalSecond: selector.initReducer.isStepTimer,
-      }),
-    );
-    if (countRef.current) {
-      clearTimeout(countRef.current);
-    }
-    clearInterval(countRef.current);
+
     // navigation.navigate(tabNavigator.TAB_HOME);
   };
 
