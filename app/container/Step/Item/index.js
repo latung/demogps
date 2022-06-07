@@ -133,7 +133,7 @@ function Item() {
 
     return {
       speed: speed < 1 ? 0 : speed,
-      distance: newDistance > 1 ? newDistance / 1000 : 0,
+      distance: newDistance / 1000,
     };
   };
 
@@ -145,6 +145,7 @@ function Item() {
             position.coords,
             position.timestamp,
           );
+          const { longitude, latitude } = position.coords || {};
           setCurrentSpeed(speed.toFixed(2));
           setTotalKm(distanceOld => distanceOld + distance);
           if (classShoe === 'walker') {
@@ -161,6 +162,31 @@ function Item() {
           if (runId && secondValid % 300 === 0) {
             getRunningSession(runId);
             setEnergy(e => e - 1);
+          }
+
+          if (speed > 0) {
+            const dataLocationDup = [
+              ...refLocationsStore.current,
+              { latitude: Number(latitude), longitude: Number(longitude) },
+            ];
+            dispatch(
+              _action.changeScreenState({
+                ...selector.screenState,
+                dataLocation: cloneDeep(dataLocationDup),
+              }),
+            );
+          } else if (selector.screenState.dataLocation.length === 0) {
+            dispatch(
+              _action.changeScreenState({
+                ...selector.screenState,
+                dataLocation: [
+                  {
+                    latitude: Number(latitude),
+                    longitude: Number(longitude),
+                  },
+                ],
+              }),
+            );
           }
         },
         err => {
