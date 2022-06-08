@@ -99,7 +99,7 @@ export default forwardRef(function ItemSneakers(
       <View
         style={[
           {
-            width: (getSize.Width - 32) / 2,
+            width: (getSize.Width - 36) / 2,
             height: getSize.scale(300),
             flexDirection: 'row',
             alignItems: 'center',

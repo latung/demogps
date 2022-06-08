@@ -27,89 +27,6 @@ import ItemShoeBoxes from './ItemShoeBoxes';
 import ItemPromos from './ItemPromos';
 
 import Head from './../../components/head/index';
-const dataSneakers = [
-  {
-    shoesId: 316942392,
-    classify: 'Runner',
-    mint: 1,
-    level: 1,
-    sol: 10000,
-    img: 'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg',
-    color: '#33ff99',
-  },
-  {
-    shoesId: 316942392,
-    classify: 'Jogger',
-    mint: 2,
-    level: 2,
-    sol: 10000,
-    img: 'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg',
-    color: 'grey',
-  },
-  {
-    shoesId: 316942392,
-    classify: 'Walker',
-    mint: 0,
-    level: 3,
-    sol: 10000,
-    img: 'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg',
-    color: 'blue',
-  },
-  {
-    shoesId: 316942392,
-    classify: 'Runner',
-    mint: 1,
-    level: 4,
-    sol: 10000,
-    img: 'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg',
-    color: 'orange',
-  },
-  {
-    shoesId: 316942392,
-    classify: 'Jogger',
-    mint: 2,
-    level: 5,
-    sol: 10000,
-    img: 'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg',
-    color: '#33ff99',
-  },
-  {
-    shoesId: 316942392,
-    classify: 'Runner',
-    mint: 1,
-    level: 4,
-    sol: 10000,
-    img: 'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg',
-    color: 'orange',
-  },
-  {
-    shoesId: 316942392,
-    classify: 'Jogger',
-    mint: 2,
-    level: 5,
-    sol: 10000,
-    img: 'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg',
-    color: '#33ff99',
-  },
-  {
-    shoesId: 316942392,
-    classify: 'Runner',
-    mint: 1,
-    level: 4,
-    sol: 10000,
-    img: 'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg',
-    color: 'orange',
-  },
-  {
-    shoesId: 316942392,
-    classify: 'Jogger',
-    mint: 2,
-    level: 5,
-    sol: 10000,
-    img: 'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg',
-    color: '#33ff99',
-  },
-];
 
 const dataPromos = [
   {
@@ -195,6 +112,9 @@ class TabStore extends Component {
       modalVisibles: false,
       marketBackup: [],
       refreshing: false,
+      pageSize: 8,
+      pageSneaker: 1,
+      loadingMore: false,
     };
   }
 
@@ -273,9 +193,42 @@ class TabStore extends Component {
     this.loadData();
   }
 
+  handleLoadMore = () => {
+    // this.setState({ loadingMore: true });
+    const { market, action, screenState } = this.props;
+    const { isSneakers, isGems, isShoeBoxes, isPromos } = screenState;
+    if (isSneakers) {
+      const dataSneaker = market?.data;
+      ApiServices.market({
+        pageSize: this.state.pageSize,
+        page: this.state.pageSneaker + 1,
+      }).then(res => {
+        if (res.code === 200) {
+          this.setState({ pageSneaker: this.state.pageSneaker + 1 });
+          const data = [...dataSneaker, ...res?.data?.shoes];
+          action.market(data);
+          this.setState(
+            state => {
+              return {
+                marketBackup: data,
+                refreshing: false,
+              };
+            },
+            () => {
+              console.log('this.state.marketBackup', this.state.marketBackup);
+            },
+          );
+        }
+      });
+    }
+  };
+
   loadData = () => {
     const { action } = this.props;
-    ApiServices.market({ pageSize: 20, page: 1 }).then(res => {
+    ApiServices.market({
+      pageSize: this.state.pageSize,
+      page: this.state.pageSneaker,
+    }).then(res => {
       if (res.code === 200) {
         action.market(res.data.shoes);
         this.setState(
@@ -291,7 +244,7 @@ class TabStore extends Component {
         );
       }
     });
-    ApiServices.getShopBox({ pageSize: 20, page: 1 }).then(res => {
+    ApiServices.getShopBox({ pageSize: 100, page: 1 }).then(res => {
       if (res.code === 200) {
         this.setState(state => {
           return {
@@ -317,6 +270,7 @@ class TabStore extends Component {
       }
     });
   };
+
   buyShoe = id => {
     const { action } = this.props;
     this.setState(
@@ -399,6 +353,7 @@ class TabStore extends Component {
       state => {
         return {
           refreshing: true,
+          pageSneaker: 1,
         };
       },
       () => {
@@ -416,7 +371,7 @@ class TabStore extends Component {
       listBox,
       listGem,
     } = this.props;
-    const { isSneakers, isGems, isBadges, isShoeBoxes, isPromos } = screenState;
+    const { isSneakers, isGems, isShoeBoxes, isPromos } = screenState;
 
     const image =
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRogMFHOw0CKtwUvuJmhgcSi18GmfqlCxUI6g&usqp=CAU';
@@ -489,10 +444,12 @@ class TabStore extends Component {
                 : null
             }
             renderItem={this._renderItem}
+            onEndReachedThreshold={0.5}
+            onEndReached={this.handleLoadMore}
             // refreshControl={<RefreshControl onRefresh={this.handleReload} refreshing={false} />}
             // ListEmptyComponent={this.renderEmptyList()}
             // ListFooterComponent={this.renderFooter()}
-            // onEndReached={this.handleLoadMore}
+            // onEndReached={this.this.handleLoadMore}
             // onEndReachedThreshold={0.2}
           />
         </View>

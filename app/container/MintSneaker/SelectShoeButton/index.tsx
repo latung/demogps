@@ -6,6 +6,7 @@ const bigShoesPick = require('../../../assets/images/bigShoesPick.png');
 const addLinearIcon = require('../../../assets/images/addLinear.png');
 
 export const SelectShoeButton = ({ selectedShoe, onPress }) => {
+  
   return (
     <TouchableOpacity
       onPress={() => onPress()}
