@@ -95,6 +95,7 @@ function Item() {
   const [runId, setRunId] = useState();
   const isPause = selector.screenState.isStepPause;
   const checkingLocationInterval = useRef(null);
+  const consumedEnergy = useRef(0);
 
   const calculateDistanceAndSpeed = (location, timestamp) => {
     if (!location) {
@@ -148,17 +149,14 @@ function Item() {
           const { longitude, latitude } = position.coords || {};
           setCurrentSpeed(speed.toFixed(2));
           setTotalKm(distanceOld => distanceOld + distance);
-          if (classShoe === 'walker') {
-            if (speed > 1 && speed <= 6) {
-              setSecondValid(e => e + 1);
-              updateRunningSession({ runtime: 1000 });
-            }
-          }
-          if (classShoe === 'runner') {
-            if (speed > 6 && speed <= 20) {
-              setSecondValid(e => e + 1);
-              updateRunningSession({ runtime: 1000 });
-            }
+
+          const isSpeedValid =
+            (speed > 1 && speed <= 6 && classShoe === 'walker') ||
+            (classShoe === 'runner' && speed > 6 && speed <= 20);
+
+          if (isSpeedValid) {
+            setSecondValid(e => e + timeChangeSeconds);
+            updateRunningSession({ runtime: timeChangeSeconds });
           }
 
           if (speed > 0) {
@@ -306,7 +304,12 @@ function Item() {
   };
 
   useEffect(() => {
-    if (runId && secondValid > 0 && secondValid % 300 === 0) {
+    if (
+      runId &&
+      secondValid > 0 &&
+      Math.floor(secondValid % 300) > consumedEnergy.current
+    ) {
+      consumedEnergy.current = Math.floor(secondValid % 300);
       setEnergy(e => e - 1);
     }
   }, [secondValid]);
