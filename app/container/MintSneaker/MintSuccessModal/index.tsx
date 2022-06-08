@@ -83,9 +83,7 @@ export const MintSuccessModal: React.FC<Props> = ({
                     resizeMode: 'contain',
                     marginVertical: getSize.scale(8),
                   }}
-                  source={{
-                    uri: 'ic_shoe_jogging', // item?.img
-                  }}
+                  source={{ uri: selectedItem?.img }}
                 />
               </ImageContainer>
 

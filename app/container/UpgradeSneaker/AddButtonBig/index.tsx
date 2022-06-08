@@ -17,6 +17,7 @@ export const AddButtonBig: React.FC<Props> = ({ image, onPress }) => {
         height: getSize.scale(117),
         width: getSize.scale(117),
         borderRadius: getSize.scale(117) / 2,
+        overflow: 'hidden',
         backgroundColor: '#565874',
         borderWidth: 1,
         borderColor: '#E7E7E7',

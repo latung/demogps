@@ -124,7 +124,7 @@ export const ModalSelectShoe: React.FC<Props> = React.memo(
                                   resizeMode: 'contain',
                                 }}
                                 source={{
-                                  uri: 'ic_shoe_jogging',
+                                  uri: item?.img,
                                 }}
                               />
                             </View>
@@ -299,7 +299,7 @@ export const ModalSelectShoe: React.FC<Props> = React.memo(
                       marginVertical: getSize.scale(8),
                     }}
                     source={{
-                      uri: 'ic_shoe_jogging', // item?.img
+                      uri: displayDetailItem.img, // item?.img
                     }}
                   />
                   <View

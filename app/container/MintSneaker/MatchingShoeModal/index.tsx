@@ -83,11 +83,12 @@ export const MatchingShoeModal: React.FC<Props> = ({
                   style={{
                     height: getSize.scale(150),
                     width: getSize.scale(150),
+                    borderRadius: getSize.scale(150) / 2,
                     resizeMode: 'contain',
                     marginVertical: getSize.scale(8),
                   }}
                   source={{
-                    uri: !!selectedItem ? 'ic_shoe_jogging' : '', // item?.img
+                    uri: !!selectedItem ? selectedItem.img : '', // item?.img
                   }}
                 />
               </ImageContainer>
@@ -107,6 +108,7 @@ export const MatchingShoeModal: React.FC<Props> = ({
                       style={{
                         width: getSize.scale(48),
                         height: getSize.scale(48),
+                        overflow: 'hidden',
                         alignItems: 'center',
                         justifyContent: 'center',
                         backgroundColor:
@@ -117,7 +119,7 @@ export const MatchingShoeModal: React.FC<Props> = ({
                         borderRadius: getSize.scale(5),
                       }}>
                       <Image
-                        source={{ uri: 'ic_shoe_jogging' }}
+                        source={{ uri: shoe?.item?.img }}
                         style={{
                           opacity: 1,
                           width: getSize.scale(40),

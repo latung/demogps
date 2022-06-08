@@ -57,7 +57,7 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
   const onUpgradeShoe = () => {
     setLoading(true);
     console.log(selectedShoe);
-    
+
     ApiServices.onUpgradeShoeLevel(selectedShoe?._id)
       .then(res1 => {
         console.log('res1', res1);
@@ -66,7 +66,7 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
           setUpgradedShoe(res1?.data?.updatedShoes);
           ApiServices.shoes().then(response => {
             console.log('response', response);
-            
+
             if (response.code === 200) {
               dispatch({
                 type: ACTION_CONST.SHOES_SUCCESS,
@@ -211,7 +211,7 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
             />
           }>
           <AddButtonBig
-            image={!!selectedShoe ? 'ic_shoe_jogging' : ''}
+            image={!!selectedShoe ? selectedShoe?.img : ''}
             onPress={() => {
               setShowShoeModal(!showShoeModal);
             }}
@@ -234,7 +234,7 @@ export const UpgradeSneaker: React.FC = ({ dataSneakers, dataGem }: any) => {
         </TouchableOpacity>
       </View>
       <ModalSelectShoe
-        data={dataSneakers.filter(item => item.level > 10)}
+        data={dataSneakers}
         modalTransfer={showShoeModal}
         toggleModalTransfer={onToggleSelectModal}
         onSelectedShoe={onSelectedShoe}
