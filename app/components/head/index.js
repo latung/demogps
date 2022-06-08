@@ -96,7 +96,7 @@ class index extends Component
                                             fontSize: getSize.scale(14)
                                         }}>
                                         Spending account shows tokens you can spend in
-                                        MOVEARN
+                                        BINANSTEP
                                     </Text>
                                 </View>
                                 <View

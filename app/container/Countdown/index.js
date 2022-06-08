@@ -161,7 +161,7 @@ class Countdown extends Component
                                 color: 'rgba(255, 255, 255, 1)',
                                 textAlign: 'center'
                             }}>
-                            Movearn - The world’s leading move for community platform.
+                            Binanstep - The world’s leading move for community platform.
                         </Text>
                     </View>
                     <View

@@ -2275,7 +2275,7 @@ class TabHome extends Component {
                           fontSize: getSize.scale(18),
                           fontWeight: 'bold',
                         }}>
-                        WELCOME TO MOVEARN
+                        WELCOME TO BINANSTEP
                       </Text>
                       <Text
                         style={{
@@ -2283,7 +2283,7 @@ class TabHome extends Component {
                           textAlign: 'center',
                           fontSize: getSize.scale(14),
                         }}>
-                        MOVEARN is a digital platform through which users can
+                        BINANSTEP is a digital platform through which users can
                         generate real-world financial and community values by
                         gamifying personal fitness & traveling experience
                       </Text>

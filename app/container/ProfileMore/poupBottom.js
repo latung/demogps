@@ -118,7 +118,7 @@ class PoppupBottom extends Component
                                 fontWeight: "bold",
                                 fontStyle: "italic"
                             }}>
-                                MOVEARN
+                                BINANSTEP
                             </Text>
 
                         </View>
