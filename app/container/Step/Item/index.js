@@ -156,7 +156,7 @@ function Item() {
 
           if (isSpeedValid) {
             setSecondValid(e => e + timeChangeSeconds);
-            updateRunningSession({ runtime: timeChangeSeconds });
+            updateRunningSession({ runtime: timeChangeSeconds * 1000 });
           }
 
           if (speed > 0) {
@@ -307,9 +307,9 @@ function Item() {
     if (
       runId &&
       secondValid > 0 &&
-      Math.floor(secondValid % 300) > consumedEnergy.current
+      Math.floor(secondValid / 300) > consumedEnergy.current
     ) {
-      consumedEnergy.current = Math.floor(secondValid % 300);
+      consumedEnergy.current = Math.floor(secondValid / 300);
       setEnergy(e => e - 1);
     }
   }, [secondValid]);
@@ -549,7 +549,6 @@ function Item() {
 
   const handleStepStop = () => {
     updateRunningSession({ status: 'ended' });
-
     // navigation.navigate(tabNavigator.TAB_HOME);
   };
 
@@ -811,6 +810,16 @@ function Item() {
               }}>
               km/h
             </Text>
+            {/* <Text
+              style={{
+                fontSize: getSize.scale(14),
+                color: '#A79BBF',
+                // fontWeight: 'bold',
+                fontStyle: 'italic',
+                marginTop: getSize.scale(8),
+              }}>
+              {classShoe + ' ' + secondValid}
+            </Text> */}
           </View>
           <View
             style={{
