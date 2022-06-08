@@ -591,13 +591,13 @@ class PoppupBottom extends Component
                                                 fontWeight: "bold",
                                                 fontStyle: "italic"
                                             }}>
-                                                MOVEARN
+                                                BINANSTEP
                                             </Text>
                                             <Text style={{
                                                 color: "#c8c8c8",
                                                 fontStyle: "italic"
                                             }}>
-                                                MOVEARN is MOVEARN is a game
+                                                BINANSTEP is BINANSTEP is a game
                                             </Text>
                                         </View>
                                     </View>

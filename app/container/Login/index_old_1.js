@@ -239,7 +239,7 @@ class Login extends Component
                                                 width: '70%',
                                                 textAlign: 'center'
                                             }}>
-                                            Registration means that you agree to MOVEARN
+                                            Registration means that you agree to BINANSTEP
                                             <Text
                                                 style={{
                                                     color: 'red'

@@ -262,7 +262,7 @@ function ItemShare()
                                     fontStyle: 'italic',
                                     top: getSize.scale(-8)
                                 }}>
-                                {`MOVEARN `}
+                                {`BINANSTEP `}
                             </Text>
                             <Text
                                 style={{

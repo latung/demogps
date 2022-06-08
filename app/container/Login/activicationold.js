@@ -57,7 +57,7 @@ class Activicaction extends Component
 
                     }}>
                         {/* <Image style={{ width: "100%", height: "100%" }} source={logonho} /> */}
-                        <Text>MOVEARN</Text>
+                        <Text>BINANSTEP</Text>
                     </View>
 
                     <View style={{

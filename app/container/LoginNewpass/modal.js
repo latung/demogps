@@ -126,7 +126,7 @@ class PoppupBottom extends Component
                         fontWeight: "bold"
                     }}>Telegram community </Text>and text<Text style={{
                         color: "#0974F1", fontWeight: "bold"
-                    }}> "Hi MOVEARN" </Text>to get the activation code from our Support account.
+                    }}> "Hi BINANSTEP" </Text>to get the activation code from our Support account.
                 </Text>
             </View>
         </View>

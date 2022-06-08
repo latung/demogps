@@ -175,7 +175,7 @@ class ProfileDelete extends Component {
                                         textAlign: 'center',
                                         marginTop: getSize.scale(16)
                                     }}>
-                                    {`Are you sure to permanently delete account \n michaelblue@gmail.com? \n Your MOVEARN account and data will be lost and cannot be retrieved.`}
+                                    {`Are you sure to permanently delete account \n michaelblue@gmail.com? \n Your BINANSTEP account and data will be lost and cannot be retrieved.`}
                                 </Text>
                             </View>
                         </View>
@@ -312,7 +312,7 @@ class ProfileDelete extends Component {
                                     marginVertical: getSize.scale(16)
                                 }}>
                                 Before you delete, please inform us any problems you have in
-                                MOVEARN.
+                                BINANSTEP.
                             </Text>
 
                             <View
@@ -365,7 +365,7 @@ class ProfileDelete extends Component {
                                             color: 'rgba(44, 44, 44, 1)',
                                             fontWeight: 'bold'
                                         }}>
-                                        I don't have enough time for MOVEARN.
+                                        I don't have enough time for BINANSTEP.
                                     </Text>
                                 </View>
                             </View>
@@ -475,7 +475,7 @@ class ProfileDelete extends Component {
                                             color: 'rgba(44, 44, 44, 1)',
                                             fontWeight: 'bold'
                                         }}>
-                                        I no longer find MOVEARN useful.
+                                        I no longer find BINANSTEP useful.
                                     </Text>
                                 </View>
                             </View>
