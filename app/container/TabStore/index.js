@@ -315,9 +315,9 @@ class TabStore extends Component {
     );
   };
 
-  buyItem = id => {
+  buyItem = (id, quantity) => {
     const { action } = this.props;
-    ApiServices.buyItem({ sellingId: id }).then(res => {
+    ApiServices.buyItem({ sellingId: id, quantity }).then(res => {
       if (res.code === 200) {
         ApiServices.getMyBox()
           .then(res => {

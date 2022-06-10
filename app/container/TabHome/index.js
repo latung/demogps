@@ -2199,18 +2199,48 @@ class TabHome extends Component {
                     style={{ alignItems: 'center' }}
                     disabled={this.state.toolTipStart}
                     onPress={() => {
-                      // Start
                       // action.changeScreenState({
-                      //     ...screenState,
-                      //     isStepStart: true,
-                      //     isStepPause: false
+                      //   ...screenState,
+                      //   isStateCountDown: true,
                       // });
-                      // return navigation.navigate(stackNavigator.STEP);
-                      action.changeScreenState({
-                        ...screenState,
-                        isStateCountDown: true,
-                      });
-                      return navigation.navigate(stackNavigator.COUNT_DOWN);
+                      // return navigation.navigate(stackNavigator.COUNT_DOWN);
+                      if (shoeCurrentWear?._id) {
+                        ApiServices.getShoesById(shoeCurrentWear?._id)
+                          .then(res => {
+                            if (res.code === 200) {
+                              const shoe = res?.data;
+                              if (shoe?.energy > 0) {
+                                action.changeScreenState({
+                                  ...screenState,
+                                  isStateCountDown: true,
+                                });
+                                navigation.navigate(stackNavigator.COUNT_DOWN);
+                              } else {
+                                Toast.showWithGravity(
+                                  'The energy was exhausted. Please select another shoe',
+                                  Toast.LONG,
+                                  Toast.CENTER,
+                                );
+                              }
+                            }
+                            if (res.code === 404) {
+                              alert(res.message);
+                            }
+                          })
+                          .catch(err => {
+                            Toast.showWithGravity(
+                              err?.message,
+                              Toast.LONG,
+                              Toast.CENTER,
+                            );
+                          });
+                      } else {
+                        Toast.showWithGravity(
+                          'Please select one of your shoes',
+                          Toast.LONG,
+                          Toast.CENTER,
+                        );
+                      }
                     }}>
                     <Image
                       style={{

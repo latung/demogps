@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Text,
   Modal,
-  Platform,
+  TextInput,
 } from 'react-native';
 import { getSize, Colors } from '../../../common';
 import { useNavigation } from '@react-navigation/native';
@@ -15,12 +15,16 @@ import { useDispatch } from 'react-redux';
 import { stackNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
 import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import { Button } from '@rneui/base';
 
 export default function ItemShoeBoxes({ item, index, buyItem }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [modalBuy, setmodalBuy] = useState(false);
   const [modalTransfer, setmodalTransfer] = useState(false);
+  const [modalQuantity, setModalQuantity] = useState(false);
+  const [quantity, setQuantity] = useState('');
+
   let price;
   if (item.price) {
     price = item.price;
@@ -480,7 +484,7 @@ export default function ItemShoeBoxes({ item, index, buyItem }) {
                                   color: Colors.GREY_DARK,
                                   fontStyle: 'italic',
                                 }}>
-                                Quanity
+                                Quantity
                               </Text>
                               <View
                                 style={{
@@ -624,8 +628,11 @@ export default function ItemShoeBoxes({ item, index, buyItem }) {
                               }}>
                               <TouchableOpacity
                                 onPress={() => {
-                                  buyItem(item?._id);
+                                  // buyItem(item?._id);
                                   setmodalBuy(!modalBuy);
+                                  setTimeout(() => {
+                                    setModalQuantity(true);
+                                  }, 500);
                                 }}
                                 style={{
                                   width: getSize.Width / 3,
@@ -722,6 +729,97 @@ export default function ItemShoeBoxes({ item, index, buyItem }) {
           </View>
         </View>
       </ImageBackground>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalQuantity}
+        onRequestClose={() => setModalQuantity(false)}>
+        <View
+          style={{
+            height: '100%',
+            width: '100%',
+            top: 0,
+            position: 'absolute',
+            backgroundColor: '#000000bf',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <View
+            style={{
+              backgroundColor: 'white',
+              width: '80%',
+              height: 150,
+              borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingHorizontal: 10,
+            }}>
+            <Text
+              style={{
+                textAlign: 'left',
+                alignSelf: 'flex-start',
+                marginBottom: 10,
+              }}>
+              Quantity
+            </Text>
+            <TextInput
+              placeholder="Quantity"
+              keyboardType="numeric"
+              onChangeText={text => setQuantity(text)}
+              value={quantity}
+              style={{
+                padding: 5,
+                height: 40,
+                borderRadius: 8,
+                borderColor: '#565874',
+                borderWidth: 1,
+                width: '100%',
+              }}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                width: '90%',
+                marginTop: 15,
+              }}>
+              <Button
+                onPress={() => setModalQuantity(!modalQuantity)}
+                buttonStyle={{
+                  backgroundColor: 'white',
+                  borderWidth: 1,
+                  borderRadius: 20,
+                  width: 100,
+                }}
+                title="Cancel"
+                titleStyle={{
+                  color: 'black',
+                  fontWeight: 'bold',
+                  fontSize: 15,
+                }}
+              />
+              <Button
+                buttonStyle={{
+                  backgroundColor: '#3EF1F2',
+                  borderRadius: 20,
+                  width: 100,
+                }}
+                onPress={() => {
+                  setModalQuantity(!modalQuantity);
+                  buyItem(item?._id, quantity);
+                }}
+                disabled={quantity.length ? false : true}
+                title="Confirm"
+                titleStyle={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  fontSize: 15,
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
       {/* Switch popup when not enough Sol */}
       <Modal
         animationType="fade"

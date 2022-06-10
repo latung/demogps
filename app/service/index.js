@@ -538,7 +538,7 @@ const buyItem = async Body => {
   const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
   const body = {
     sellingId: Body.sellingId,
-    quantity: 1,
+    quantity: Body.quantity,
   };
   const rawResponse = await fetch(API_CONST.API_POST_BUY_ITEM, {
     method: 'POST',
@@ -662,6 +662,21 @@ const onUpgradeShoeLevel = async (shoeId) => {
   return content;
 };
 
+const getShoesById = async id => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+
+  const rawResponse = await fetch(API_CONST.API_GET_SHOES + '/' + id, {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+  });
+  const content = await rawResponse.json();
+  console.log('content shoes', content);
+  return content;
+};
+
 export {
   createSession,
   getSession,
@@ -700,5 +715,6 @@ export {
   getRunningSession,
   updateRunningSession,
   onAddGem,
-  onUpgradeShoeLevel
+  onUpgradeShoeLevel,
+  getShoesById
 };
