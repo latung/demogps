@@ -48,10 +48,10 @@ export default function ItemSneakers({
     owner.toString().length < 10
       ? owner
       : owner.toString().substring(0, 4) +
-        '...' +
-        owner
-          .toString()
-          .substring(owner.toString().length - 4, owner.toString().length);
+      '...' +
+      owner
+        .toString()
+        .substring(owner.toString().length - 4, owner.toString().length);
   useEffect(() => {
     return () => {
       if (selector.market.isSuccess) {
@@ -94,17 +94,14 @@ export default function ItemSneakers({
               width: '70%',
               position: 'relative',
             }}>
-            <ImageBackground
+            {/* <ImageBackground
               source={{ uri: 'ic_head_frame_shoe' }}
               style={{
-                width: getSize.scale(100),
-                height: getSize.scale(28),
+                width: '100%',
+                height: getSize.scale(30),
                 flexDirection: 'row',
                 alignItems: 'center',
-                position: 'absolute',
-                right: 0,
-                top: 0,
-                marginTop: getSize.scale(-10),
+                marginTop: getSize.scale(5),
               }}>
               <View style={{ width: '100%' }}>
                 <View
@@ -156,7 +153,7 @@ export default function ItemSneakers({
                   </View>
                 </View>
               </View>
-            </ImageBackground>
+            </ImageBackground> */}
 
             <View style={{ flex: 6 }}>
               <TouchableOpacity

@@ -2,7 +2,8 @@ import Config from 'react-native-config';
 
 // HOST-ALL
 // Config.HOST  'http://178.128.112.53:3000'
-const HOST = 'http://178.128.112.53:3000';
+// const HOST = 'http://178.128.112.53:3000';
+const HOST = 'http://157.245.145.162:3000';
 // __Name Postman
 const AUTH = '/auth';
 const USER = '/user';

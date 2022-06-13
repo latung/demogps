@@ -53,17 +53,17 @@ export const API_GET_RUNNING_SESSION_ID = `${HOST + RUN}/runningSessionId`;
 export const API_PUT_RUNNING_SESSION_ID = `${HOST + RUN}`;
 //const shoe
 export const API_GET_SHOES_CONST = `${HOST + SHOES}/constants`;
-export const API_GET_RATE = `${HOSTWALLET}/price_movearn`;
-export const API_SWAP = `${HOSTWALLET}/movearn_swaps`;
-export const API_TRANSFER = `${HOSTWALLET}/movearn_deposits`;
-export const API_TRANSFER_SPENDING = `${HOSTWALLET}/movearn_withdraws`;
+export const API_GET_RATE = `${HOSTWALLET}/price_binanstep`;
+export const API_SWAP = `${HOSTWALLET}/binanstep_swaps`;
+export const API_TRANSFER = `${HOSTWALLET}/binanstep_deposits`;
+export const API_TRANSFER_SPENDING = `${HOSTWALLET}/binanstep_withdraws`;
 export const API_GET_RATE_BNB = `https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT`;
 
-export const API_GET_USER_ID_BNB = `${HOSTWALLET}/movearn_getBalance`;
+export const API_GET_USER_ID_BNB = `${HOSTWALLET}/binanstep_getBalance`;
 
-export const API_PASS_CODE_WALLET = `${HOSTWALLET}/movearn_setpasss`;
+export const API_PASS_CODE_WALLET = `${HOSTWALLET}/binanstep_setpasss`;
 
-export const API_CHECK_PASS_WALLET = `${HOSTWALLET}/movearn_checkPass`;
+export const API_CHECK_PASS_WALLET = `${HOSTWALLET}/binanstep_checkPass`;
 
 
 export const API_GET_TOTAL_KM = `${HOST + USER}/total-run`;

@@ -763,7 +763,7 @@ function Item() {
               }}>
               {`${formatTime(timeRun)}`}
             </Text>
-            <Text
+            {/* <Text
               style={{
                 fontSize: getSize.scale(14),
                 color: '#A79BBF',
@@ -772,7 +772,7 @@ function Item() {
                 marginTop: getSize.scale(8),
               }}>
               time
-            </Text>
+            </Text> */}
           </View>
 
           <View
@@ -845,7 +845,7 @@ function Item() {
               }}>
               {energy || 0}
             </Text>
-            <Text
+            {/* <Text
               style={{
                 fontSize: getSize.scale(14),
                 color: '#A79BBF',
@@ -854,7 +854,7 @@ function Item() {
                 marginTop: getSize.scale(8),
               }}>
               energy
-            </Text>
+            </Text> */}
           </View>
         </View>
       </View>

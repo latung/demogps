@@ -161,7 +161,7 @@ export const ModalSelectShoe: React.FC<Props> = React.memo(
                                       marginLeft: getSize.scale(2),
                                       fontSize: getSize.scale(12),
                                     }}>
-                                    {`# ${item?.attributes?._id}`}
+                                    {`# ${item?.readableId}`}
                                   </Text>
                                 </View>
                               </View>
@@ -293,10 +293,15 @@ export const ModalSelectShoe: React.FC<Props> = React.memo(
                   }}>
                   <Image
                     style={{
-                      height: getSize.Width / 1.8,
-                      width: getSize.Width - getSize.Width * 0.1,
+                      // height: getSize.Width / 1.8,
+                      // width: getSize.Width - getSize.Width * 0.1,
+                      // resizeMode: 'contain',
+                      // marginVertical: getSize.scale(8),
+
+                      height: getSize.scale(170),
+                      width: getSize.scale(170),
                       resizeMode: 'contain',
-                      marginVertical: getSize.scale(8),
+                      marginVertical: getSize.scale(16),
                     }}
                     source={{
                       uri: displayDetailItem.img, // item?.img

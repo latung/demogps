@@ -323,7 +323,7 @@ class Profile extends Component
                             </TouchableOpacity>
                         </View>
 
-                        <View
+                        {/* <View
                             style={{
                                 flex: 1,
                                 alignItems: 'center',
@@ -379,7 +379,6 @@ class Profile extends Component
                                                 color: 'rgba(44, 44, 44, 1)',
                                                 fontWeight: 'bold'
                                             }}>
-                                            {/* {userId.data.busd} */}
                                             {0}
                                         </Text>
                                         <Text
@@ -401,7 +400,7 @@ class Profile extends Component
                                     />
                                 </View>
                             </View>
-                        </View>
+                        </View> */}
                     </View>
                     <View style={{ flex: 3, justifyContent: 'space-between' }}>
                         <View style={{ flex: 1.5 }} />
@@ -413,7 +412,7 @@ class Profile extends Component
                                 width: getSize.Width,
                                 paddingHorizontal: getSize.scale(16)
                             }}>
-                            <View
+                            {/* <View
                                 style={{
                                     alignItems: 'center',
                                     flexDirection: 'row',
@@ -447,7 +446,7 @@ class Profile extends Component
                                         />
                                     </TouchableOpacity>
                                 </View>
-                            </View>
+                            </View> */}
 
                             <View
                                 style={{

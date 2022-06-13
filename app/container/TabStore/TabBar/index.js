@@ -443,7 +443,7 @@ class TabBar extends Component {
                     justifyContent: 'center',
                     overflow: 'hidden',
                   }}>
-                  <View
+                  {/* <View
                     style={{
                       flex: 1,
                       width: '100%',
@@ -484,7 +484,7 @@ class TabBar extends Component {
                       }}
                       source={{ uri: 'ic_filter' }}
                     />
-                  </View>
+                  </View> */}
                 </TouchableOpacity>
               </View>
 
@@ -760,7 +760,7 @@ class TabBar extends Component {
                     alignItems: 'center',
                     overflow: 'hidden',
                   }}>
-                  <View
+                  {/* <View
                     style={{
                       flex: 1,
                       alignItems: 'center',
@@ -797,7 +797,7 @@ class TabBar extends Component {
                         source={{ uri: 'ic_arrow_grey' }}
                       />
                     </View>
-                  </View>
+                  </View> */}
                 </TouchableOpacity>
               </View>
             </View>
@@ -810,7 +810,7 @@ class TabBar extends Component {
                 alignItems: 'center',
                 paddingVertical: getSize.scale(10),
               }}>
-              <View
+              {/* <View
                 style={{
                   flex: 1,
                   flexDirection: 'row',
@@ -1039,47 +1039,9 @@ class TabBar extends Component {
                     justifyContent: 'center',
                     overflow: 'hidden',
                   }}>
-                  {/* <View
-                    style={{
-                      flex: 1,
-                      width: '100%',
-                      alignItems: 'center',
-                      justifyContent: 'flex-end',
-                      flexDirection: 'row',
-                    }}>
-                    <Text style={{fontSize: getSize.scale(12), color: 'white'}}>Filter</Text>
-                    <View
-                      style={{
-                        fontSize: getSize.scale(12),
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: 'red',
-                        width: getSize.scale(16),
-                        height: getSize.scale(16),
-                        borderRadius: 50,
-                        marginHorizontal: getSize.scale(2),
-                      }}>
-                      <Text
-                        style={{
-                          fontSize: getSize.scale(12),
-                          color: '#fff',
-                          fontWeight: 'bold',
-                        }}>
-                        2
-                      </Text>
-                    </View>
-                    <Image
-                      style={{
-                        marginLeft: getSize.scale(5),
-                        width: getSize.scale(20),
-                        height: getSize.scale(20),
-                        resizeMode: 'contain',
-                      }}
-                      source={{uri: 'ic_filter'}}
-                    />
-                  </View> */}
+                  
                 </TouchableOpacity>
-              </View>
+              </View> */}
             </View>
           )}
         </View>

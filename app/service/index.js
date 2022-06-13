@@ -1,4 +1,5 @@
-const domain = 'http://178.128.112.53:3000';
+// const domain = 'http://178.128.112.53:3000';
+const domain = 'http://157.245.145.162:3000';
 import { CONST_STORAGE, storage } from '../common';
 import { API_CONST, API_FETCH } from './../api';
 import Config from 'react-native-config';
@@ -39,7 +40,7 @@ const testStop = async (a, b, c, d, e) => {
   const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
 
   const rawResponse = await fetch(
-    `https://us-central1-safaty-e20ba.cloudfunctions.net/movearn_teststep?a=${a}&b=${b}&c=${c}&d=${d}&e=${e}`,
+    `https://us-central1-safaty-e20ba.cloudfunctions.net/binanstep_teststep?a=${a}&b=${b}&c=${c}&d=${d}&e=${e}`,
     {
       method: 'GET',
       headers: {
@@ -58,7 +59,7 @@ const set_pass = async (a, b) => {
   const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
 
   const rawResponse = await fetch(
-    `https://us-central1-safaty-e20ba.cloudfunctions.net/movearn_setpasss?uid=${a}&pass=${b}`,
+    `https://us-central1-safaty-e20ba.cloudfunctions.net/binanstep_setpasss?uid=${a}&pass=${b}`,
     {
       method: 'GET',
       headers: {
@@ -82,7 +83,7 @@ const check_pass = async (a, b) => {
   const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
 
   const rawResponse = await fetch(
-    `https://us-central1-safaty-e20ba.cloudfunctions.net/movearn_checkPass?userId=${a}&pass=${b}`,
+    `https://us-central1-safaty-e20ba.cloudfunctions.net/binanstep_checkPass?userId=${a}&pass=${b}`,
     {
       method: 'GET',
       headers: {
@@ -106,7 +107,7 @@ const BackupCode = async (a, b) => {
   const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
 
   const rawResponse = await fetch(
-    `https://us-central1-safaty-e20ba.cloudfunctions.net/movearn_backup?userId=${a}&pass=${b}`,
+    `https://us-central1-safaty-e20ba.cloudfunctions.net/binanstep_backup?userId=${a}&pass=${b}`,
     {
       method: 'GET',
       headers: {
@@ -129,7 +130,7 @@ const updateWallets = async (a, b) => {
   const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
 
   const rawResponse = await fetch(
-    `https://us-central1-safaty-e20ba.cloudfunctions.net/movearn_updateWallets?uid=${a}&privkey=${b}`,
+    `https://us-central1-safaty-e20ba.cloudfunctions.net/binanstep_updateWallets?uid=${a}&privkey=${b}`,
     {
       method: 'GET',
       headers: {

@@ -156,7 +156,7 @@ export const ModalSelectShoe: React.FC<Props> = React.memo(
                                     marginLeft: getSize.scale(2),
                                     fontSize: getSize.scale(12),
                                   }}>
-                                  {`# ${item?.attributes?._id}`}
+                                  {`# ${item?.readableId}`}
                                 </Text>
                               </View>
                             </View>

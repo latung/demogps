@@ -47,6 +47,7 @@ class WalletPasscode extends Component
     }
     handle = () =>
     {
+        console.log('run');
         const { navigation, action, userIdBnb, user } = this.props;
         let isPass = userIdBnb.data.isPass;
 
@@ -113,9 +114,10 @@ class WalletPasscode extends Component
             }, async () =>
             {
                 let dataSet = await check_pass(user._id, this.state.inputPasscode);
+                console.log(dataSet);
                 // let dataSet = await check_pass("627b6068698ae1a4a6a142eb", "1");
                 if (Number(dataSet.data.code) == 200) {
-                    if (!dataSet.data.data.isPass) { // Hard
+                    if (dataSet.data.data.isPass) { // Hard
                         navigation.navigate(stackNavigator.WALLET_HOME);
                     } else {
                         console.log('error');

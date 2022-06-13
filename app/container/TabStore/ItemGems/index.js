@@ -85,7 +85,7 @@ export default function ItemGems({ item, index, buyItem }) {
                 height: getSize.scale(30),
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginTop: getSize.scale(-10),
+                marginTop: getSize.scale(5),
               }}>
               <View style={{ width: '100%' }}>
                 <View
@@ -105,7 +105,17 @@ export default function ItemGems({ item, index, buyItem }) {
                     }}>
                     {item.classify}
                   </Text>
-                  <View
+                  <Text
+                    style={{
+                      fontSize: getSize.scale(12),
+                      fontStyle: 'italic',
+                      fontWeight: 'bold',
+                      color: '#2C2C2C',
+                    }}>
+
+                    {item?.type?.split('_').join(' ')}
+                  </Text>
+                  {/* <View
                     style={{
                       marginLeft: getSize.scale(5),
                       flexDirection: 'row',
@@ -134,7 +144,7 @@ export default function ItemGems({ item, index, buyItem }) {
                         resizeMode: 'contain',
                       }}
                     />
-                  </View>
+                  </View> */}
                 </View>
               </View>
             </ImageBackground>
@@ -189,7 +199,8 @@ export default function ItemGems({ item, index, buyItem }) {
                         marginLeft: getSize.scale(2),
                         fontSize: getSize.scale(12),
                       }}>
-                      {`# ${item._id}`}
+                      {/* {`# ${item._id}`} */}
+                      Quantity: {item?.quantity}
                     </Text>
                   </View>
                 </View>
@@ -336,7 +347,7 @@ export default function ItemGems({ item, index, buyItem }) {
                                 width: '100%',
                                 height: getSize.scale(40),
                               }}>
-                              <View
+                              {/* <View
                                 style={{
                                   // flexDirection: '',
                                   // borderWidth: 1,
@@ -436,7 +447,7 @@ export default function ItemGems({ item, index, buyItem }) {
                                     {item?.owner}
                                   </Text>
                                 </View>
-                              </View>
+                              </View> */}
                             </View>
                           </View>
                           <View

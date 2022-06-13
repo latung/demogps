@@ -355,7 +355,8 @@ class LoginSignup extends Component
                                     style={{
                                         fontStyle: 'italic',
                                         fontWeight: 'bold',
-                                        fontSize: getSize.scale(30)
+                                        fontSize: getSize.scale(30),
+                                        color: '#fff'
                                     }}>
                                     {paramsCurrent?.params?.isForgotPass ? 'FORGOT PASSWORD' : 'SIGN UP'}
                                 </Text>

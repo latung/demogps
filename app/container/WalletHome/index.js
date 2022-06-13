@@ -1,19 +1,19 @@
 import React, { Component, createRef } from 'react';
 import {
-  View,
-  Text,
-  SafeAreaView,
-  Animated,
-  ImageBackground,
-  ScrollView,
-  TouchableWithoutFeedback,
-  StatusBar,
-  TouchableOpacity,
-  FlatList,
-  StyleSheet,
-  Image,
-  Modal,
-  RefreshControl,
+    View,
+    Text,
+    SafeAreaView,
+    Animated,
+    ImageBackground,
+    ScrollView,
+    TouchableWithoutFeedback,
+    StatusBar,
+    TouchableOpacity,
+    FlatList,
+    StyleSheet,
+    Image,
+    Modal,
+    RefreshControl,
 } from 'react-native';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 
@@ -34,672 +34,672 @@ import * as ApiServices from './../../service/index';
 const TIME_REFRESH_WALLET = 3;
 
 class WalletHome extends Component {
-  constructor(props) {
-    super(props);
-    this.popupBotomRef = new createRef();
-    this.popupRef = new createRef();
-    this.popupDetailRef = new createRef();
-    this.popupBotomRRef = new createRef();
-    this.popupExternalRef = new createRef();
-    this.timeIntervalRef = new createRef();
-    this.state = {
-      isSpending: false,
-      isWallet: true,
-      modalVisibles: false,
-      data: [
-        { id: 2, Name: 'BFI', amount: '8.888', icon: 'ic_location' },
-        { id: 1, Name: 'BNB', amount: '8.888', icon: 'ic_coin' },
-      ],
-      data1: [
-        { id: 1, Name: 'Sneakers', amount: 15 },
-        { id: 2, Name: 'Shoeboxes', amount: 52 },
-        { id: 2, Name: 'Gems', amount: 16 },
-      ],
-      data2: [
-        { name: 'SOL', icon: '#000000' },
-        { name: 'BFI', icon: '#d2c402' },
-        { name: 'BFI', icon: '#d2c402' },
-        { name: 'PAY', icon: 'blue' },
-      ],
-      data3: [
-        { name: 'SOL', icon: '#000000' },
-        { name: 'BFI', icon: '#777777' },
-        { name: 'PAY', icon: 'blue' },
-      ],
-      istop: true,
-      viewState: true,
-      animationValue: new Animated.Value(60),
-      animationOpacity: new Animated.Value(0),
-      animationOpacity1: new Animated.Value(1),
-      refreshing: false,
-      modalVisibles: false,
-      modalMER: false,
+    constructor(props) {
+        super(props);
+        this.popupBotomRef = new createRef();
+        this.popupRef = new createRef();
+        this.popupDetailRef = new createRef();
+        this.popupBotomRRef = new createRef();
+        this.popupExternalRef = new createRef();
+        this.timeIntervalRef = new createRef();
+        this.state = {
+            isSpending: false,
+            isWallet: true,
+            modalVisibles: false,
+            data: [
+                { id: 2, Name: 'BFI', amount: '8.888', icon: 'ic_location' },
+                { id: 1, Name: 'BNB', amount: '8.888', icon: 'ic_coin' },
+            ],
+            data1: [
+                { id: 1, Name: 'Sneakers', amount: 15 },
+                { id: 2, Name: 'Shoeboxes', amount: 52 },
+                { id: 2, Name: 'Gems', amount: 16 },
+            ],
+            data2: [
+                { name: 'SOL', icon: '#000000' },
+                { name: 'BFI', icon: '#d2c402' },
+                { name: 'BFI', icon: '#d2c402' },
+                { name: 'PAY', icon: 'blue' },
+            ],
+            data3: [
+                { name: 'SOL', icon: '#000000' },
+                { name: 'BFI', icon: '#777777' },
+                { name: 'PAY', icon: 'blue' },
+            ],
+            istop: true,
+            viewState: true,
+            animationValue: new Animated.Value(60),
+            animationOpacity: new Animated.Value(0),
+            animationOpacity1: new Animated.Value(1),
+            refreshing: false,
+            modalVisibles: false,
+            modalMER: false,
 
-      data: [
-        {
-          dateTime: '15/04/2022 15:30',
-          merValue: 0.5,
-          status: 1,
-          statusName: 'Confirmed',
-        },
-        {
-          dateTime: '15/04/2022 15:30',
-          merValue: 0.5,
-          status: 2,
-          statusName: 'Pending',
-        },
-        {
-          dateTime: '15/04/2022 15:30',
-          merValue: 0.5,
-          status: 3,
-          statusName: 'Cancel',
-        },
-        {
-          dateTime: '15/04/2022 15:30',
-          merValue: 0.5,
-          status: 1,
-          statusName: 'Confirmed',
-        },
-        {
-          dateTime: '15/04/2022 15:30',
-          merValue: 0.5,
-          status: 1,
-          statusName: 'Confirmed',
-        },
-        {
-          dateTime: '15/04/2022 15:30',
-          merValue: 0.5,
-          status: 1,
-          statusName: 'Confirmed',
-        },
-        {
-          dateTime: '15/04/2022 15:30',
-          merValue: 0.5,
-          status: 1,
-          statusName: 'Confirmed',
-        },
-      ],
-    };
-  }
-
-  onShowPoup = () => {
-    this.popupRef.Show();
-  };
-
-  onColsePopup = () => {
-    this.popupRef.Close();
-  };
-  toggleAnimation = type => {
-    if (type) {
-      this.setState(
-        state => {
-          return {
-            viewState: false,
-          };
-        },
-        () => {
-          Animated.timing(this.state.animationValue, {
-            toValue: 150,
-            duration: 500,
-            useNativeDriver: false,
-          }).start();
-          Animated.timing(this.state.animationOpacity, {
-            toValue: 1,
-            duration: 300,
-            useNativeDriver: false,
-          }).start();
-        },
-      );
-    } else {
-      Animated.timing(this.state.animationValue, {
-        toValue: 60,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
-
-      Animated.timing(this.state.animationOpacity, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-      }).start(() => {
-        this.setState(
-          state => {
-            return {
-              viewState: true,
-            };
-          },
-          () => {
-            Animated.timing(this.state.animationOpacity1, {
-              toValue: 1,
-              duration: 300,
-              useNativeDriver: false,
-            }).start();
-          },
-        );
-      });
+            data: [
+                {
+                    dateTime: '15/04/2022 15:30',
+                    merValue: 0.5,
+                    status: 1,
+                    statusName: 'Confirmed',
+                },
+                {
+                    dateTime: '15/04/2022 15:30',
+                    merValue: 0.5,
+                    status: 2,
+                    statusName: 'Pending',
+                },
+                {
+                    dateTime: '15/04/2022 15:30',
+                    merValue: 0.5,
+                    status: 3,
+                    statusName: 'Cancel',
+                },
+                {
+                    dateTime: '15/04/2022 15:30',
+                    merValue: 0.5,
+                    status: 1,
+                    statusName: 'Confirmed',
+                },
+                {
+                    dateTime: '15/04/2022 15:30',
+                    merValue: 0.5,
+                    status: 1,
+                    statusName: 'Confirmed',
+                },
+                {
+                    dateTime: '15/04/2022 15:30',
+                    merValue: 0.5,
+                    status: 1,
+                    statusName: 'Confirmed',
+                },
+                {
+                    dateTime: '15/04/2022 15:30',
+                    merValue: 0.5,
+                    status: 1,
+                    statusName: 'Confirmed',
+                },
+            ],
+        };
     }
-  };
-  _onRefresh = () => {
-    this.setState(
-      state => {
-        return { refreshing: true };
-      },
-      () => {
-        this.BalanceUserIdBnb();
-        this.BalanceUserId();
-        this.setState(state => {
-          return { refreshing: false };
+
+    onShowPoup = () => {
+        this.popupRef.Show();
+    };
+
+    onColsePopup = () => {
+        this.popupRef.Close();
+    };
+    toggleAnimation = type => {
+        if (type) {
+            this.setState(
+                state => {
+                    return {
+                        viewState: false,
+                    };
+                },
+                () => {
+                    Animated.timing(this.state.animationValue, {
+                        toValue: 150,
+                        duration: 500,
+                        useNativeDriver: false,
+                    }).start();
+                    Animated.timing(this.state.animationOpacity, {
+                        toValue: 1,
+                        duration: 300,
+                        useNativeDriver: false,
+                    }).start();
+                },
+            );
+        } else {
+            Animated.timing(this.state.animationValue, {
+                toValue: 60,
+                duration: 300,
+                useNativeDriver: false,
+            }).start();
+
+            Animated.timing(this.state.animationOpacity, {
+                toValue: 0,
+                duration: 300,
+                useNativeDriver: false,
+            }).start(() => {
+                this.setState(
+                    state => {
+                        return {
+                            viewState: true,
+                        };
+                    },
+                    () => {
+                        Animated.timing(this.state.animationOpacity1, {
+                            toValue: 1,
+                            duration: 300,
+                            useNativeDriver: false,
+                        }).start();
+                    },
+                );
+            });
+        }
+    };
+    _onRefresh = () => {
+        this.setState(
+            state => {
+                return { refreshing: true };
+            },
+            () => {
+                this.BalanceUserIdBnb();
+                this.BalanceUserId();
+                this.setState(state => {
+                    return { refreshing: false };
+                });
+            },
+        );
+    };
+    BalanceUserIdBnb = () => {
+        const { action, user } = this.props;
+        ApiServices.userIdBnb({ _id: user._id })
+            .then(res => {
+                //
+                console.log('res', res);
+                if (res.code === 200) {
+                    action.userIdBnb(res.data);
+                }
+            })
+            .catch(err => { });
+    };
+    BalanceUserId = () => {
+        const { action, user } = this.props;
+        ApiServices.userId({ _id: user._id })
+            .then(res => {
+                if (res.code === 200) {
+                    action.userId(res.data);
+                }
+            })
+            .catch(err => { });
+    };
+    componentDidMount() {
+        this.timeIntervalRef = setInterval(() => {
+            this.BalanceUserIdBnb();
+            this.BalanceUserId();
+        }, TIME_REFRESH_WALLET * 1000);
+        this.props.navigation.addListener('blur', () => {
+            clearInterval(this.timeIntervalRef);
         });
-      },
-    );
-  };
-  BalanceUserIdBnb = () => {
-    const { action, user } = this.props;
-    ApiServices.userIdBnb({ _id: user._id })
-      .then(res => {
-        //
-        console.log('res', res);
-        if (res.code === 200) {
-          action.userIdBnb(res.data);
-        }
-      })
-      .catch(err => {});
-  };
-  BalanceUserId = () => {
-    const { action, user } = this.props;
-    ApiServices.userId({ _id: user._id })
-      .then(res => {
-        if (res.code === 200) {
-          action.userId(res.data);
-        }
-      })
-      .catch(err => {});
-  };
-  componentDidMount() {
-    this.timeIntervalRef = setInterval(() => {
-      this.BalanceUserIdBnb();
-      this.BalanceUserId();
-    }, TIME_REFRESH_WALLET * 1000);
-    this.props.navigation.addListener('blur', () => {
-      clearInterval(this.timeIntervalRef);
-    });
-  }
+    }
 
-  onShowPoupBottomR = () => {
-    this.popupBotomRRef.Show();
-  };
-  onColsePopupBottomR = () => {
-    this.popupBotomRRef.Close();
-  };
-  onShowPoupBottom = () => {
-    this.popupBotomRef.Show();
-  };
-  onColsePopupBottom = () => {
-    this.popupBotomRef.Close();
-  };
-  onShowPoup = () => {
-    this.popupRef.Show();
-  };
+    onShowPoupBottomR = () => {
+        this.popupBotomRRef.Show();
+    };
+    onColsePopupBottomR = () => {
+        this.popupBotomRRef.Close();
+    };
+    onShowPoupBottom = () => {
+        this.popupBotomRef.Show();
+    };
+    onColsePopupBottom = () => {
+        this.popupBotomRef.Close();
+    };
+    onShowPoup = () => {
+        this.popupRef.Show();
+    };
 
-  onColsePopup = () => {
-    this.popupRef.Close();
-  };
-  onShowPoupDetail = () => {
-    this.popupDetailRef.Show();
-  };
+    onColsePopup = () => {
+        this.popupRef.Close();
+    };
+    onShowPoupDetail = () => {
+        this.popupDetailRef.Show();
+    };
 
-  onColsePopupDetail = () => {
-    this.popupDetailRef.Close();
-  };
-  onShowPoupExternal = () => {
-    this.popupExternalRef.Show();
-  };
-  onColsePopupExternal = () => {
-    this.popupExternalRef.Close();
-  };
-  render() {
-    const { navigation, userId, user, getRate, getRateBnb, userIdBnb } =
-      this.props;
+    onColsePopupDetail = () => {
+        this.popupDetailRef.Close();
+    };
+    onShowPoupExternal = () => {
+        this.popupExternalRef.Show();
+    };
+    onColsePopupExternal = () => {
+        this.popupExternalRef.Close();
+    };
+    render() {
+        const { navigation, userId, user, getRate, getRateBnb, userIdBnb } =
+            this.props;
 
-    const { modalMER, isSpending, isWallet, data, data1, istop, viewState } =
-      this.state;
-    const rate = parseFloat(getRate.data.price);
-    const rateBnb = parseFloat(getRateBnb.data.price);
-    const _id = userIdBnb.data.address ? userIdBnb.data.address : '';
-    // console.log("userIdBnb", userIdBnb)
-    const address =
-      _id.length < 15
-        ? _id
-        : _id.substring(0, 6) +
-          '...' +
-          _id.substring(_id.length - 6, _id.length);
+        const { modalMER, isSpending, isWallet, data, data1, istop, viewState } =
+            this.state;
+        const rate = parseFloat(getRate.data.price);
+        const rateBnb = parseFloat(getRateBnb.data.price);
+        const _id = userIdBnb.data.address ? userIdBnb.data.address : '';
+        // console.log("userIdBnb", userIdBnb)
+        const address =
+            _id.length < 15
+                ? _id
+                : _id.substring(0, 6) +
+                '...' +
+                _id.substring(_id.length - 6, _id.length);
 
-    const balanceUseridBNB = userIdBnb.data ? userIdBnb.data : {};
-    const totalBalanceUsd =
-      balanceUseridBNB.bfi * rate + balanceUseridBNB.bnb * rateBnb;
-    const totalBalancemer = totalBalanceUsd / rate;
-    const dataBalance = [
-      {
-        name: 'BFI',
-        amount: balanceUseridBNB.bfi
-          ? Number(balanceUseridBNB.bfi).toFixed(2)
-          : '0',
-        icon: 'ic_location',
-      },
-      // {
-      //     name: "BNB", amount: balanceUseridBNB.bnb ? Number(balanceUseridBNB.bnb).toFixed(6) : "0", icon: "ic_coin_b"
-      // }
-      // ,
-      {
-        name: 'PAY',
-        amount: balanceUseridBNB.pay
-          ? Number(balanceUseridBNB.pay).toFixed(2)
-          : '0',
-        icon: 'ic_coin',
-      },
-      {
-        name: 'BNB',
-        amount: balanceUseridBNB.bnb
-          ? Number(balanceUseridBNB.bnb).toFixed(2)
-          : '0',
-        icon: 'ic_coin_b',
-      },
-    ];
-
-    return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#000000' }}>
-        <ImageBackground
-          style={{
-            width: getSize.Width,
-            height: getSize.scale(100),
-            position: 'absolute',
-            resizeMode: 'cover',
-            zIndex: -1,
-            top: Platform.OS === 'android' ? getSize.scale(-10) : 0,
-          }}
-          source={{ uri: 'ic_top_bar' }}
-        />
-        <View
-          style={{
-            width: getSize.Width,
-            height: getSize.scale(430),
-            backgroundColor: '#565874',
-            borderBottomLeftRadius: getSize.scale(32),
-            borderBottomRightRadius: getSize.scale(32),
-            zIndex: -2,
-            position: 'absolute',
-            top: Platform.OS === 'android' ? getSize.scale(-32) : 0,
-          }}
-        />
-        <View
-          style={{
-            flex: 1 / 2,
-            marginVertical: Platform.OS === 'android' ? getSize.scale(8) : 0,
-            marginTop: isIphoneX() ? -15 : 0,
-          }}>
-          {/* HeaderMini */}
-          <View
-            style={{
-              flex: 1,
-              minHeight: Platform.OS === 'ios' ? 0 : getSize.scale(30),
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginHorizontal: getSize.scale(16),
-              // backgroundColor: "red"
-            }}>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate(stackNavigator.SPENDING_WALLET)
-              }
-              style={{ flex: 2, justifyContent: 'center' }}>
-              <Image
-                style={{
-                  width: getSize.scale(28),
-                  height: getSize.scale(28),
-                  resizeMode: 'contain',
-                }}
-                source={{ uri: 'ic_back' }}
-              />
-            </TouchableOpacity>
-            <View
-              style={{
-                flex: 6,
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'row',
-              }}>
-              <Text
-                style={{
-                  fontSize: getSize.scale(18),
-                  color: '#000',
-                  fontWeight: 'bold',
-                }}>
-                {'WALLET'}
-              </Text>
-            </View>
-            <View
-              style={{
-                flex: 2,
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-              }}>
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.navigation.navigate(
-                    stackNavigator.WALLET_SETTINGS,
-                  );
-                }}>
-                <Image
-                  style={{
-                    width: getSize.scale(20),
-                    height: getSize.scale(20),
-                    resizeMode: 'contain',
-                  }}
-                  source={{ uri: 'ic_settings' }}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh}
-            />
-          }
-          style={
+        const balanceUseridBNB = userIdBnb.data ? userIdBnb.data : {};
+        const totalBalanceUsd =
+            balanceUseridBNB.bfi * rate + balanceUseridBNB.bnb * rateBnb;
+        const totalBalancemer = totalBalanceUsd / rate;
+        const dataBalance = [
             {
-              // backgroundColor: "red"
-            }
-          }>
-          <View style={{ flex: 1 }}>
-            <View
-              style={{
-                flex: 1.5,
-                paddingHorizontal: getSize.scale(24),
-                alignItems: 'center',
-              }}>
-              <View
-                style={{
-                  alignItems: 'flex-start',
-                  width: '100%',
-                }}>
-                <View
-                  style={{
-                    borderRadius: getSize.scale(100),
-                    paddingHorizontal: getSize.scale(24),
-                    paddingVertical: getSize.scale(8),
+                name: 'BFI',
+                amount: balanceUseridBNB.bfi
+                    ? Number(balanceUseridBNB.bfi).toFixed(2)
+                    : '0',
+                icon: 'ic_location',
+            },
+            // {
+            //     name: "BNB", amount: balanceUseridBNB.bnb ? Number(balanceUseridBNB.bnb).toFixed(6) : "0", icon: "ic_coin_b"
+            // }
+            // ,
+            {
+                name: 'PAY',
+                amount: balanceUseridBNB.pay
+                    ? Number(balanceUseridBNB.pay).toFixed(2)
+                    : '0',
+                icon: 'ic_coin',
+            },
+            {
+                name: 'BNB',
+                amount: balanceUseridBNB.bnb
+                    ? Number(balanceUseridBNB.bnb).toFixed(2)
+                    : '0',
+                icon: 'ic_coin_b',
+            },
+        ];
 
-                    backgroundColor: '#96CFE1',
-                    marginVertical: getSize.scale(16),
-                    alignItems: 'flex-start',
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                  }}>
-                  <Text style={{ color: '#ffffff', fontWeight: 'bold' }}>
-                    {address}
-                  </Text>
-                  <Image
-                    source={{ uri: 'ic_copy' }}
-                    style={{ width: 20, height: 20, resizeMode: 'contain' }}
-                  />
-                </View>
-              </View>
-
-              <View
-                style={{
-                  justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
-                  flexDirection: 'row',
-
-                  width: '100%',
-                }}>
-                <Text
-                  style={{
-                    fontSize: getSize.scale(16),
-                    color: '#FFFFFF',
-                    fontStyle: 'italic',
-                    marginTop: getSize.scale(10),
-                  }}>
-                  Total balance:
-                </Text>
-                <View
-                  style={{
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    marginLeft: getSize.scale(10),
-                    marginBottom: getSize.scale(20),
-                  }}>
-                  <Text
+        return (
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#000000' }}>
+                <ImageBackground
                     style={{
-                      fontSize: getSize.scale(32),
-                      fontWeight: 'bold',
-                      fontStyle: 'italic',
-                      color: '#FFFFFF',
-                    }}>
-                    ${' '}
-                    {totalBalanceUsd ? Number(totalBalanceUsd).toFixed(2) : '0'}
-                  </Text>
-                  <Text
+                        width: getSize.Width,
+                        height: getSize.scale(100),
+                        position: 'absolute',
+                        resizeMode: 'cover',
+                        zIndex: -1,
+                        top: Platform.OS === 'android' ? getSize.scale(-10) : 0,
+                    }}
+                    source={{ uri: 'ic_top_bar' }}
+                />
+                <View
                     style={{
-                      fontSize: getSize.scale(18),
-                      fontStyle: 'italic',
-                      color: '#FFFFFF',
-                      textAlign: 'center',
-                    }}>
-                    BFI:{' '}
-                    {totalBalancemer ? Number(totalBalancemer).toFixed(2) : '0'}
-                  </Text>
-                </View>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
+                        width: getSize.Width,
+                        height: getSize.scale(430),
+                        backgroundColor: '#565874',
+                        borderBottomLeftRadius: getSize.scale(32),
+                        borderBottomRightRadius: getSize.scale(32),
+                        zIndex: -2,
+                        position: 'absolute',
+                        top: Platform.OS === 'android' ? getSize.scale(-32) : 0,
+                    }}
+                />
                 <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'flex-start',
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate(stackNavigator.RECVICE)}>
-                    <Image
-                      style={{
-                        width: getSize.scale(74),
-                        height: getSize.scale(74),
-                        resizeMode: 'contain',
-                      }}
-                      source={{ uri: 'ic_btn_recvice' }}
-                    />
-                    <Text
-                      style={{
-                        fontWeight: 'bold',
-                        fontStyle: 'italic',
-                        fontSize: getSize.scale(14),
-                        textAlign: 'center',
-                        marginTop: getSize.scale(8),
-                        color: '#FFFFFF',
-                      }}>
-                      Receive
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate(stackNavigator.TRANSFER)
-                    }>
-                    <Image
-                      style={{
-                        width: getSize.scale(74),
-                        height: getSize.scale(74),
-                        resizeMode: 'contain',
-                      }}
-                      source={{ uri: 'ic_btn_transfer' }}
-                    />
-                    <Text
-                      style={{
-                        fontWeight: 'bold',
-                        fontStyle: 'italic',
-                        fontSize: getSize.scale(14),
-                        textAlign: 'center',
-                        marginTop: getSize.scale(8),
-                        color: '#FFFFFF',
-                      }}>
-                      Transfer
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'flex-end',
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate(stackNavigator.SWAP)}>
-                    <Image
-                      style={{
-                        width: getSize.scale(74),
-                        height: getSize.scale(74),
-                        resizeMode: 'contain',
-                      }}
-                      source={{ uri: 'ic_btn_trade' }}
-                    />
-                    <Text
-                      style={{
-                        fontWeight: 'bold',
-                        fontStyle: 'italic',
-                        fontSize: getSize.scale(14),
-                        textAlign: 'center',
-                        marginTop: getSize.scale(8),
-                        color: '#FFFFFF',
-                      }}>
-                      Trade
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-
-            <View
-              style={{
-                flex: 2,
-                marginHorizontal: getSize.scale(16),
-                marginTop: getSize.scale(60),
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginTop: 10,
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                  <Text
                     style={{
-                      fontWeight: 'bold',
-                      fontSize: getSize.scale(16),
-                      color: '#FFFFFF',
+                        flex: 1 / 2,
+                        marginVertical: Platform.OS === 'android' ? getSize.scale(8) : 0,
+                        marginTop: isIphoneX() ? -15 : 0,
                     }}>
-                    Wallet Account
-                  </Text>
-                </View>
-                <View>
-                  <TouchableOpacity onPress={this.onShowPoup}>
-                    <Image
-                      style={{
-                        height: getSize.scale(20),
-                        width: getSize.scale(20),
-                        resizeMode: 'contain',
-                      }}
-                      source={{ uri: 'ic_question_grey' }}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              {dataBalance &&
-                dataBalance.map((item, index) => {
-                  return (
+                    {/* HeaderMini */}
                     <View
-                      style={{
-                        justifyContent: 'space-between',
-                        marginTop: getSize.scale(8),
-                      }}>
-                      <ImageBackground
-                        source={{ uri: 'ic_frame_coin' }}
                         style={{
-                          width: getSize.Width - getSize.scale(32),
-                          height: getSize.scale(70.5),
-                        }}>
-                        <TouchableOpacity
-                          activeOpacity={1}
-                          style={{
                             flex: 1,
+                            minHeight: Platform.OS === 'ios' ? 0 : getSize.scale(30),
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             alignItems: 'center',
                             marginHorizontal: getSize.scale(16),
-                          }}
-                          onPress={
-                            () =>
-                              this.setState({ ...this.state, modalMER: true })
-                            // navigation.navigate(stackNavigator.WALLET_COIN)
-                          }>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                            }}>
+                            // backgroundColor: "red"
+                        }}>
+                        <TouchableOpacity
+                            onPress={() =>
+                                navigation.navigate(stackNavigator.SPENDING_WALLET)
+                            }
+                            style={{ flex: 2, justifyContent: 'center' }}>
                             <Image
-                              style={{
-                                resizeMode: 'contain',
-                                width: getSize.scale(32),
-                                height: getSize.scale(32),
-                              }}
-                              source={{ uri: item.icon }}
+                                style={{
+                                    width: getSize.scale(28),
+                                    height: getSize.scale(28),
+                                    resizeMode: 'contain',
+                                }}
+                                source={{ uri: 'ic_back' }}
                             />
-                            <Text
-                              style={{
-                                fontSize: getSize.scale(14),
-                                fontWeight: 'bold',
-                                marginLeft: getSize.scale(8),
-                              }}>
-                              {item.name ? item.name : ''}
-                            </Text>
-                          </View>
-                          <Text
-                            style={{
-                              fontSize: getSize.scale(24),
-                              fontWeight: 'bold',
-                            }}>
-                            {item.amount.toString()}
-                          </Text>
                         </TouchableOpacity>
-                      </ImageBackground>
+                        <View
+                            style={{
+                                flex: 6,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                flexDirection: 'row',
+                            }}>
+                            <Text
+                                style={{
+                                    fontSize: getSize.scale(18),
+                                    color: '#000',
+                                    fontWeight: 'bold',
+                                }}>
+                                {'WALLET'}
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                flex: 2,
+                                justifyContent: 'center',
+                                alignItems: 'flex-end',
+                            }}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.navigate(
+                                        stackNavigator.WALLET_SETTINGS,
+                                    );
+                                }}>
+                                <Image
+                                    style={{
+                                        width: getSize.scale(20),
+                                        height: getSize.scale(20),
+                                        resizeMode: 'contain',
+                                    }}
+                                    source={{ uri: 'ic_settings' }}
+                                />
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                  );
-                })}
+                </View>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this._onRefresh}
+                        />
+                    }
+                    style={
+                        {
+                            // backgroundColor: "red"
+                        }
+                    }>
+                    <View style={{ flex: 1 }}>
+                        <View
+                            style={{
+                                flex: 1.5,
+                                paddingHorizontal: getSize.scale(24),
+                                alignItems: 'center',
+                            }}>
+                            {/* <View
+                                style={{
+                                    alignItems: 'flex-start',
+                                    width: '100%',
+                                }}>
+                                <View
+                                    style={{
+                                        borderRadius: getSize.scale(100),
+                                        paddingHorizontal: getSize.scale(24),
+                                        paddingVertical: getSize.scale(8),
 
-              {/* <View
+                                        backgroundColor: '#96CFE1',
+                                        marginVertical: getSize.scale(16),
+                                        alignItems: 'flex-start',
+                                        justifyContent: 'space-between',
+                                        flexDirection: 'row',
+                                    }}>
+                                    <Text style={{ color: '#ffffff', fontWeight: 'bold' }}>
+                                        {address}
+                                    </Text>
+                                    <Image
+                                        source={{ uri: 'ic_copy' }}
+                                        style={{ width: 20, height: 20, resizeMode: 'contain' }}
+                                    />
+                                </View>
+                            </View>
+
+                            <View
+                                style={{
+                                    justifyContent: 'flex-start',
+                                    alignItems: 'flex-start',
+                                    flexDirection: 'row',
+
+                                    width: '100%',
+                                }}>
+                                <Text
+                                    style={{
+                                        fontSize: getSize.scale(16),
+                                        color: '#FFFFFF',
+                                        fontStyle: 'italic',
+                                        marginTop: getSize.scale(10),
+                                    }}>
+                                    Total balance:
+                                </Text>
+                                <View
+                                    style={{
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        flexDirection: 'column',
+                                        marginLeft: getSize.scale(10),
+                                        marginBottom: getSize.scale(20),
+                                    }}>
+                                    <Text
+                                        style={{
+                                            fontSize: getSize.scale(32),
+                                            fontWeight: 'bold',
+                                            fontStyle: 'italic',
+                                            color: '#FFFFFF',
+                                        }}>
+                                        ${' '}
+                                        {totalBalanceUsd ? Number(totalBalanceUsd).toFixed(2) : '0'}
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            fontSize: getSize.scale(18),
+                                            fontStyle: 'italic',
+                                            color: '#FFFFFF',
+                                            textAlign: 'center',
+                                        }}>
+                                        BFI:{' '}
+                                        {totalBalancemer ? Number(totalBalancemer).toFixed(2) : '0'}
+                                    </Text>
+                                </View>
+                            </View> */}
+
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                }}>
+                                <View
+                                    style={{
+                                        flex: 1,
+                                        justifyContent: 'center',
+                                        alignItems: 'flex-start',
+                                    }}>
+                                    <TouchableOpacity
+                                        onPress={() => navigation.navigate(stackNavigator.RECVICE)}>
+                                        <Image
+                                            style={{
+                                                width: getSize.scale(74),
+                                                height: getSize.scale(74),
+                                                resizeMode: 'contain',
+                                            }}
+                                            source={{ uri: 'ic_btn_recvice' }}
+                                        />
+                                        <Text
+                                            style={{
+                                                fontWeight: 'bold',
+                                                fontStyle: 'italic',
+                                                fontSize: getSize.scale(14),
+                                                textAlign: 'center',
+                                                marginTop: getSize.scale(8),
+                                                color: '#FFFFFF',
+                                            }}>
+                                            Receive
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                                <View
+                                    style={{
+                                        flex: 1,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}>
+                                    <TouchableOpacity
+                                        onPress={() =>
+                                            navigation.navigate(stackNavigator.TRANSFER)
+                                        }>
+                                        <Image
+                                            style={{
+                                                width: getSize.scale(74),
+                                                height: getSize.scale(74),
+                                                resizeMode: 'contain',
+                                            }}
+                                            source={{ uri: 'ic_btn_transfer' }}
+                                        />
+                                        <Text
+                                            style={{
+                                                fontWeight: 'bold',
+                                                fontStyle: 'italic',
+                                                fontSize: getSize.scale(14),
+                                                textAlign: 'center',
+                                                marginTop: getSize.scale(8),
+                                                color: '#FFFFFF',
+                                            }}>
+                                            Transfer
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                                <View
+                                    style={{
+                                        flex: 1,
+                                        justifyContent: 'center',
+                                        alignItems: 'flex-end',
+                                    }}>
+                                    <TouchableOpacity
+                                        onPress={() => navigation.navigate(stackNavigator.SWAP)}>
+                                        <Image
+                                            style={{
+                                                width: getSize.scale(74),
+                                                height: getSize.scale(74),
+                                                resizeMode: 'contain',
+                                            }}
+                                            source={{ uri: 'ic_btn_trade' }}
+                                        />
+                                        <Text
+                                            style={{
+                                                fontWeight: 'bold',
+                                                fontStyle: 'italic',
+                                                fontSize: getSize.scale(14),
+                                                textAlign: 'center',
+                                                marginTop: getSize.scale(8),
+                                                color: '#FFFFFF',
+                                            }}>
+                                            Trade
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+
+                        <View
+                            style={{
+                                flex: 2,
+                                marginHorizontal: getSize.scale(16),
+                                marginTop: getSize.scale(60),
+                            }}>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    marginTop: 10,
+                                }}>
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                    }}>
+                                    <Text
+                                        style={{
+                                            fontWeight: 'bold',
+                                            fontSize: getSize.scale(16),
+                                            color: '#FFFFFF',
+                                        }}>
+                                        Wallet Account
+                                    </Text>
+                                </View>
+                                <View>
+                                    <TouchableOpacity onPress={this.onShowPoup}>
+                                        <Image
+                                            style={{
+                                                height: getSize.scale(20),
+                                                width: getSize.scale(20),
+                                                resizeMode: 'contain',
+                                            }}
+                                            source={{ uri: 'ic_question_grey' }}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            {dataBalance &&
+                                dataBalance.map((item, index) => {
+                                    return (
+                                        <View
+                                            style={{
+                                                justifyContent: 'space-between',
+                                                marginTop: getSize.scale(8),
+                                            }}>
+                                            <ImageBackground
+                                                source={{ uri: 'ic_frame_coin' }}
+                                                style={{
+                                                    width: getSize.Width - getSize.scale(32),
+                                                    height: getSize.scale(70.5),
+                                                }}>
+                                                <TouchableOpacity
+                                                    activeOpacity={1}
+                                                    style={{
+                                                        flex: 1,
+                                                        flexDirection: 'row',
+                                                        justifyContent: 'space-between',
+                                                        alignItems: 'center',
+                                                        marginHorizontal: getSize.scale(16),
+                                                    }}
+                                                    onPress={
+                                                        () =>
+                                                            this.setState({ ...this.state, modalMER: true })
+                                                        // navigation.navigate(stackNavigator.WALLET_COIN)
+                                                    }>
+                                                    <View
+                                                        style={{
+                                                            flexDirection: 'row',
+                                                            alignItems: 'center',
+                                                        }}>
+                                                        <Image
+                                                            style={{
+                                                                resizeMode: 'contain',
+                                                                width: getSize.scale(32),
+                                                                height: getSize.scale(32),
+                                                            }}
+                                                            source={{ uri: item.icon }}
+                                                        />
+                                                        <Text
+                                                            style={{
+                                                                fontSize: getSize.scale(14),
+                                                                fontWeight: 'bold',
+                                                                marginLeft: getSize.scale(8),
+                                                            }}>
+                                                            {item.name ? item.name : ''}
+                                                        </Text>
+                                                    </View>
+                                                    <Text
+                                                        style={{
+                                                            fontSize: getSize.scale(24),
+                                                            fontWeight: 'bold',
+                                                        }}>
+                                                        {item.amount.toString()}
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            </ImageBackground>
+                                        </View>
+                                    );
+                                })}
+
+                            {/* <View
                                 style={{
                                     justifyContent: 'space-between',
                                     marginTop: getSize.scale(8)
@@ -752,7 +752,7 @@ class WalletHome extends Component {
                                 </ImageBackground>
                             </View> */}
 
-              {/* <View
+                            {/* <View
                                 style={{
                                     marginTop: getSize.scale(32),
                                     flexDirection: 'row',
@@ -844,353 +844,353 @@ class WalletHome extends Component {
                                     </Text>
                                 </TouchableOpacity>
                             </ImageBackground> */}
-            </View>
-          </View>
-        </ScrollView>
-        {/* Modal MER */}
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalMER}
-          onRequestClose={() => setmodalMER(!modalMER)}>
-          <View
-            style={{
-              height: '100%',
-              width: '100%',
-              top: 0,
-              position: 'absolute',
-              backgroundColor: '#0000007f',
-            }}></View>
-          <TouchableOpacity
-            // onPress={() => setmodalMER(!modalMER)}
-            activeOpacity={1}
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <View
-              style={{
-                justifyContent: 'center',
-                width: getSize.Width - getSize.scale(64),
-              }}>
-              <View
-                style={{
-                  width: '100%',
-                  paddingHorizontal: getSize.scale(16),
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  backgroundColor: '#96CFE1',
-                  paddingVertical: getSize.scale(10),
-                  borderRadius: 20,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 2,
-                  },
-                  shadowOpacity: 0.25,
-                  shadowRadius: 4,
-                  elevation: 5,
-                }}>
-                <View style={{ alignItems: 'center' }}>
-                  <Text
-                    style={{
-                      fontSize: getSize.scale(14),
-                      color: 'rgba(44, 44, 44, 1)',
-                      fontWeight: 'bold',
-                      marginTop: getSize.scale(16),
-                    }}>
-                    BFI
-                  </Text>
-                  <View
-                    style={{
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      flexDirection: 'row',
-                    }}>
-                    <Image
-                      style={{
-                        resizeMode: 'contain',
-                        width: getSize.scale(32),
-                        height: getSize.scale(32),
-                        marginHorizontal: getSize.scale(8),
-                      }}
-                      source={{ uri: 'ic_location' }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: getSize.scale(32),
-                        fontWeight: 'bold',
-                        fontStyle: 'italic',
-                        color: '#ffffff',
-                        marginVertical: getSize.scale(16),
-                      }}>
-                      158.5
-                    </Text>
-                  </View>
-
-                  <Text
-                    style={{
-                      fontSize: getSize.scale(14),
-                      color: 'rgba(44, 44, 44, 1)',
-                      fontWeight: 'bold',
-                      marginVertical: getSize.scale(16),
-                    }}>
-                    Transaction records
-                  </Text>
-                  <View style={{ height: getSize.Width / 1.5 }}>
-                    <FlatList
-                      showsHorizontalScrollIndicator={false}
-                      showsVerticalScrollIndicator={false}
-                      keyExtractor={(item, index) => index}
-                      data={data}
-                      renderItem={({ item, index }) => (
-                        <View style={{ flex: 1 }}>
-                          <View
-                            style={{
-                              width: getSize.Width - getSize.scale(96),
-                            }}>
-                            <TouchableOpacity
-                              activeOpacity={1}
-                              style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                              }}>
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                  alignItems: 'flex-start',
-                                }}>
-                                <Image
-                                  style={{
-                                    width: getSize.scale(16),
-                                    height: getSize.scale(50),
-                                    resizeMode: 'contain',
-                                  }}
-                                  source={{
-                                    uri: 'ic_wallet_line_trans',
-                                  }}
-                                />
-                                <View
-                                  style={{
-                                    justifyContent: 'space-evenly',
-                                  }}>
-                                  <Text
-                                    style={{
-                                      flex: 1,
-                                      fontSize: getSize.scale(12),
-                                      fontStyle: 'italic',
-                                    }}>
-                                    {item.dateTime}
-                                  </Text>
-                                  <Text
-                                    style={{
-                                      flex: 1,
-                                      fontSize: getSize.scale(14),
-                                      fontWeight: 'bold',
-                                      fontStyle: 'italic',
-                                      color:
-                                        item.status === 1
-                                          ? 'rgba(36, 158, 26, 1)'
-                                          : item.status === 2
-                                          ? 'rgba(240, 137, 17, 1)'
-                                          : 'rgba(218, 33, 21, 1)',
-                                    }}>
-                                    {item.statusName}
-                                  </Text>
-                                </View>
-                              </View>
-                              <Text
-                                style={{
-                                  fontSize: getSize.scale(14),
-                                }}>
-                                {`${item.merValue} BFI`}
-                              </Text>
-                            </TouchableOpacity>
-                          </View>
                         </View>
-                      )}
-                      // refreshControl={<RefreshControl onRefresh={this.handleReload} refreshing={false} />}
-                      // ListEmptyComponent={this.renderEmptyList()}
-                      // ListFooterComponent={this.renderFooter()}
-                      // onEndReached={this.handleLoadMore}
-                      // onEndReachedThreshold={0.2}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}>
-                    <View
-                      style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'flex-start',
-                      }}>
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate(stackNavigator.RECVICE)
-                        }>
-                        <Image
-                          style={{
-                            width: getSize.scale(74),
-                            height: getSize.scale(74),
-                            resizeMode: 'contain',
-                          }}
-                          source={{ uri: 'ic_btn_recvice' }}
-                        />
-                        <Text
-                          style={{
-                            fontWeight: 'bold',
-                            fontStyle: 'italic',
-                            fontSize: getSize.scale(14),
-                            textAlign: 'center',
-                            marginTop: getSize.scale(8),
-                          }}>
-                          Receive
-                        </Text>
-                      </TouchableOpacity>
                     </View>
-
+                </ScrollView>
+                {/* Modal MER */}
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={modalMER}
+                    onRequestClose={() => setmodalMER(!modalMER)}>
                     <View
-                      style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate(stackNavigator.TRANSFER)
-                        }>
-                        <Image
-                          style={{
-                            width: getSize.scale(74),
-                            height: getSize.scale(74),
-                            resizeMode: 'contain',
-                          }}
-                          source={{ uri: 'ic_btn_transfer' }}
-                        />
-                        <Text
-                          style={{
-                            fontWeight: 'bold',
-                            fontStyle: 'italic',
-                            fontSize: getSize.scale(14),
-                            textAlign: 'center',
-                            marginTop: getSize.scale(8),
-                          }}>
-                          Transfer
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
+                        style={{
+                            height: '100%',
+                            width: '100%',
+                            top: 0,
+                            position: 'absolute',
+                            backgroundColor: '#0000007f',
+                        }}></View>
+                    <TouchableOpacity
+                        // onPress={() => setmodalMER(!modalMER)}
+                        activeOpacity={1}
+                        style={{
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
+                        <View
+                            style={{
+                                justifyContent: 'center',
+                                width: getSize.Width - getSize.scale(64),
+                            }}>
+                            <View
+                                style={{
+                                    width: '100%',
+                                    paddingHorizontal: getSize.scale(16),
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    backgroundColor: '#96CFE1',
+                                    paddingVertical: getSize.scale(10),
+                                    borderRadius: 20,
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    shadowColor: '#000',
+                                    shadowOffset: {
+                                        width: 0,
+                                        height: 2,
+                                    },
+                                    shadowOpacity: 0.25,
+                                    shadowRadius: 4,
+                                    elevation: 5,
+                                }}>
+                                <View style={{ alignItems: 'center' }}>
+                                    <Text
+                                        style={{
+                                            fontSize: getSize.scale(14),
+                                            color: 'rgba(44, 44, 44, 1)',
+                                            fontWeight: 'bold',
+                                            marginTop: getSize.scale(16),
+                                        }}>
+                                        BFI
+                                    </Text>
+                                    <View
+                                        style={{
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            flexDirection: 'row',
+                                        }}>
+                                        <Image
+                                            style={{
+                                                resizeMode: 'contain',
+                                                width: getSize.scale(32),
+                                                height: getSize.scale(32),
+                                                marginHorizontal: getSize.scale(8),
+                                            }}
+                                            source={{ uri: 'ic_location' }}
+                                        />
+                                        <Text
+                                            style={{
+                                                fontSize: getSize.scale(32),
+                                                fontWeight: 'bold',
+                                                fontStyle: 'italic',
+                                                color: '#ffffff',
+                                                marginVertical: getSize.scale(16),
+                                            }}>
+                                            158.5
+                                        </Text>
+                                    </View>
 
-                    <View
-                      style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'flex-end',
-                      }}>
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate(stackNavigator.SWAP)
-                        }>
-                        <Image
-                          style={{
-                            width: getSize.scale(74),
-                            height: getSize.scale(74),
-                            resizeMode: 'contain',
-                          }}
-                          source={{ uri: 'ic_btn_trade' }}
-                        />
-                        <Text
-                          style={{
-                            fontWeight: 'bold',
-                            fontStyle: 'italic',
-                            fontSize: getSize.scale(14),
-                            textAlign: 'center',
-                            marginTop: getSize.scale(8),
-                          }}>
-                          Trade
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View>
+                                    <Text
+                                        style={{
+                                            fontSize: getSize.scale(14),
+                                            color: 'rgba(44, 44, 44, 1)',
+                                            fontWeight: 'bold',
+                                            marginVertical: getSize.scale(16),
+                                        }}>
+                                        Transaction records
+                                    </Text>
+                                    <View style={{ height: getSize.Width / 1.5 }}>
+                                        <FlatList
+                                            showsHorizontalScrollIndicator={false}
+                                            showsVerticalScrollIndicator={false}
+                                            keyExtractor={(item, index) => index}
+                                            data={data}
+                                            renderItem={({ item, index }) => (
+                                                <View style={{ flex: 1 }}>
+                                                    <View
+                                                        style={{
+                                                            width: getSize.Width - getSize.scale(96),
+                                                        }}>
+                                                        <TouchableOpacity
+                                                            activeOpacity={1}
+                                                            style={{
+                                                                flex: 1,
+                                                                flexDirection: 'row',
+                                                                alignItems: 'center',
+                                                                justifyContent: 'space-between',
+                                                            }}>
+                                                            <View
+                                                                style={{
+                                                                    flexDirection: 'row',
+                                                                    alignItems: 'flex-start',
+                                                                }}>
+                                                                <Image
+                                                                    style={{
+                                                                        width: getSize.scale(16),
+                                                                        height: getSize.scale(50),
+                                                                        resizeMode: 'contain',
+                                                                    }}
+                                                                    source={{
+                                                                        uri: 'ic_wallet_line_trans',
+                                                                    }}
+                                                                />
+                                                                <View
+                                                                    style={{
+                                                                        justifyContent: 'space-evenly',
+                                                                    }}>
+                                                                    <Text
+                                                                        style={{
+                                                                            flex: 1,
+                                                                            fontSize: getSize.scale(12),
+                                                                            fontStyle: 'italic',
+                                                                        }}>
+                                                                        {item.dateTime}
+                                                                    </Text>
+                                                                    <Text
+                                                                        style={{
+                                                                            flex: 1,
+                                                                            fontSize: getSize.scale(14),
+                                                                            fontWeight: 'bold',
+                                                                            fontStyle: 'italic',
+                                                                            color:
+                                                                                item.status === 1
+                                                                                    ? 'rgba(36, 158, 26, 1)'
+                                                                                    : item.status === 2
+                                                                                        ? 'rgba(240, 137, 17, 1)'
+                                                                                        : 'rgba(218, 33, 21, 1)',
+                                                                        }}>
+                                                                        {item.statusName}
+                                                                    </Text>
+                                                                </View>
+                                                            </View>
+                                                            <Text
+                                                                style={{
+                                                                    fontSize: getSize.scale(14),
+                                                                }}>
+                                                                {`${item.merValue} BFI`}
+                                                            </Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                </View>
+                                            )}
+                                        // refreshControl={<RefreshControl onRefresh={this.handleReload} refreshing={false} />}
+                                        // ListEmptyComponent={this.renderEmptyList()}
+                                        // ListFooterComponent={this.renderFooter()}
+                                        // onEndReached={this.handleLoadMore}
+                                        // onEndReachedThreshold={0.2}
+                                        />
+                                    </View>
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                        }}>
+                                        <View
+                                            style={{
+                                                flex: 1,
+                                                justifyContent: 'center',
+                                                alignItems: 'flex-start',
+                                            }}>
+                                            <TouchableOpacity
+                                                onPress={() =>
+                                                    navigation.navigate(stackNavigator.RECVICE)
+                                                }>
+                                                <Image
+                                                    style={{
+                                                        width: getSize.scale(74),
+                                                        height: getSize.scale(74),
+                                                        resizeMode: 'contain',
+                                                    }}
+                                                    source={{ uri: 'ic_btn_recvice' }}
+                                                />
+                                                <Text
+                                                    style={{
+                                                        fontWeight: 'bold',
+                                                        fontStyle: 'italic',
+                                                        fontSize: getSize.scale(14),
+                                                        textAlign: 'center',
+                                                        marginTop: getSize.scale(8),
+                                                    }}>
+                                                    Receive
+                                                </Text>
+                                            </TouchableOpacity>
+                                        </View>
 
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: getSize.scale(16),
-                }}>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.setState({
-                      ...this.state,
-                      modalMER: !this.state.modalMER,
-                    })
-                  }>
-                  <Image
-                    style={{
-                      width: getSize.scale(32),
-                      height: getSize.scale(32),
-                      resizeMode: 'contain',
+                                        <View
+                                            style={{
+                                                flex: 1,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}>
+                                            <TouchableOpacity
+                                                onPress={() =>
+                                                    navigation.navigate(stackNavigator.TRANSFER)
+                                                }>
+                                                <Image
+                                                    style={{
+                                                        width: getSize.scale(74),
+                                                        height: getSize.scale(74),
+                                                        resizeMode: 'contain',
+                                                    }}
+                                                    source={{ uri: 'ic_btn_transfer' }}
+                                                />
+                                                <Text
+                                                    style={{
+                                                        fontWeight: 'bold',
+                                                        fontStyle: 'italic',
+                                                        fontSize: getSize.scale(14),
+                                                        textAlign: 'center',
+                                                        marginTop: getSize.scale(8),
+                                                    }}>
+                                                    Transfer
+                                                </Text>
+                                            </TouchableOpacity>
+                                        </View>
+
+                                        <View
+                                            style={{
+                                                flex: 1,
+                                                justifyContent: 'center',
+                                                alignItems: 'flex-end',
+                                            }}>
+                                            <TouchableOpacity
+                                                onPress={() =>
+                                                    navigation.navigate(stackNavigator.SWAP)
+                                                }>
+                                                <Image
+                                                    style={{
+                                                        width: getSize.scale(74),
+                                                        height: getSize.scale(74),
+                                                        resizeMode: 'contain',
+                                                    }}
+                                                    source={{ uri: 'ic_btn_trade' }}
+                                                />
+                                                <Text
+                                                    style={{
+                                                        fontWeight: 'bold',
+                                                        fontStyle: 'italic',
+                                                        fontSize: getSize.scale(14),
+                                                        textAlign: 'center',
+                                                        marginTop: getSize.scale(8),
+                                                    }}>
+                                                    Trade
+                                                </Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+
+                            <View
+                                style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginTop: getSize.scale(16),
+                                }}>
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        this.setState({
+                                            ...this.state,
+                                            modalMER: !this.state.modalMER,
+                                        })
+                                    }>
+                                    <Image
+                                        style={{
+                                            width: getSize.scale(32),
+                                            height: getSize.scale(32),
+                                            resizeMode: 'contain',
+                                        }}
+                                        source={{
+                                            uri: 'ic_close_red',
+                                        }}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </Modal>
+                {/* Popup */}
+                <Poup
+                    ref={target => {
+                        this.popupRef = target;
                     }}
-                    source={{
-                      uri: 'ic_close_red',
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </Modal>
-        {/* Popup */}
-        <Poup
-          ref={target => {
-            this.popupRef = target;
-          }}
-          onTouchOutside={this.onColsePopup}
-          title={'Solana WALLET'}
-          navigation={navigation}
-          stackNavigator={stackNavigator}
-        />
-      </SafeAreaView>
-    );
-  }
+                    onTouchOutside={this.onColsePopup}
+                    title={'Solana WALLET'}
+                    navigation={navigation}
+                    stackNavigator={stackNavigator}
+                />
+            </SafeAreaView>
+        );
+    }
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
-  },
+    container: {
+        flex: 1,
+        marginTop: StatusBar.currentHeight || 0,
+    },
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+    },
+    title: {
+        fontSize: 32,
+    },
 });
 
 const mapStateToProps = state => ({
-  isSignIn: state.initReducer.isSignIn,
-  screenState: state.initReducer.screenState,
-  userId: state.initReducer.userId,
-  user: state.initReducer.user,
-  getRate: state.initReducer.getRate,
-  getRateBnb: state.initReducer.getRateBnb,
-  userIdBnb: state.initReducer.userIdBnb,
+    isSignIn: state.initReducer.isSignIn,
+    screenState: state.initReducer.screenState,
+    userId: state.initReducer.userId,
+    user: state.initReducer.user,
+    getRate: state.initReducer.getRate,
+    getRateBnb: state.initReducer.getRateBnb,
+    userIdBnb: state.initReducer.userIdBnb,
 });
 const mapDispatchToProps = dispatch => ({
-  action: bindActionCreators(_action, dispatch),
+    action: bindActionCreators(_action, dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(WalletHome);
