@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useState, useEffect} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
 import {
   Image,
   ImageBackground,
@@ -9,18 +9,19 @@ import {
   View,
 } from 'react-native';
 import Toast from 'react-native-simple-toast';
-import {useDispatch} from 'react-redux';
-import {Colors, getSize} from '../../../common';
+import { useDispatch } from 'react-redux';
+import { Colors, getSize } from '../../../common';
 import * as ApiServices from '../../../service';
-import {LoadingIndicator, NoData} from '../../../components';
-import {InfoItemModal} from '../../../components/InfoItemModal';
+import { LoadingIndicator, NoData } from '../../../components';
+import { InfoItemModal } from '../../../components/InfoItemModal';
 import * as ACTION_CONST from '../../../redux/action/ActionType';
 
-export default function ItemShoeBoxes({item, index}) {
+export default function ItemShoeBoxes({ item, index }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [modalInfo, setModalInfo] = useState(false);
+  const [modalInfoBox, setModalInfoBox] = useState(false);
   const [sneaker, setSneaker] = useState(null);
 
   const image =
@@ -30,7 +31,7 @@ export default function ItemShoeBoxes({item, index}) {
 
   const onOpenBox = async () => {
     setLoading(true);
-    ApiServices.onOpenBox({item_type: item?.type})
+    ApiServices.onOpenBox({ item_type: item?.type })
       .then(res => {
         setLoading(false);
         setSneaker(res?.data?.newShoes);
@@ -65,7 +66,8 @@ export default function ItemShoeBoxes({item, index}) {
   }, [sneaker]);
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => setModalInfoBox(true)}
       key={index}
       style={{
         width: getSize.Width / 2.09,
@@ -74,7 +76,7 @@ export default function ItemShoeBoxes({item, index}) {
         marginVertical: getSize.scale(4),
       }}>
       <ImageBackground
-        source={{uri: 'ic_tabbag_items'}}
+        source={{ uri: 'ic_tabbag_items' }}
         style={{
           width: '100%',
           height: getSize.scale(250),
@@ -97,7 +99,7 @@ export default function ItemShoeBoxes({item, index}) {
               position: 'relative',
             }}>
             <ImageBackground
-              source={{uri: 'ic_head_frame_shoe'}}
+              source={{ uri: 'ic_head_frame_shoe' }}
               style={{
                 width: '100%',
                 height: getSize.scale(30),
@@ -132,7 +134,7 @@ export default function ItemShoeBoxes({item, index}) {
                       flexDirection: 'row',
                     }}>
                     <Image
-                      source={{uri: 'ic_ray'}}
+                      source={{ uri: 'ic_ray' }}
                       style={{
                         width: getSize.scale(12),
                         height: getSize.scale(12),
@@ -140,7 +142,7 @@ export default function ItemShoeBoxes({item, index}) {
                       }}
                     />
                     <Image
-                      source={{uri: 'ic_ray'}}
+                      source={{ uri: 'ic_ray' }}
                       style={{
                         width: getSize.scale(12),
                         height: getSize.scale(12),
@@ -148,7 +150,7 @@ export default function ItemShoeBoxes({item, index}) {
                       }}
                     />
                     <Image
-                      source={{uri: 'ic_ray'}}
+                      source={{ uri: 'ic_ray' }}
                       style={{
                         width: getSize.scale(12),
                         height: getSize.scale(12),
@@ -160,7 +162,7 @@ export default function ItemShoeBoxes({item, index}) {
               </View>
             </ImageBackground>
 
-            <View style={{flex: 6}}>
+            <View style={{ flex: 6 }}>
               <TouchableOpacity
                 disabled
                 style={{
@@ -185,22 +187,23 @@ export default function ItemShoeBoxes({item, index}) {
                       backgroundColor: '#565874',
                       paddingHorizontal: getSize.scale(8),
                       paddingVertical: getSize.scale(2),
-                      height: 20
+                      height: 20,
                     }}>
                     <Text
-                    numberOfLines={1}
+                      numberOfLines={1}
                       style={{
                         color: '#fff',
                         fontWeight: 'bold',
                         marginLeft: getSize.scale(2),
                         fontSize: getSize.scale(12),
+                        textTransform: 'capitalize',
                       }}>
-                      {`# ${item?._id}`}
+                      {item?.type?.split('_').join(' ')}
                     </Text>
                   </View>
                 </View>
                 <Image
-                  source={{uri: 'ic_git'}}
+                  source={{ uri: 'ic_git' }}
                   style={{
                     flex: 7,
                     width: getSize.scale(105),
@@ -218,7 +221,7 @@ export default function ItemShoeBoxes({item, index}) {
                 </TouchableOpacity>
               </TouchableOpacity>
             </View>
-            <View style={{flex: 1}} />
+            <View style={{ flex: 1 }} />
           </View>
         </View>
       </ImageBackground>
@@ -228,7 +231,14 @@ export default function ItemShoeBoxes({item, index}) {
         item={sneaker}
         isSneakerItem
       />
-    </View>
+      <InfoItemModal
+        visible={modalInfoBox}
+        setVisible={values => setModalInfoBox(values)}
+        item={item}
+        isShoebox
+        allowSell={true}
+      />
+    </TouchableOpacity>
   );
 }
 

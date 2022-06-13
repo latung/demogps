@@ -316,9 +316,15 @@ class TabStore extends Component {
   };
 
   buyItem = (id, quantity) => {
-    const { action } = this.props;
+    const { action, user } = this.props;
     ApiServices.buyItem({ sellingId: id, quantity }).then(res => {
+      ApiServices.userId({ _id: user._id }).then(res => {
+        if (res.code === 200) {
+          action.userId(res.data);
+        }
+      });
       if (res.code === 200) {
+        console.log('ress');
         ApiServices.getMyBox()
           .then(res => {
             if (res.code === 200) {
@@ -517,6 +523,7 @@ const mapStateToProps = state => ({
   buy: state.initReducer.buy,
   getConstShoe: state.initReducer.getConstShoe,
   listBox: state.initReducer.listBox,
+  user: state.initReducer.user,
   listGem: state.initReducer.listGem,
 });
 const mapDispatchToProps = dispatch => ({

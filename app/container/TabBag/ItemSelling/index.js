@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Image,
@@ -6,22 +6,13 @@ import {
   ImageBackground,
   StyleSheet,
   Text,
-  Modal,
-  Platform,
 } from 'react-native';
 import { getSize, Colors } from '../../../common';
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { stackNavigator } from '../../../navigation/nameNavigator';
 import * as _action from '../../../redux/action/ActionHandle';
-import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import { InfoItemModal } from '../../../components/InfoItemModal';
 
-export default function ItemGems({ item, index }) {
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
+export default function ItemSelling({ item, index }) {
   const [modalInfo, setModalInfo] = useState(false);
-
   return (
     <>
       <TouchableOpacity
@@ -129,7 +120,9 @@ export default function ItemGems({ item, index }) {
                     alignItems: 'center',
                   }}>
                   <Image
-                    source={require('../../../assets/images/gem1.png')}
+                    source={{
+                      uri: item.category === 'gem' ? 'ic_tree_coin' : 'ic_git',
+                    }}
                     style={{
                       flex: 7,
                       width: getSize.scale(60),
@@ -213,8 +206,9 @@ export default function ItemGems({ item, index }) {
         visible={modalInfo}
         setVisible={values => setModalInfo(values)}
         item={item}
-        isGemItem
-        allowSell
+        isGemItem={item.category === 'gem' ? true : false}
+        isShoebox={item.category === 'box' ? true : false}
+        allowUnSell
       />
     </>
   );

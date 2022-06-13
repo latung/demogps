@@ -1,13 +1,19 @@
-import React from 'react';
+import { Button } from '@rneui/base';
+import React, { useState } from 'react';
 import {
   Image,
   Modal,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { getSize } from '../../common';
+import * as ApiServices from '../../service';
+import Toast from 'react-native-simple-toast';
+import { useDispatch } from 'react-redux';
+import * as ACTION_CONST from '../../redux/action/ActionType';
 
 type Props = {
   visible: boolean;
@@ -15,9 +21,95 @@ type Props = {
   item: any;
   isGemItem?: boolean;
   isSneakerItem?: boolean;
+  isShoebox?: boolean;
+  allowSell?: boolean;
+  allowUnSell?: boolean;
+  action?: any;
 };
 export const InfoItemModal = React.memo<Props>(
-  ({ visible, setVisible, item, isGemItem, isSneakerItem }) => {
+  ({
+    visible,
+    setVisible,
+    item,
+    isGemItem,
+    isSneakerItem,
+    allowSell,
+    isShoebox,
+    allowUnSell,
+  }) => {
+    const [modalQuantity, setModalQuantity] = useState(false);
+    const [quantity, setQuantity] = useState('');
+    const [price, setPrice] = useState('');
+    const dispatch = useDispatch();
+
+    const sellItem = () => {
+      ApiServices.sellItem({
+        item_type: item.type,
+        quantity,
+        price,
+      })
+        .then(res => {
+          setQuantity('');
+          setPrice('');
+          Toast.showWithGravity(res.message, Toast.LONG, Toast.CENTER);
+          if (res.code === 200) {
+            ApiServices.getMyBox()
+              .then(res => {
+                if (res.code === 200) {
+                  dispatch({
+                    type: ACTION_CONST.GET_SHOEBOX,
+                    data: res.data,
+                  });
+                }
+              })
+              .catch(err => {
+                console.log('LoadData', err);
+              });
+          }
+        })
+        .catch(err => {
+          setQuantity('');
+          setPrice('');
+          Toast.showWithGravity(err.message, Toast.LONG, Toast.CENTER);
+        });
+    };
+
+    const unSellItem = () => {
+      ApiServices.unSellItem(item._id)
+        .then(res => {
+          Toast.showWithGravity(res.message, Toast.LONG, Toast.CENTER);
+          if (res.code === 200) {
+            ApiServices.getMyBox()
+              .then(res => {
+                if (res.code === 200) {
+                  dispatch({
+                    type: ACTION_CONST.GET_SHOEBOX,
+                    data: res.data,
+                  });
+                }
+              })
+              .catch(err => {
+                console.log('LoadData', err);
+              });
+            ApiServices.listSellingItem()
+              .then(res => {
+                if (res.code === 200) {
+                  dispatch({
+                    type: ACTION_CONST.GET_LIST_SELLING_ITEMS,
+                    data: res.data,
+                  });
+                }
+              })
+              .catch(err => {
+                console.log('LoadData', err);
+              });
+          }
+        })
+        .catch(err => {
+          Toast.showWithGravity(err.message, Toast.LONG, Toast.CENTER);
+        });
+    };
+
     return (
       <Modal
         animationType="fade"
@@ -32,6 +124,122 @@ export const InfoItemModal = React.memo<Props>(
             position: 'absolute',
             backgroundColor: '#000000bf',
           }}></View>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalQuantity}
+          onRequestClose={() => setModalQuantity(false)}>
+          <View
+            style={{
+              height: '100%',
+              width: '100%',
+              top: 0,
+              position: 'absolute',
+              backgroundColor: '#000000bf',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <View
+              style={{
+                backgroundColor: 'white',
+                width: '80%',
+                height: 220,
+                borderRadius: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingHorizontal: 10,
+              }}>
+              <Text
+                style={{
+                  textAlign: 'left',
+                  alignSelf: 'flex-start',
+                  marginBottom: 10,
+                }}>
+                Quantity
+              </Text>
+              <TextInput
+                placeholder="Quantity"
+                keyboardType="numeric"
+                onChangeText={text => setQuantity(text)}
+                value={quantity}
+                style={{
+                  padding: 5,
+                  height: 40,
+                  borderRadius: 8,
+                  borderColor: '#565874',
+                  borderWidth: 1,
+                  width: '100%',
+                  marginBottom: 10,
+                }}
+              />
+              <Text
+                style={{
+                  textAlign: 'left',
+                  alignSelf: 'flex-start',
+                  marginBottom: 10,
+                }}>
+                Price
+              </Text>
+              <TextInput
+                placeholder="Price"
+                keyboardType="numeric"
+                onChangeText={text => setPrice(text)}
+                value={price}
+                style={{
+                  padding: 5,
+                  height: 40,
+                  borderRadius: 8,
+                  borderColor: '#565874',
+                  borderWidth: 1,
+                  width: '100%',
+                }}
+              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  width: '90%',
+                  marginTop: 15,
+                }}>
+                <Button
+                  onPress={() => setModalQuantity(!modalQuantity)}
+                  buttonStyle={{
+                    backgroundColor: 'white',
+                    borderWidth: 1,
+                    borderRadius: 20,
+                    width: 100,
+                  }}
+                  title="Cancel"
+                  titleStyle={{
+                    color: 'black',
+                    fontWeight: 'bold',
+                    fontSize: 15,
+                  }}
+                />
+                <Button
+                  buttonStyle={{
+                    backgroundColor: '#3EF1F2',
+                    borderRadius: 20,
+                    width: 100,
+                  }}
+                  onPress={() => {
+                    setModalQuantity(!modalQuantity);
+                    setVisible(false);
+                    sellItem();
+                    // buyItem(item?._id, quantity);
+                  }}
+                  disabled={quantity.length && price.length ? false : true}
+                  title="Confirm"
+                  titleStyle={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    fontSize: 15,
+                  }}
+                />
+              </View>
+            </View>
+          </View>
+        </Modal>
         <TouchableOpacity
           // onPress={() => setVisible(!visible)}
           activeOpacity={1}
@@ -77,44 +285,39 @@ export const InfoItemModal = React.memo<Props>(
                     marginVertical: getSize.scale(8),
                   }}
                   source={{
-                    uri: isGemItem ? 'ic_tree_coin' : item?.img, // item?.img
+                    uri: isGemItem
+                      ? 'ic_tree_coin'
+                      : isShoebox
+                      ? 'ic_git'
+                      : item?.img, // item?.img
                   }}
-                  source={
-                    isGemItem
-                      ? require('../../assets/images/gem1.png')
-                      : { uri: item?.img }
-                  }
+                  // source={
+                  //   isGemItem
+                  //     ? require('../../assets/images/gem1.png')
+                  //     : { uri: item?.img }
+                  // }
                 />
+
                 <View
                   style={{
-                    justifyContent: 'flex-start',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    width: '100%',
-                    // backgroundColor: "red"
+                    borderWidth: 0.5,
+                    borderRadius: 20,
+                    marginVertical: getSize.scale(8),
+                    marginRight: getSize.scale(8),
+                    paddingVertical: getSize.scale(4),
+                    paddingHorizontal: getSize.scale(10),
+                    backgroundColor: '#565874',
                   }}>
-                  <View
+                  <Text
                     style={{
-                      justifyContent: 'center',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderWidth: 0.5,
-                      borderRadius: 20,
-                      marginVertical: getSize.scale(8),
-                      marginRight: getSize.scale(8),
-                      paddingVertical: getSize.scale(4),
-                      paddingHorizontal: getSize.scale(32),
-                      backgroundColor: '#565874',
+                      color: '#fff',
+                      fontWeight: 'bold',
+                      fontSize: getSize.scale(14),
                     }}>
-                    <Text
-                      style={{
-                        color: '#fff',
-                        fontWeight: 'bold',
-                        fontSize: getSize.scale(14),
-                      }}>
-                      {`# ${isGemItem ? item?._id : item?.readableId}`}
-                    </Text>
-                  </View>
+                    {`# ${
+                      isGemItem || isShoebox ? item?._id : item?.readableId
+                    }`}
+                  </Text>
                 </View>
               </View>
               {isSneakerItem && (
@@ -415,7 +618,7 @@ export const InfoItemModal = React.memo<Props>(
                     </View>
                   </View>
                 )}
-                {isGemItem && (
+                {(isGemItem || isShoebox) && (
                   <View
                     style={{
                       alignItems: 'center',
@@ -477,6 +680,121 @@ export const InfoItemModal = React.memo<Props>(
                         </Text>
                       </View>
                     </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        width: '100%',
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: 'flex-start',
+                          justifyContent: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: getSize.scale(12),
+                            fontStyle: 'italic',
+                            color: '#000000',
+                          }}>
+                          Quantity
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: 'flex-end',
+                          justifyContent: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: getSize.scale(12),
+                            fontWeight: 'bold',
+                            color: '#000000',
+                            textTransform: 'capitalize',
+                          }}>
+                          {/* {`${constShoe?.LUCK[item?.quality]}`} */}
+                          {item?.quantity}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                )}
+                {allowSell && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginVertical: getSize.scale(10),
+                    }}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setTimeout(() => {
+                          setModalQuantity(true);
+                        }, 100);
+                      }}
+                      style={{
+                        width: 100,
+                        opacity: item?.isSelling ? 0.5 : 1,
+                        // marginHorizontal: getSize.scale(16),
+                        paddingVertical: getSize.scale(6),
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 20,
+                        borderColor: '#888888',
+                        borderWidth: 1,
+                        borderBottomWidth: 2,
+                        borderRightWidth: 2,
+                        backgroundColor: '#2EDBDC',
+                        // marginRight: 10,
+                      }}>
+                      <Text
+                        style={{
+                          fontStyle: 'italic',
+                          color: '#ffffff',
+                          fontWeight: 'bold',
+                        }}>
+                        Sell
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+                {allowUnSell && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginVertical: getSize.scale(10),
+                    }}>
+                    <TouchableOpacity
+                      onPress={() => unSellItem()}
+                      style={{
+                        width: 100,
+                        opacity: item?.isSelling ? 0.5 : 1,
+                        paddingVertical: getSize.scale(6),
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 20,
+                        borderColor: '#888888',
+                        borderWidth: 1,
+                        borderBottomWidth: 2,
+                        borderRightWidth: 2,
+                        backgroundColor: '#2EDBDC',
+                      }}>
+                      <Text
+                        style={{
+                          fontStyle: 'italic',
+                          color: '#ffffff',
+                          fontWeight: 'bold',
+                        }}>
+                        UnSell
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 )}
               </View>
