@@ -54,6 +54,7 @@ export const SelectShoeButton = ({ selectedShoe, onPress }) => {
       )}
       {!!selectedShoe && (
         <Image
+          resizeMode="contain"
           source={{ uri: selectedShoe?.img }}
           style={{ width: getSize.scale(110), height: getSize.scale(110) }}
         />
