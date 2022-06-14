@@ -335,7 +335,7 @@ class WalletHome extends Component {
                     style={{
                         flex: 1 / 2,
                         marginVertical: Platform.OS === 'android' ? getSize.scale(8) : 0,
-                        marginTop: isIphoneX() ? -15 : 0,
+                        marginTop: isIphoneX() ? -40 : 0,
                     }}>
                     {/* HeaderMini */}
                     <View
