@@ -151,9 +151,9 @@ export default function ItemGems({ item, index }) {
                         alignItems: 'center',
                         flexDirection: 'row',
                         backgroundColor: '#565874',
-                        paddingHorizontal: getSize.scale(8),
-                        paddingVertical: getSize.scale(2),
                         marginBottom: 5,
+                        height: 20,
+                        paddingHorizontal: 5
                       }}>
                       <Text
                         numberOfLines={1}
