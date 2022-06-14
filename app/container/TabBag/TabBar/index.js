@@ -103,6 +103,7 @@ class TabBar extends Component {
         isGems: false,
         isBadges: false,
         isShoeBoxes: false,
+        isSelling: false,
         isPromos: false,
       });
     }
@@ -113,6 +114,7 @@ class TabBar extends Component {
         isGems: true,
         isBadges: false,
         isShoeBoxes: false,
+        isSelling: false,
         isPromos: false,
       });
       // Toast.showWithGravity('Coming soon', Toast.LONG, Toast.CENTER);
@@ -125,19 +127,33 @@ class TabBar extends Component {
         isBadges: false,
         isShoeBoxes: true,
         isPromos: false,
+        isSelling: false,
+      });
+      // Toast.showWithGravity('Coming soon', Toast.LONG, Toast.CENTER);
+    }
+    if (key === 'Selling') {
+      action.changeScreenState({
+        ...screenState,
+        isSneakers: false,
+        isGems: false,
+        isBadges: false,
+        isShoeBoxes: false,
+        isPromos: false,
+        isSelling: true,
       });
       // Toast.showWithGravity('Coming soon', Toast.LONG, Toast.CENTER);
     }
     if (key === 'Promos') {
-      // action.changeScreenState({
-      //     ...screenState,
-      //     isSneakers: false,
-      //     isGems: false,
-      //     isBadges: false,
-      //     isShoeBoxes: false,
-      //     isPromos: true
-      // });
-      Toast.showWithGravity('Coming soon', Toast.LONG, Toast.CENTER);
+      action.changeScreenState({
+          ...screenState,
+          isSneakers: false,
+          isGems: false,
+          isBadges: false,
+          isShoeBoxes: false,
+        isSelling: false,
+        isPromos: true
+      });
+      // Toast.showWithGravity('Coming soon', Toast.LONG, Toast.CENTER);
     }
     if (key === 'Badges') {
       Toast.showWithGravity('Coming soon', Toast.LONG, Toast.CENTER);
@@ -186,7 +202,8 @@ class TabBar extends Component {
       isPromos,
       isGalleryMini,
       isUpgradeMini,
-      mintSneaker
+      mintSneaker,
+      isSelling
     } = screenState;
     return (
       <View
@@ -324,25 +341,25 @@ class TabBar extends Component {
                   alignItems: 'center',
                   overflow: 'hidden',
                 }}
-                onPress={() => this._handleTabbar('Promos')}>
+                onPress={() => this._handleTabbar('Selling')}>
                 <View
                   style={{
                     flex: 0.8,
-                    backgroundColor: isPromos ? '#2EDBDC' : 'transparent',
+                    backgroundColor: isSelling ? '#2EDBDC' : 'transparent',
                     paddingVertical: 2,
                     width: '100%',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    borderRadius: isPromos ? 20 : 0,
+                    borderRadius: isSelling ? 20 : 0,
                     borderRadius: 20,
                   }}>
                   <Text
                     style={{
                       fontSize: 13,
                       fontWeight: 'bold',
-                      color: isPromos ? '#FFFFFF' : '#2C2C2C',
+                      color: isSelling ? '#FFFFFF' : '#2C2C2C',
                     }}>
-                    Promo
+                    Selling
                   </Text>
                 </View>
               </TouchableOpacity>

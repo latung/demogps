@@ -56,7 +56,7 @@ export const SelectShoeButton = ({ selectedShoe, onPress }) => {
         <Image
           resizeMode="contain"
           source={{ uri: selectedShoe?.img }}
-          style={{ width: getSize.scale(110), height: getSize.scale(110) }}
+          style={{ width: getSize.scale(110), height: getSize.scale(110), resizeMode: 'contain' }}
         />
       )}
     </TouchableOpacity>

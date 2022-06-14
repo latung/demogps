@@ -852,3 +852,11 @@ export const getMyListBox = (data) => (dispatch) =>
         data: data
     });
 };
+
+export const getMyListSelling = (data) => (dispatch) =>
+{
+    dispatch({
+        type: ACTION_CONST.GET_LIST_SELLING_ITEMS,
+        data: data
+    });
+};

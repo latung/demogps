@@ -125,6 +125,7 @@ export const MatchingShoeModal: React.FC<Props> = ({
                           opacity: 1,
                           width: getSize.scale(40),
                           height: getSize.scale(40),
+                          resizeMode: 'contain'
                         }}
                         resizeMode="contain"
                       />

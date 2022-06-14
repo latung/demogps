@@ -104,8 +104,6 @@ class Wallet extends Component {
     const { action, user } = this.props;
     ApiServices.userIdBnb({ _id: user._id })
       .then(res => {
-        //
-        console.log('res', res);
         if (res.code === 200) {
           action.userIdBnb(res.data);
         }

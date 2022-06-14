@@ -663,7 +663,7 @@ export default function ItemGems({ item, index, buyItem }) {
                                   setmodalBuy(!modalBuy);
                                   setTimeout(() => {
                                     setModalQuantity(true);
-                                  }, 500);
+                                  }, 200);
                                 }}
                                 style={{
                                   width: getSize.Width / 3,

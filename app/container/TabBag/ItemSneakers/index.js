@@ -37,6 +37,7 @@ export default forwardRef(function ItemSneakers(
     isshoesIdWear,
     constShoe,
     sellShoe,
+    unSellShoe
   },
   ref,
 ) {
@@ -1460,7 +1461,9 @@ export default forwardRef(function ItemSneakers(
                 <TouchableOpacity
                   disabled={item?.isSelling ? false : true}
                   onPress={() => {
-                    item?._id && putShoe(!item?.isSelling, item?._id);
+                    unSellShoe(item?._id);
+                    setmodalTransfer(false);
+                    // item?._id && putShoe(!item?.isSelling, item?._id);
                   }}
                   style={{
                     width: getSize.Width * 0.3,

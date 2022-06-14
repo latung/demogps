@@ -624,7 +624,7 @@ class WalletHome extends Component {
                                     </Text>
                                 </View>
                                 <View>
-                                    <TouchableOpacity onPress={this.onShowPoup}>
+                                    {/* <TouchableOpacity onPress={this.onShowPoup}>
                                         <Image
                                             style={{
                                                 height: getSize.scale(20),
@@ -633,7 +633,7 @@ class WalletHome extends Component {
                                             }}
                                             source={{ uri: 'ic_question_grey' }}
                                         />
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> */}
                                 </View>
                             </View>
                             {dataBalance &&
@@ -659,11 +659,12 @@ class WalletHome extends Component {
                                                         alignItems: 'center',
                                                         marginHorizontal: getSize.scale(16),
                                                     }}
-                                                    onPress={
-                                                        () =>
-                                                            this.setState({ ...this.state, modalMER: true })
-                                                        // navigation.navigate(stackNavigator.WALLET_COIN)
-                                                    }>
+                                                    // onPress={
+                                                    //     () =>
+                                                    //         this.setState({ ...this.state, modalMER: true })
+                                                    //     // navigation.navigate(stackNavigator.WALLET_COIN)
+                                                    // }
+                                                    >
                                                     <View
                                                         style={{
                                                             flexDirection: 'row',
