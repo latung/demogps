@@ -105,7 +105,7 @@ export default function ItemShoeBoxes({ item, index }) {
                 height: getSize.scale(30),
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginTop: getSize.scale(-16),
+                // marginTop: getSize.scale(-16),
               }}>
               <View
                 style={{
@@ -113,50 +113,31 @@ export default function ItemShoeBoxes({ item, index }) {
                 }}>
                 <View
                   style={{
-                    flex: 1,
-                    flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
                     width: '100%',
                   }}>
-                  <Text
-                    style={{
-                      fontSize: getSize.scale(12),
-                      fontStyle: 'italic',
-                      fontWeight: 'bold',
-                      color: '#2C2C2C',
-                    }}>
-                    {item.classify}
-                  </Text>
                   <View
                     style={{
-                      marginLeft: getSize.scale(5),
+                      borderRadius: 50,
+                      justifyContent: 'center',
+                      alignItems: 'center',
                       flexDirection: 'row',
+                      backgroundColor: '#565874',
+                      paddingHorizontal: getSize.scale(8),
+                      height: 20,
                     }}>
-                    <Image
-                      source={{ uri: 'ic_ray' }}
+                    <Text
+                      numberOfLines={1}
                       style={{
-                        width: getSize.scale(12),
-                        height: getSize.scale(12),
-                        resizeMode: 'contain',
-                      }}
-                    />
-                    <Image
-                      source={{ uri: 'ic_ray' }}
-                      style={{
-                        width: getSize.scale(12),
-                        height: getSize.scale(12),
-                        resizeMode: 'contain',
-                      }}
-                    />
-                    <Image
-                      source={{ uri: 'ic_ray' }}
-                      style={{
-                        width: getSize.scale(12),
-                        height: getSize.scale(12),
-                        resizeMode: 'contain',
-                      }}
-                    />
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        marginLeft: getSize.scale(2),
+                        fontSize: getSize.scale(12),
+                        textTransform: 'capitalize',
+                      }}>
+                      {item?.type?.split('_').join(' ')}
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -178,29 +159,17 @@ export default function ItemShoeBoxes({ item, index }) {
                     alignItems: 'center',
                     marginVertical: 15,
                   }}>
-                  <View
+                  <Text
+                    numberOfLines={1}
                     style={{
-                      borderRadius: 50,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flexDirection: 'row',
-                      backgroundColor: '#565874',
-                      paddingHorizontal: getSize.scale(8),
-                      paddingVertical: getSize.scale(2),
-                      height: 20,
+                      // color: '#fff',
+                      fontWeight: 'bold',
+                      marginLeft: getSize.scale(2),
+                      fontSize: getSize.scale(12),
+                      textTransform: 'capitalize',
                     }}>
-                    <Text
-                      numberOfLines={1}
-                      style={{
-                        color: '#fff',
-                        fontWeight: 'bold',
-                        marginLeft: getSize.scale(2),
-                        fontSize: getSize.scale(12),
-                        textTransform: 'capitalize',
-                      }}>
-                      {item?.type?.split('_').join(' ')}
-                    </Text>
-                  </View>
+                    Quantity: {item?.quantity}
+                  </Text>
                 </View>
                 <Image
                   source={{ uri: 'ic_git' }}

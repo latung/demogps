@@ -37,7 +37,7 @@ export default function ItemGems({ item, index }) {
           source={{ uri: 'ic_tabbag_items' }}
           style={{
             width: '100%',
-            height: getSize.scale(240),
+            height: getSize.scale(250),
             flexDirection: 'row',
             alignItems: 'center',
           }}>
@@ -56,7 +56,7 @@ export default function ItemGems({ item, index }) {
                 width: '70%',
                 position: 'relative',
               }}>
-              <ImageBackground
+              {/* <ImageBackground
                 source={{ uri: 'ic_head_frame_shoe' }}
                 style={{
                   width: '100%',
@@ -118,7 +118,7 @@ export default function ItemGems({ item, index }) {
                     </View>
                   </View>
                 </View>
-              </ImageBackground>
+              </ImageBackground> */}
 
               <View style={{ flex: 6 }}>
                 <TouchableOpacity
@@ -153,6 +153,7 @@ export default function ItemGems({ item, index }) {
                         backgroundColor: '#565874',
                         paddingHorizontal: getSize.scale(8),
                         paddingVertical: getSize.scale(2),
+                        marginBottom: 5,
                       }}>
                       <Text
                         numberOfLines={1}
@@ -167,7 +168,16 @@ export default function ItemGems({ item, index }) {
                       </Text>
                     </View>
                   </View>
-
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      fontWeight: 'bold',
+                      textTransform: 'capitalize',
+                      marginLeft: getSize.scale(2),
+                      fontSize: getSize.scale(12),
+                    }}>
+                    Quantity: {item?.quantity}
+                  </Text>
                   <View
                     style={{
                       flex: 1.5,

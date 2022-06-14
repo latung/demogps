@@ -155,7 +155,7 @@ class TabBag extends Component {
       isGalleryMini,
       isUpgradeMini,
       isShoeBoxes,
-      isSelling
+      isSelling,
     } = screenState;
     const constShoe = getConstShoe.data ? getConstShoe.data : [];
     if (isSneakers && isGalleryMini) {
@@ -172,6 +172,7 @@ class TabBag extends Component {
           constShoe={constShoe}
           ref={this.ModalInfoRef}
           sellShoe={this.sellShoe}
+          unSellShoe={this.unSellShoe}
         />
       );
     }
@@ -362,6 +363,22 @@ class TabBag extends Component {
       });
   };
 
+  unSellShoe = id => {
+    ApiServices.unSellShoe(id, { isSelling: false })
+      .then(res => {
+        console.log('res', res);
+        if (res.code === 200) {
+          this.LoadData();
+          Alert.alert('Successfully', res?.message);
+        } else {
+          alert(res?.message ?? 'Somethings went wrong. Please try again');
+        }
+      })
+      .catch(err => {
+        alert(err.message);
+      });
+  };
+
   setShoeCurrentWear = (shoes, action) => {
     let data = shoes.data;
     for (let i = 0; i < data.length; i++) {
@@ -391,7 +408,8 @@ class TabBag extends Component {
   };
 
   render() {
-    const { navigation, screenState, shoes, myListBox, listSelling } = this.props;
+    const { navigation, screenState, shoes, myListBox, listSelling } =
+      this.props;
     const {
       isSneakers,
       isGems,
@@ -407,7 +425,7 @@ class TabBag extends Component {
 
     const dataGem = myListBox?.data?.filter(e => e.category === 'gem') ?? [];
     const dataBox = myListBox?.data?.filter(e => e.category === 'box') ?? [];
-    const dataSelling = listSelling?.data ?? []; 
+    const dataSelling = listSelling?.data ?? [];
 
     const stylesContent = {
       flex: isAndroid ? 0 : !screenState.isSneakers ? 1 / 1.78 : 2 / 1.78,

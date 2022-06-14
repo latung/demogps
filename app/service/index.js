@@ -731,6 +731,20 @@ const listSellingItem = async () => {
   return content;
 };
 
+const unSellShoe = async (id, body) => {
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(API_CONST.API_SELL_SHOE + id, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+    body: JSON.stringify(body),
+  });
+  const content = await rawResponse.json();
+  return content;
+};
+
 export {
   createSession,
   getSession,
@@ -773,5 +787,6 @@ export {
   getShoesById,
   sellItem,
   unSellItem,
-  listSellingItem
+  listSellingItem,
+  unSellShoe
 };

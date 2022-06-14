@@ -49,22 +49,12 @@ export const InfoItemModal = React.memo<Props>(
         price,
       })
         .then(res => {
+          setVisible(false);
           setQuantity('');
           setPrice('');
           Toast.showWithGravity(res.message, Toast.LONG, Toast.CENTER);
           if (res.code === 200) {
-            ApiServices.getMyBox()
-              .then(res => {
-                if (res.code === 200) {
-                  dispatch({
-                    type: ACTION_CONST.GET_SHOEBOX,
-                    data: res.data,
-                  });
-                }
-              })
-              .catch(err => {
-                console.log('LoadData', err);
-              });
+            reloadData();
           }
         })
         .catch(err => {
@@ -74,35 +64,40 @@ export const InfoItemModal = React.memo<Props>(
         });
     };
 
+    const reloadData = () => {
+      ApiServices.getMyBox()
+        .then(res => {
+          if (res.code === 200) {
+            dispatch({
+              type: ACTION_CONST.GET_SHOEBOX,
+              data: res.data,
+            });
+          }
+        })
+        .catch(err => {
+          console.log('LoadData', err);
+        });
+      ApiServices.listSellingItem()
+        .then(res => {
+          if (res.code === 200) {
+            dispatch({
+              type: ACTION_CONST.GET_LIST_SELLING_ITEMS,
+              data: res.data,
+            });
+          }
+        })
+        .catch(err => {
+          console.log('LoadData', err);
+        });
+    };
+
     const unSellItem = () => {
       ApiServices.unSellItem(item._id)
         .then(res => {
+          setVisible(false);
           Toast.showWithGravity(res.message, Toast.LONG, Toast.CENTER);
           if (res.code === 200) {
-            ApiServices.getMyBox()
-              .then(res => {
-                if (res.code === 200) {
-                  dispatch({
-                    type: ACTION_CONST.GET_SHOEBOX,
-                    data: res.data,
-                  });
-                }
-              })
-              .catch(err => {
-                console.log('LoadData', err);
-              });
-            ApiServices.listSellingItem()
-              .then(res => {
-                if (res.code === 200) {
-                  dispatch({
-                    type: ACTION_CONST.GET_LIST_SELLING_ITEMS,
-                    data: res.data,
-                  });
-                }
-              })
-              .catch(err => {
-                console.log('LoadData', err);
-              });
+            reloadData();
           }
         })
         .catch(err => {
@@ -284,18 +279,20 @@ export const InfoItemModal = React.memo<Props>(
                     resizeMode: 'contain',
                     marginVertical: getSize.scale(8),
                   }}
-                  source={{
-                    uri: isGemItem
-                      ? 'ic_tree_coin'
+                  // source={{
+                  //   uri: isGemItem
+                  //     ? 'ic_tree_coin'
+                  //     : isShoebox
+                  //     ? 'ic_git'
+                  //     : item?.img, // item?.img
+                  // }}
+                  source={
+                    isGemItem
+                      ? require('../../assets/images/gem1.png')
                       : isShoebox
-                      ? 'ic_git'
-                      : item?.img, // item?.img
-                  }}
-                  // source={
-                  //   isGemItem
-                  //     ? require('../../assets/images/gem1.png')
-                  //     : { uri: item?.img }
-                  // }
+                      ? { uri: 'ic_git' }
+                      : { uri: item?.img }
+                  }
                 />
 
                 <View
