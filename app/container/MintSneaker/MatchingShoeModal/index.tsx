@@ -87,6 +87,7 @@ export const MatchingShoeModal: React.FC<Props> = ({
                     resizeMode: 'contain',
                     marginVertical: getSize.scale(8),
                   }}
+                  resizeMode="contain"
                   source={{
                     uri: !!selectedItem ? selectedItem.img : '', // item?.img
                   }}
@@ -126,6 +127,7 @@ export const MatchingShoeModal: React.FC<Props> = ({
                           height: getSize.scale(40),
                           resizeMode: 'contain'
                         }}
+                        resizeMode="contain"
                       />
                     </TouchableOpacity>
                   );
