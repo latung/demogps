@@ -272,7 +272,7 @@ class TabStore extends Component {
   };
 
   buyShoe = id => {
-    const { action } = this.props;
+    const { action, user } = this.props;
     this.setState(
       state => {
         return {
@@ -282,6 +282,11 @@ class TabStore extends Component {
       () => {
         ApiServices.buy({ shoesId: id })
           .then(res => {
+            ApiServices.userId({ _id: user._id }).then(res => {
+              if (res.code === 200) {
+                action.userId(res.data);
+              }
+            });
             if (res.code === 200) {
               ApiServices.shoes()
                 .then(res => {

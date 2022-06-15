@@ -32,7 +32,7 @@ class Transfer extends Component {
       dataWallet: [
         { name: 'BFI', icon: 'ic_location', next: false, id: 1 },
         { name: 'BNB', icon: 'ic_coin_b', next: false, id: 2 },
-        { name: 'PAY', icon: 'ic_coin', next: false, id: 3 },
+        // { name: 'PAY', icon: 'ic_coin', next: false, id: 3 },
       ],
       dataSpend: [
         { name: 'BFI', icon: 'ic_location', next: false, id: 1 },

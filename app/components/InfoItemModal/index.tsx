@@ -310,9 +310,13 @@ export const InfoItemModal = React.memo<Props>(
                       color: '#fff',
                       fontWeight: 'bold',
                       fontSize: getSize.scale(14),
+                      textTransform: 'capitalize'
                     }}>
-                    {`# ${
+                    {/* {`# ${
                       isGemItem || isShoebox ? item?._id : item?.readableId
+                    }`} */}
+                     {`${
+                      isGemItem || isShoebox ? item?.type?.split('_').join(' ') : `# ${item?.readableId}`
                     }`}
                   </Text>
                 </View>

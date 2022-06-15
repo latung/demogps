@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
+  ImageBackground
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -17,6 +18,7 @@ import * as _action from '../../redux/action/ActionHandle';
 import { stackNavigator, tabNavigator } from '../../navigation/nameNavigator';
 import PoupBottom from './poupBottom';
 import Poup from './modal';
+import { getSize } from '../../common';
 
 import * as ApiServices from './../../service/index';
 class Wallet extends Component {
@@ -281,6 +283,16 @@ class Wallet extends Component {
           flex: 1,
           backgroundColor: '#000000',
         }}>
+        <ImageBackground
+          style={{
+            width: getSize.Width,
+            height: getSize.Height,
+            position: 'absolute',
+            resizeMode: 'contain',
+            zIndex: -2,
+          }}
+          source={{ uri: 'ic_background' }}
+        />
         <View
           style={{
             flex: 5,

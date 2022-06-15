@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -11,13 +11,16 @@ import {
   ImageBackground,
 } from 'react-native';
 import Toast from 'react-native-simple-toast';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as _action from '../../../redux/action/ActionHandle';
-import {stackNavigator, tabNavigator} from '../../../navigation/nameNavigator';
-import {Popup} from '../../../components';
-import {DrawerActions} from '@react-navigation/native';
-import {getSize} from '../../../common';
+import {
+  stackNavigator,
+  tabNavigator,
+} from '../../../navigation/nameNavigator';
+import { Popup } from '../../../components';
+import { DrawerActions } from '@react-navigation/native';
+import { getSize } from '../../../common';
 
 class TabBar extends Component {
   constructor(props) {
@@ -36,8 +39,8 @@ class TabBar extends Component {
       titlePrice: 'Lowest Price',
       modalFilter: false,
       filters: {
-        class: {Jogging: false, Running: false, Training: false},
-        grade: {Common: false, Rare: false, Legendary: false},
+        class: { Jogging: false, Running: false, Training: false },
+        grade: { Common: false, Rare: false, Legendary: false },
       },
     };
   }
@@ -47,7 +50,7 @@ class TabBar extends Component {
       return {
         filters: {
           ...state.filters,
-          [fil]: {...state.filters[fil], [type]: !state.filters[fil][type]},
+          [fil]: { ...state.filters[fil], [type]: !state.filters[fil][type] },
         },
       };
     });
@@ -59,8 +62,8 @@ class TabBar extends Component {
     this.setState(state => {
       return {
         filters: {
-          class: {Jogging: false, Running: false, Training: false},
-          grade: {Common: false, Rare: false, Legendary: false},
+          class: { Jogging: false, Running: false, Training: false },
+          grade: { Common: false, Rare: false, Legendary: false },
         },
       };
     });
@@ -95,7 +98,7 @@ class TabBar extends Component {
   };
 
   _handleTabbar = key => {
-    const {action, screenState} = this.props;
+    const { action, screenState } = this.props;
     if (key === 'Sneakers') {
       action.changeScreenState({
         ...screenState,
@@ -105,6 +108,9 @@ class TabBar extends Component {
         isShoeBoxes: false,
         isSelling: false,
         isPromos: false,
+        mintSneaker: false,
+        isUpgradeMini: false,
+        isGalleryMini: true,
       });
     }
     if (key === 'Gems') {
@@ -116,6 +122,9 @@ class TabBar extends Component {
         isShoeBoxes: false,
         isSelling: false,
         isPromos: false,
+        mintSneaker: false,
+        isUpgradeMini: false,
+        isGalleryMini: true,
       });
       // Toast.showWithGravity('Coming soon', Toast.LONG, Toast.CENTER);
     }
@@ -128,6 +137,9 @@ class TabBar extends Component {
         isShoeBoxes: true,
         isPromos: false,
         isSelling: false,
+        mintSneaker: false,
+        isUpgradeMini: false,
+        isGalleryMini: true,
       });
       // Toast.showWithGravity('Coming soon', Toast.LONG, Toast.CENTER);
     }
@@ -140,18 +152,24 @@ class TabBar extends Component {
         isShoeBoxes: false,
         isPromos: false,
         isSelling: true,
+        mintSneaker: false,
+        isUpgradeMini: false,
+        isGalleryMini: true,
       });
       // Toast.showWithGravity('Coming soon', Toast.LONG, Toast.CENTER);
     }
     if (key === 'Promos') {
       action.changeScreenState({
-          ...screenState,
-          isSneakers: false,
-          isGems: false,
-          isBadges: false,
-          isShoeBoxes: false,
+        ...screenState,
+        isSneakers: false,
+        isGems: false,
+        isBadges: false,
+        isShoeBoxes: false,
         isSelling: false,
-        isPromos: true
+        isPromos: true,
+        mintSneaker: false,
+        isUpgradeMini: false,
+        isGalleryMini: true,
       });
       // Toast.showWithGravity('Coming soon', Toast.LONG, Toast.CENTER);
     }
@@ -161,7 +179,7 @@ class TabBar extends Component {
   };
 
   _handleTabbarMini = key => {
-    const {action, screenState} = this.props;
+    const { action, screenState } = this.props;
     if (key === 'isGalleryMini') {
       action.changeScreenState({
         ...screenState,
@@ -194,7 +212,7 @@ class TabBar extends Component {
     const imageSneakers =
       'https://stepn-simulator.xyz/static/simulator/img/sneakers.jpeg';
 
-    const {action, screenState} = this.props;
+    const { action, screenState } = this.props;
     const {
       isSneakers,
       isGems,
@@ -203,7 +221,7 @@ class TabBar extends Component {
       isGalleryMini,
       isUpgradeMini,
       mintSneaker,
-      isSelling
+      isSelling,
     } = screenState;
     return (
       <View
@@ -476,9 +494,7 @@ class TabBar extends Component {
                   <View
                     style={{
                       flex: 1,
-                      backgroundColor: mintSneaker
-                        ? '#2EDBDC'
-                        : 'transparent',
+                      backgroundColor: mintSneaker ? '#2EDBDC' : 'transparent',
                       width: '100%',
                       alignItems: 'center',
                       justifyContent: 'center',
