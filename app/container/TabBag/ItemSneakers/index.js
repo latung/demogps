@@ -37,7 +37,7 @@ export default forwardRef(function ItemSneakers(
     isshoesIdWear,
     constShoe,
     sellShoe,
-    unSellShoe
+    unSellShoe,
   },
   ref,
 ) {
@@ -1419,14 +1419,14 @@ export default forwardRef(function ItemSneakers(
                   // backgroundColor: "red"
                 }}>
                 <TouchableOpacity
-                  disabled={item?.isSelling ? true : false}
+                  disabled={item?.isSelling || item?.isLockSell ? true : false}
                   onPress={() => {
                     // setmodalBuy(!modalBuy);
                     setModalPrice(true);
                   }}
                   style={{
                     width: getSize.Width * 0.3,
-                    opacity: item?.isSelling ? 0.5 : 1,
+                    opacity: item?.isSelling || item?.isLockSell ? 0.5 : 1,
                     // marginHorizontal: getSize.scale(16),
                     paddingVertical: getSize.scale(6),
                     alignItems: 'center',
