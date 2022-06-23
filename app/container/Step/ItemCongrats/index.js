@@ -194,7 +194,7 @@ function ItemCongrats() {
                   fontWeight: 'bold',
                   fontStyle: 'italic',
                 }}>
-                {selector.screenState?.totalDistance}
+                {selector.screenState?.totalDistance?.toFixed(2)}
               </Text>
               <Text
                 style={{
@@ -249,7 +249,7 @@ function ItemCongrats() {
                   fontWeight: 'bold',
                   fontStyle: 'italic',
                 }}>
-                {selector.screenState?.moneyEarned}
+                {selector.screenState?.moneyEarned.toFixed(2)}
               </Text>
             </View>
             <View

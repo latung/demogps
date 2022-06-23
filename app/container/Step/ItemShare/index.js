@@ -184,7 +184,7 @@ function ItemShare()
                                         fontWeight: 'bold',
                                         fontStyle: 'italic'
                                     }}>
-                                    {selector.screenState?.totalDistance}
+                                    {selector.screenState?.totalDistance?.toFixed(2)}
                                 </Text>
                                 <Text
                                     style={{
@@ -234,7 +234,7 @@ function ItemShare()
                                         fontWeight: 'bold',
                                         fontStyle: 'italic'
                                     }}>
-                                    {selector.screenState?.moneyEarned}
+                                    {selector.screenState?.moneyEarned?.toFixed(2)}
                                 </Text>
                                 <Text
                                     style={{
