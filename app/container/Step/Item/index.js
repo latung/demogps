@@ -238,7 +238,6 @@ function Item() {
     ApiServices.getRunningSession(id)
       .then(res => {
         if (res?.data) {
-          setMoneyEarned(res?.data?.earned);
           if (res?.data?.status === 'ended') {
             setModalVisible(false);
             setisPress(false);
@@ -275,6 +274,7 @@ function Item() {
   const updateRunningSession = async body => {
     ApiServices.updateRunningSession(runId, body)
       .then(res => {
+        setMoneyEarned(res?.data?.earned);
         if (res?.data?.status === 'ended') {
           getRunningSession(runId);
         }
