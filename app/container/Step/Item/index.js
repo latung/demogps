@@ -127,14 +127,16 @@ function Item() {
     );
 
     const timeChangeSeconds = (timestamp - refLocations.current?.time) / 1000;
-    const speed = newDistance > 1 ? (newDistance / timeChangeSeconds) * 3.6 : 0;
+    // const speed = newDistance > 1 ? (newDistance / timeChangeSeconds) * 3.6 : 0;
+    const speed = (newDistance / timeChangeSeconds) * 3.6;
 
     refLocations.current.time = timestamp;
     refLocations.current.latitude = latitude;
     refLocations.current.longitude = longitude;
 
     return {
-      speed: speed < 1 ? 0 : speed,
+      // speed: speed < 1 ? 0 : speed,
+      speed: speed,
       distance: newDistance / 1000,
       timeChangeSeconds: Math.round(timeChangeSeconds),
     };
@@ -294,9 +296,8 @@ function Item() {
   const mainFuncThread = () => {
     refTimeInterval.current = setInterval(() => {
       setTimeRun(preSta => preSta + 1);
-      _startUpdatingLocation()
+      _startUpdatingLocation();
       // handleLocationsFunc();
-
     }, 1000);
   };
 
