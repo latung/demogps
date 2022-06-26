@@ -278,7 +278,7 @@ class Profile extends Component {
                       justifyContent: 'flex-end',
                       flexDirection: 'row',
                     }}>
-                    <View
+                    {/* <View
                       style={{
                         justifyContent: 'center',
                         marginLeft: getSize.scale(8),
@@ -300,7 +300,7 @@ class Profile extends Component {
                         }}>
                         Km
                       </Text>
-                    </View>
+                    </View> */}
                     <Image
                       style={{
                         width: getSize.scale(12),

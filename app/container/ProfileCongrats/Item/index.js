@@ -359,7 +359,7 @@ function ItemCongrats() {
                 fontStyle: 'italic',
                 marginLeft: getSize.scale(8),
               }}>
-              {`${formatTime(data.currentRuntime / 1000)}`}
+              {`${formatTime(data.currentRuntime / 60000)}`}
             </Text>
           </View>
 

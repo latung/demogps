@@ -36,6 +36,7 @@ class ProfileRunningRecord extends Component {
 
   getHistory = async () => {
     const data = await getHistoryRun();
+    console.log(data);
     if (data) {
       const totalDistance = data.data
         .map(item => item.totalDistance)
@@ -49,6 +50,16 @@ class ProfileRunningRecord extends Component {
         totalTime: totalTime,
       });
     }
+  };
+
+  formatTime = timer => {
+    const getSeconds = `0${timer % 60}`.slice(-2);
+    const minutes = `${Math.floor(timer / 60)}`;
+    const getMinutes = `0${minutes % 60}`.slice(-2);
+    const getHours = `0${Math.floor(timer / 3600)}`.slice(-2);
+    return timer > 3599
+      ? `${getHours}:${getMinutes}:${getSeconds}`
+      : `${getMinutes}:${getSeconds}`;
   };
 
   render() {
@@ -211,7 +222,7 @@ class ProfileRunningRecord extends Component {
                             fontWeight: 'bold',
                             marginRight: 5,
                           }}>
-                          {totalTime / 1000}
+                          {this.formatTime(totalTime / 60000)}
                         </Text>
                         <Text
                           style={{
@@ -350,7 +361,7 @@ class ProfileRunningRecord extends Component {
                                 <MapboxGL.Camera
                                   zoomLevel={15}
                                   centerCoordinate={
-                                    item.path.length
+                                    item.path && item.path.length
                                       ? [
                                           item.path[0].latitude,
                                           item.path[0].longitude,
@@ -360,7 +371,7 @@ class ProfileRunningRecord extends Component {
                                 />
                                 <MapboxGL.PointAnnotation
                                   coordinate={
-                                    item.path.length
+                                    item.path && item.path.length
                                       ? [
                                           item.path[0].latitude,
                                           item.path[0].longitude,

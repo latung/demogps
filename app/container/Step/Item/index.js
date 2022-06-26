@@ -234,6 +234,7 @@ function Item() {
     ApiServices.startRunning({ shoesId: id })
       .then(res => {
         if (res?.data?._id) {
+          console.log('assssssssssssssssssss',res?.data?._id);
           setRunId(res?.data?._id);
           getRunningSession(res?.data?._id);
         }
