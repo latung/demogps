@@ -114,21 +114,23 @@ function Item() {
       return { speed: 0, distance: 0 };
     }
 
-    const newDistance = getDistance(
-      {
-        latitude: Number(refLocations.current.latitude),
-        longitude: Number(refLocations.current.longitude),
-      },
-      {
-        latitude: Number(latitude),
-        longitude: Number(longitude),
-      },
-      0.1,
-    );
+    const newDistance =
+      getDistance(
+        {
+          latitude: Number(refLocations.current.latitude),
+          longitude: Number(refLocations.current.longitude),
+        },
+        {
+          latitude: Number(latitude),
+          longitude: Number(longitude),
+        },
+        0.1,
+      ) || 0;
 
     const timeChangeSeconds = (timestamp - refLocations.current?.time) / 1000;
     // const speed = newDistance > 1 ? (newDistance / timeChangeSeconds) * 3.6 : 0;
-    const speed = (newDistance / timeChangeSeconds) * 3.6;
+    const speed =
+      timeChangeSeconds > 0 ? (newDistance / timeChangeSeconds) * 3.6 : 0;
 
     refLocations.current.time = timestamp;
     refLocations.current.latitude = latitude;
@@ -146,10 +148,13 @@ function Item() {
     if (!isPause) {
       checkingLocationInterval.current = Geolocation.watchPosition(
         position => {
-          const { speed, distance, timeChangeSeconds } =
-            calculateDistanceAndSpeed(position.coords, position.timestamp);
+          const {
+            speed,
+            distance = 0,
+            timeChangeSeconds,
+          } = calculateDistanceAndSpeed(position.coords, position.timestamp);
           const { longitude, latitude } = position.coords || {};
-          setCurrentSpeed(speed.toFixed(2));
+          setCurrentSpeed(speed);
           setTotalKm(distanceOld => distanceOld + distance);
 
           const isSpeedValid =
@@ -222,6 +227,8 @@ function Item() {
     //   }
     // });
   };
+
+  console.log('debug-total-speed', currentSpeed.toFixed(2));
 
   const startRunning = () => {
     ApiServices.startRunning({ shoesId: id })
@@ -691,7 +698,7 @@ function Item() {
                       fontWeight: 'bold',
                       fontStyle: 'italic',
                     }}>
-                    {totalKm.toFixed(2) || 0}
+                    {totalKm ? totalKm.toFixed(2) : 0}
                   </Text>
                   <Text
                     style={{
@@ -802,7 +809,7 @@ function Item() {
                 marginTop: getSize.scale(11),
                 color: '#ffffff',
               }}>
-              {currentSpeed || '0.00'}
+              {currentSpeed?.toFixed(2) || '0.00'}
             </Text>
             <Text
               style={{
