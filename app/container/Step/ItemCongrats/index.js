@@ -194,7 +194,7 @@ function ItemCongrats() {
                   fontWeight: 'bold',
                   fontStyle: 'italic',
                 }}>
-                {selector.screenState?.totalDistance?.toFixed(2)}
+                {Number(selector.screenState?.totalDistance | 0).toFixed(2)}
               </Text>
               <Text
                 style={{

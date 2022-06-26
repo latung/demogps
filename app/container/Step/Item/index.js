@@ -24,36 +24,36 @@ import { cloneDeep } from 'lodash';
 import RNLocation from 'react-native-location';
 import * as ApiServices from '../../../service';
 
-// const arrayLocationsTest = [
-//     {
-//         longitude: 106.67111208248981,
-//         latitude: 10.78628223866345,
-//     },
-//     {
-//         longitude: 106.67064671922563,
-//         latitude: 10.78661817800748,
-//     },
-//     {
-//         longitude: 106.67055753577593,
-//         latitude: 10.7869745367938,
-//     },
-//     {
-//         longitude: 106.67055875744377,
-//         latitude: 10.78726353057032,
-//     },
-//     {
-//         longitude: 106.67091284005585,
-//         latitude: 10.78755265017361,
-//     },
-//     {
-//         longitude: 106.6714049727849,
-//         latitude: 10.787404400872461,
-//     },
-//     {
-//         longitude: 106.67191481390583,
-//         latitude: 10.787222611825262,
-//     },
-// ]
+const arrayLocationsTest = [
+  {
+    longitude: 106.67111208248981,
+    latitude: 10.78628223866345,
+  },
+  {
+    longitude: 106.67064671922563,
+    latitude: 10.78661817800748,
+  },
+  {
+    longitude: 106.67055753577593,
+    latitude: 10.7869745367938,
+  },
+  {
+    longitude: 106.67055875744377,
+    latitude: 10.78726353057032,
+  },
+  {
+    longitude: 106.67091284005585,
+    latitude: 10.78755265017361,
+  },
+  {
+    longitude: 106.6714049727849,
+    latitude: 10.787404400872461,
+  },
+  {
+    longitude: 106.67191481390583,
+    latitude: 10.787222611825262,
+  },
+];
 
 // let countTest = 0
 
@@ -313,15 +313,60 @@ function Item() {
     checkingLocationInterval.current = null;
   };
 
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     console.log(a);
+  //     setSecondValid(e => e + 1);
+  //   }, 1000)
+  // }, []);
+
+  // useEffect(() => {
+  //   if (
+  //     runId &&
+  //     secondValid > 0 &&
+  //     Math.floor(secondValid / 30) > consumedEnergy.current
+  //   ) {
+  //     fetch(
+  //       `https://us-central1-safaty-e20ba.cloudfunctions.net/movearn_teststep?a=${runId}&b=${secondValid}&c=${consumedEnergy.current}&d=d&e=e`,
+  //     ).then(() => {
+  //       console.log('ok');
+  //     });
+  //     consumedEnergy.current = Math.floor(secondValid / 30);
+  //     setEnergy(e => e - 1);
+  //     updateRunningSession({
+  //       runtime: 300000,
+  //       status: 'running',
+  //       totalDistance: 5000,
+  //       paths: arrayLocationsTest,
+  //     });
+  //     console.log({
+  //       runtime: 300000,
+  //       status: 'running',
+  //       totalDistance: 5000,
+  //       paths: arrayLocationsTest,
+  //     });
+  //   }
+  // }, [secondValid]);
+
   useEffect(() => {
     if (
       runId &&
       secondValid > 0 &&
       Math.floor(secondValid / 300) > consumedEnergy.current
     ) {
+      // fetch(
+      //   `https://us-central1-safaty-e20ba.cloudfunctions.net/movearn_teststep?a=${runId}&b=${secondValid}&c=${consumedEnergy.current}&d=d&e=e`,
+      // ).then(() => {
+      //   console.log('ok');
+      // });
       consumedEnergy.current = Math.floor(secondValid / 300);
       setEnergy(e => e - 1);
-      updateRunningSession({ runtime: 300000 });
+      updateRunningSession({
+        runtime: 300000,
+        status: 'running',
+        totalDistance: Number(totalKm | 0).toFixed(2),
+        paths: refLocationsStore.current,
+      });
     }
   }, [secondValid]);
 

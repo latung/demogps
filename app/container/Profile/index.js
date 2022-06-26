@@ -267,7 +267,7 @@ class Profile extends Component {
                           color: 'rgba(44, 44, 44, 1)',
                           fontWeight: 'bold',
                         }}>
-                        Total distance
+                        Session history
                       </Text>
                     </View>
                   </View>

@@ -745,6 +745,19 @@ const unSellShoe = async (id, body) => {
   return content;
 };
 
+const getHistoryRun  = async () =>{
+  const token_access = await storage.getItem(CONST_STORAGE.TOKEN_ACCESS);
+  const rawResponse = await fetch(API_CONST.API_GET_RUNNING_HISTORY, {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token_access}`,
+    },
+  });
+  const content = await rawResponse.json();
+  return content;
+}
+
 export {
   createSession,
   getSession,
@@ -788,5 +801,6 @@ export {
   sellItem,
   unSellItem,
   listSellingItem,
-  unSellShoe
+  unSellShoe,
+  getHistoryRun
 };

@@ -51,6 +51,7 @@ export const API_POST_RUN = `${HOST + RUN}`;
 export const API_GET_RUNNING_SESSION_ID = `${HOST + RUN}/runningSessionId`;
 // export const API_PUT_RUNNING_SESSION_ID = `${HOST + RUN}/runningSessionId`;
 export const API_PUT_RUNNING_SESSION_ID = `${HOST + RUN}`;
+export const API_GET_RUNNING_HISTORY = `${HOST + RUN}`;
 //const shoe
 export const API_GET_SHOES_CONST = `${HOST + SHOES}/constants`;
 export const API_GET_RATE = `${HOSTWALLET}/price_binanstep`;
