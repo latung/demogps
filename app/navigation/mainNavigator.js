@@ -54,16 +54,16 @@ class MainNavigator extends PureComponent {
     this.state = {};
   }
 
-  componentDidMount() {
-    const { action, user } = this.props;
-    setInterval(() => {
-      ApiServices.userId({ _id: user._id }).then(res => {
-        if (res.code === 200) {
-          action.userId(res.data);
-        }
-      });
-    }, 10000);
-  }
+  // componentDidMount() {
+  //   const { action, user } = this.props;
+  //   setInterval(() => {
+  //     ApiServices.userId({ _id: user._id }).then(res => {
+  //       if (res.code === 200) {
+  //         action.userId(res.data);
+  //       }
+  //     });
+  //   }, 10000);
+  // }
 
   render() {
     return (
