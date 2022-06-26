@@ -76,14 +76,14 @@ function ItemCongrats() {
         <MapboxGL.Camera
           zoomLevel={15}
           centerCoordinate={
-            data.path.length
+            data.path && data.path.length
               ? [data.path[0].latitude, data.path[0].longitude]
               : [105.83247801541496, 21.03690229287492]
           }
         />
         <MapboxGL.PointAnnotation
           coordinate={
-            data.path.length
+            data.path && data.path.length
               ? [data.path[0].latitude, data.path[0].longitude]
               : [105.83247801541496, 21.03690229287492]
           }
