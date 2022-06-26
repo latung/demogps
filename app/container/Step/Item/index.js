@@ -127,14 +127,16 @@ function Item() {
     );
 
     const timeChangeSeconds = (timestamp - refLocations.current?.time) / 1000;
-    const speed = newDistance > 1 ? (newDistance / timeChangeSeconds) * 3.6 : 0;
+    // const speed = newDistance > 1 ? (newDistance / timeChangeSeconds) * 3.6 : 0;
+    const speed = (newDistance / timeChangeSeconds) * 3.6;
 
     refLocations.current.time = timestamp;
     refLocations.current.latitude = latitude;
     refLocations.current.longitude = longitude;
 
     return {
-      speed: speed < 1 ? 0 : speed,
+      // speed: speed < 1 ? 0 : speed,
+      speed: speed,
       distance: newDistance / 1000,
       timeChangeSeconds: Math.round(timeChangeSeconds),
     };
@@ -156,7 +158,7 @@ function Item() {
 
           if (isSpeedValid) {
             setSecondValid(e => e + timeChangeSeconds);
-            updateRunningSession({ runtime: timeChangeSeconds * 1000 });
+            // updateRunningSession({ runtime: timeChangeSeconds * 1000 });
           }
 
           if (speed > 0) {
@@ -238,7 +240,6 @@ function Item() {
     ApiServices.getRunningSession(id)
       .then(res => {
         if (res?.data) {
-          setMoneyEarned(res?.data?.earned);
           if (res?.data?.status === 'ended') {
             setModalVisible(false);
             setisPress(false);
@@ -275,6 +276,7 @@ function Item() {
   const updateRunningSession = async body => {
     ApiServices.updateRunningSession(runId, body)
       .then(res => {
+        setMoneyEarned(res?.data?.earned);
         if (res?.data?.status === 'ended') {
           getRunningSession(runId);
         }
@@ -294,6 +296,7 @@ function Item() {
   const mainFuncThread = () => {
     refTimeInterval.current = setInterval(() => {
       setTimeRun(preSta => preSta + 1);
+      _startUpdatingLocation();
       // handleLocationsFunc();
     }, 1000);
   };
@@ -311,6 +314,7 @@ function Item() {
     ) {
       consumedEnergy.current = Math.floor(secondValid / 300);
       setEnergy(e => e - 1);
+      updateRunningSession({ runtime: 300000 });
     }
   }, [secondValid]);
 
@@ -724,7 +728,7 @@ function Item() {
                       fontStyle: 'italic',
                       color: '#ffffff',
                     }}>
-                    {`${Number(moneyEarned).toFixed(2)}`}
+                    {`${Number(moneyEarned ?? '0').toFixed(2)}`}
                   </Text>
                 </View>
               </View>
